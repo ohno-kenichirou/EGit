@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Servlet8
+ * Servlet implementation class ServletCategoryAdd
  */
 @WebServlet("/ServletCategoryAdd")
 public class ServletCategoryAdd extends HttpServlet {

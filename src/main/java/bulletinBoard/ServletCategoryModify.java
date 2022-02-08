@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Servlet7
+ * Servlet implementation class ServletCategoryModify
  */
 @WebServlet("/ServletCategoryModify")
 public class ServletCategoryModify extends HttpServlet {

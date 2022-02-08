@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Servlet1
+ * Servlet implementation class ServletAccountModifyConfirm
  */
 @WebServlet("/ServletAccountModifyConfirm")
 public class ServletAccountModifyConfirm extends HttpServlet {
