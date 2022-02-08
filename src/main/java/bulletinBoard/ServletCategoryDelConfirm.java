@@ -1,4 +1,4 @@
-package BulletinBoard;
+package bulletinBoard;
 
 import java.io.IOException;
 
@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ServletCommentDelConfirm
+ * Servlet implementation class Servlet5
  */
-@WebServlet("/ServletCommentDelConfirm")
-public class ServletCommentDelConfirm extends HttpServlet {
+@WebServlet("/ServletCategoryDelConfirm")
+public class ServletCategoryDelConfirm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletCommentDelConfirm() {
+    public ServletCategoryDelConfirm() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,7 +28,7 @@ public class ServletCommentDelConfirm extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/commentDelConfirm.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/categoryDelConfirm.jsp");
 		dispatcher.forward(request, response);
 	}
 

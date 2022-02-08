@@ -1,4 +1,4 @@
-package BulletinBoard;
+package bulletinBoard;
 
 import java.io.IOException;
 
@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Servlet4
+ * Servlet implementation class ServletCommentPostConfirm
  */
-@WebServlet("/ServletAccountRegister")
-public class ServletAccountRegister extends HttpServlet {
+@WebServlet("/ServletCommentPostConfirm")
+public class ServletCommentPostConfirm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletAccountRegister() {
+    public ServletCommentPostConfirm() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,7 +28,7 @@ public class ServletAccountRegister extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/accountRegister.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/commentPostConfirm.jsp");
 		dispatcher.forward(request, response);
 	}
 

@@ -1,4 +1,4 @@
-package BulletinBoard;
+package bulletinBoard;
 
 import java.io.IOException;
 
@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ServletThreadSearchList
+ * Servlet implementation class ServletCategorySearchList
  */
-@WebServlet("/ServletThreadSearchList")
-public class ServletThreadSearchList extends HttpServlet {
+@WebServlet("/ServletCategorySearchList")
+public class ServletCategorySearchList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletThreadSearchList() {
+    public ServletCategorySearchList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,7 +28,7 @@ public class ServletThreadSearchList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/threadSearchList.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/categorySearchList.jsp");
 		dispatcher.forward(request, response);
 	}
 

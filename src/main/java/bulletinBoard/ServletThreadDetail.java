@@ -1,4 +1,4 @@
-package BulletinBoard;
+package bulletinBoard;
 
 import java.io.IOException;
 
@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Servlet5
+ * Servlet implementation class ServletThreadDetail
  */
-@WebServlet("/ServletCategoryDelConfirm")
-public class ServletCategoryDelConfirm extends HttpServlet {
+@WebServlet("/ServletThreadDetail")
+public class ServletThreadDetail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletCategoryDelConfirm() {
+    public ServletThreadDetail() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,7 +28,7 @@ public class ServletCategoryDelConfirm extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/categoryDelConfirm.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/threadDetail.jsp");
 		dispatcher.forward(request, response);
 	}
 

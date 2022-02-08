@@ -1,4 +1,4 @@
-package BulletinBoard;
+package bulletinBoard;
 
 import java.io.IOException;
 
@@ -8,19 +8,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class ServletLogin
+ * Servlet implementation class Servlet7
  */
-@WebServlet("/ServletLogin")
-public class ServletLogin extends HttpServlet {
+@WebServlet("/ServletCategoryModify")
+public class ServletCategoryModify extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletLogin() {
+    public ServletCategoryModify() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,15 +28,7 @@ public class ServletLogin extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		HttpSession session = request.getSession(false);
-		
-		if (session == null) {
-			session = request.getSession();
-			
-		}
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/login.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/categoryModify.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -45,19 +36,8 @@ public class ServletLogin extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String email = request.getParameter("email");
-		String pass = request.getParameter("pass");
-		
-		System.out.println(request.getParameter("email"));
-		System.out.println(request.getParameter("pass"));
-		
-		if (email == null || pass == null) {
-			request.setAttribute("message", "Emailまたはパスワードを入力して下さい");
-		}
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/threadSearchList.jsp");
-		dispatcher.forward(request, response);
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

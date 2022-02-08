@@ -1,4 +1,4 @@
-package BulletinBoard;
+package bulletinBoard;
 
 import java.io.IOException;
 
@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ServletCategorySearchList
+ * Servlet implementation class Servlet9
  */
-@WebServlet("/ServletCategorySearchList")
-public class ServletCategorySearchList extends HttpServlet {
+@WebServlet("/ServletCategoryAddConfirm")
+public class ServletCategoryAddConfirm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletCategorySearchList() {
+    public ServletCategoryAddConfirm() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,7 +28,7 @@ public class ServletCategorySearchList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/categorySearchList.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/categoryAddConfirm.jsp");
 		dispatcher.forward(request, response);
 	}
 

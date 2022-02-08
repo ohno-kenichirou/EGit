@@ -1,4 +1,4 @@
-package BulletinBoard;
+package bulletinBoard;
 
 import java.io.IOException;
 
@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Servlet1
+ * Servlet implementation class ServletThreadCreateConfirm
  */
-@WebServlet("/ServletAccountModifyConfirm")
-public class ServletAccountModifyConfirm extends HttpServlet {
+@WebServlet("/ServletThreadCreateConfirm")
+public class ServletThreadCreateConfirm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletAccountModifyConfirm() {
+    public ServletThreadCreateConfirm() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,7 +28,7 @@ public class ServletAccountModifyConfirm extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/accountModifyConfirm.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/threadCreateConfirm.jsp");
 		dispatcher.forward(request, response);
 	}
 

@@ -1,4 +1,4 @@
-package BulletinBoard;
+package bulletinBoard;
 
 public class NewThreadInfo {
 

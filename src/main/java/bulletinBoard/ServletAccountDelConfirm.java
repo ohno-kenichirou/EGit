@@ -1,4 +1,4 @@
-package BulletinBoard;
+package bulletinBoard;
 
 import java.io.IOException;
 
@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ServletAccountSearchList
+ * Servlet implementation class Servlet
  */
-@WebServlet("/ServletAccountSearchList")
-public class ServletAccountSearchList extends HttpServlet {
+@WebServlet("/ServletAccountDelConfirm")
+public class ServletAccountDelConfirm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletAccountSearchList() {
+    public ServletAccountDelConfirm() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,7 +28,7 @@ public class ServletAccountSearchList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/accountSearchList.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/accountDelConfirm.jsp");
 		dispatcher.forward(request, response);
 	}
 

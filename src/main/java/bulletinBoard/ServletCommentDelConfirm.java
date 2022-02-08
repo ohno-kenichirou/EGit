@@ -1,4 +1,4 @@
-package BulletinBoard;
+package bulletinBoard;
 
 import java.io.IOException;
 
@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ServletLogout
+ * Servlet implementation class ServletCommentDelConfirm
  */
-@WebServlet("/ServletLogout")
-public class ServletLogout extends HttpServlet {
+@WebServlet("/ServletCommentDelConfirm")
+public class ServletCommentDelConfirm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletLogout() {
+    public ServletCommentDelConfirm() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,7 +28,7 @@ public class ServletLogout extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/logout.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/commentDelConfirm.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -36,9 +36,7 @@ public class ServletLogout extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		System.out.println(request.getParameter("logout"));
-		
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

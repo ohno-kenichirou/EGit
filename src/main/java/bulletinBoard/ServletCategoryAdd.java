@@ -1,4 +1,4 @@
-package BulletinBoard;
+package bulletinBoard;
 
 import java.io.IOException;
 
@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Servlet7
+ * Servlet implementation class Servlet8
  */
-@WebServlet("/ServletCategoryModify")
-public class ServletCategoryModify extends HttpServlet {
+@WebServlet("/ServletCategoryAdd")
+public class ServletCategoryAdd extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletCategoryModify() {
+    public ServletCategoryAdd() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,7 +28,7 @@ public class ServletCategoryModify extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/categoryModify.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/categoryAdd.jsp");
 		dispatcher.forward(request, response);
 	}
 
