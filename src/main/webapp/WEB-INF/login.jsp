@@ -1,7 +1,6 @@
 <!-- 
 	作成者:高橋　作成日:2022/02/04
  -->
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -12,7 +11,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>ログイン画面</title>
-		<link rel="stylesheet" type="text.css" href="../cssLogout.css">
+		<link rel="stylesheet" type="text.css" href="css.css">
 	</head>
 	<body>
 		<%
@@ -32,7 +31,7 @@
 							Email 
 						</label>
 					</th>
-					<td>
+					<td class="border">
 						<input type="email" id="email" name="email" required>
 					</td>
 				</tr>
@@ -53,7 +52,7 @@
 				</tr>
 			</table>
 			
-			<a href="ServletLogin">ログインしないでアクセスする</a>
+			<a href="ServletThreadSearchList">ログインしないでアクセスする</a>
 		</form>
 	</body>
 </html>

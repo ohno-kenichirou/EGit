@@ -3,8 +3,15 @@
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="bulletinBoard.NewCommentInfo" %>
 <%
 	String message = (String)request.getAttribute("message");
+	String comment = "コメント内容";
+
+	NewCommentInfo newComment = (NewCommentInfo)request.getAttribute("sendNewCommentInfo");
+	if (newComment != null) {
+		comment = newComment.getComment();
+	}
 %>
     
 <!DOCTYPE html>
@@ -14,9 +21,9 @@
 		<title>コメント入力</title>
 	</head>
 	<body>
-		<header class="flex">
+		<header>
 			<a href="ServletThreadSearchList">スレッド一覧</a>
-			<a href="#">カテゴリー一覧</a>
+			<a href="ServletCategorySearchList">カテゴリー一覧</a>
 			<a href="#">アカウント一覧</a>	
 			<a href="ServletLogout">ログアウト</a>		
 		</header>
@@ -50,7 +57,7 @@
 				</label>				
 			</div>
 			<div>
-				<textarea id="comment" name="comment" placeholder="コメント内容" required></textarea>
+				<textarea id="comment" name="comment" placeholder="<%= comment %>" required></textarea>
 			</div>
 			
 			<div>

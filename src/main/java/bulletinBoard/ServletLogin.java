@@ -1,6 +1,7 @@
 package bulletinBoard;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.catalina.Session;
 
 /**
  * Servlet implementation class ServletLogin
@@ -29,12 +32,13 @@ public class ServletLogin extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		
 		HttpSession session = request.getSession(false);
 		
 		if (session == null) {
 			session = request.getSession();
-			
+			session.setAttribute("User", null);
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/login.jsp");
@@ -45,18 +49,38 @@ public class ServletLogin extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		
 		String email = request.getParameter("email");
 		String pass = request.getParameter("pass");
 		
-		System.out.println(request.getParameter("email"));
-		System.out.println(request.getParameter("pass"));
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/login.jsp");
 		
 		if (email == null || pass == null) {
 			request.setAttribute("message", "Emailまたはパスワードを入力して下さい");
-		}
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/threadSearchList.jsp");
+		} else {
+			TryUserLogin tryLogin = new TryUserLogin(email, pass);
+			UserDAO userDao = new UserDAO();
+			
+			switch (userDao.findUser(tryLogin)) {
+				case 0:
+					dispatcher = request.getRequestDispatcher("WEB-INF/threadSearchList.jsp");
+					HttpSession session = request.getSession(false);
+					session.setAttribute("User", userDao.getUserInfo(tryLogin));
+					ArrayList<ThreadDispInfo> threadList = null;
+					ThreadDAO threadDao = new ThreadDAO();
+					threadList = threadDao.searchAndSetList(1);
+					request.setAttribute("sendThreadList", threadList);
+					break;
+				case 1:
+					request.setAttribute("message", "このアカウントはロックされています");
+					break;
+				case 2:
+					request.setAttribute("message", "Emailまたはパスワードが違います");
+					break;
+			}
+			
+		}		
 		dispatcher.forward(request, response);
 	}
 

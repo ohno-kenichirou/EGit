@@ -51,7 +51,7 @@
 			</label>				
 		</div>
 		<div>
-			<input type="text" id="email" name="email" placeholder="メールアドレス入力" required>
+			<input type="text" id="email" name="email" placeholder="メールアドレス入力" maxlength="255" required>
 		</div>
 		<div>
 			<label for="pass">
@@ -59,7 +59,7 @@
 			</label>				
 		</div>
 		<div>
-			<input type="password" id="pass" name="pass" placeholder="パスワード入力" required>
+			<input type="password" id="pass" name="pass" placeholder="パスワード入力" maxlength="18" required>
 		</div>
 		<div>
 			<label for="userName">
@@ -67,7 +67,7 @@
 			</label>				
 		</div>
 		<div>
-			<input type="text" id=userName name="userName" placeholder="ユーザー名入力" required>
+			<input type="text" id=userName name="userName" placeholder="ユーザー名入力" maxlength="100" required>
 		</div>
 		<div>
 			<label for="birth">

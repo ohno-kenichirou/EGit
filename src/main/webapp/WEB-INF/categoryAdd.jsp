@@ -43,7 +43,7 @@
 			</label>				
 		</div>
 		<div>
-			<input type="text" id="categoryName" name="categoryName" placeholder="カテゴリー名入力" required>
+			<input type="text" id="categoryName" name="categoryName" placeholder="カテゴリー名入力" maxlength="50" required>
 		</div>
 		<div>
 			<label for="categoryKana">
@@ -51,7 +51,7 @@
 			</label>				
 		</div>
 		<div>
-			<input type="text" id="categoryKana" name="categoryKana" placeholder="カテゴリー名(カナ)入力" required>
+			<input type="text" id="categoryKana" name="categoryKana" placeholder="カテゴリー名(カナ)入力" maxlength="100" required>
 		</div>
 		<div>
 			<input type="submit" value="確認">

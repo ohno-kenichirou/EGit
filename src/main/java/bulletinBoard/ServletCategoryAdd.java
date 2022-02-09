@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class ServletCategoryAdd
@@ -36,8 +37,28 @@ public class ServletCategoryAdd extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");		
+		
+		String categoryName = request.getParameter("categoryName");
+		String categoryKana = request.getParameter("categoryKana");
+		
+		String msg = null;
+		if (categoryName == null || categoryName.equals("")) {
+			msg = "カテゴリー名が入力されていません。";
+		} else if (categoryKana == null || categoryKana.equals("")) {
+			msg = "カテゴリー名(カナ)が入力されていません。";
+		}
+		request.setAttribute("message", msg);
+		if (msg != null) {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/categoryAdd.jsp");
+			dispatcher.forward(request, response);
+		} else {
+			CategoryAddInfo category = new CategoryAddInfo(categoryName,categoryKana);
+			HttpSession session = request.getSession(false);
+			session.setAttribute("CategoryAdd", category);
+			session.setMaxInactiveInterval(60 * 60 * 24);		// セッションの有効期限
+			response.sendRedirect("ServletCategoryAddConfirm");
+		}
 	}
 
 }

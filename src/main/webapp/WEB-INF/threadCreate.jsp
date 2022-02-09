@@ -1,11 +1,19 @@
 <!-- 
 	作成者:高橋鮎美 作成日:2022/02/07
- -->
+-->
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="bulletinBoard.NewThreadInfo" %>
 <%
 	String message = (String)request.getAttribute("message");
+	String title = "タイトル入力";
+	String comment = "スレッド内容";
+	if (request.getAttribute("sendNewThreadInfo") instanceof NewThreadInfo) {
+		NewThreadInfo newThread = (NewThreadInfo)request.getAttribute("sendNewThreadInfo");
+		title = newThread.getTitle();
+		comment = newThread.getComment();
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -16,7 +24,7 @@
 	<body>
 		<header class="flex">
 			<a href="ServletThreadSearchList">スレッド一覧</a>
-			<a href="#">カテゴリー一覧</a>
+			<a href="ServletCategorySearchList">カテゴリー一覧</a>
 			<a href="#">アカウント一覧</a>	
 			<a href="ServletLogout">ログアウト</a>		
 		</header>
@@ -43,7 +51,7 @@
 				</label>				
 			</div>
 			<div>
-				<input type="text" id="title" name="title" placeholder="タイトル入力" required>
+				<input type="text" id="title" name="title" placeholder="<%= title %>" required>
 			</div>
 			
 			<div>
@@ -62,7 +70,7 @@
 				</label>				
 			</div>
 			<div>
-				<textarea id="comment" name="comment" placeholder="スレッド内容" required></textarea>
+				<textarea id="comment" name="comment" placeholder="<%= comment %>" required></textarea>
 			</div>
 			
 			<div>

@@ -28,6 +28,13 @@ public class ServletThreadDetail extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		
+		int threadId = Integer.parseInt(request.getParameter("threadInfo"));
+		
+		
+		System.out.println(threadId);
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/threadDetail.jsp");
 		dispatcher.forward(request, response);
 	}

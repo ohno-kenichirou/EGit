@@ -5,6 +5,12 @@
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="bulletinBoard.UserInfo" %>
+<%@ page import="bulletinBoard.CategoryAddInfo" %>
+<%
+	UserInfo user = (UserInfo)session.getAttribute("User");
+	CategoryAddInfo category = (CategoryAddInfo)session.getAttribute("CategoryAdd");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,15 +31,15 @@
 	<table>
 		<tr>
 			<th>カテゴリー名</th>
-			<td></td>
+			<td><%= category.getCategoryName() %></td>
 		</tr>
 		<tr>
 			<th>カテゴリー名(カナ)</th>
-			<td></td>
+			<td><%= category.getCategoryKana() %></td>
 		</tr>
 		<tr>
 			<th>ユーザー名</th>
-			<td></td>
+			<td><%= user.getUserName() %></td>
 		</tr>
 	</table>
 	

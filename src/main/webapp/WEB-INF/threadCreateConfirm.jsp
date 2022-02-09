@@ -3,7 +3,13 @@
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="bulletinBoard.NewThreadInfo" %>
 <%
+	NewThreadInfo newThread = null;
+	if (request.getAttribute("sendNewThreadInfo") instanceof NewThreadInfo) {
+		newThread = (NewThreadInfo)request.getAttribute("sendNewThreadInfo");
+	}
+
 	
 %>
 <!DOCTYPE html>
@@ -13,9 +19,9 @@
 		<title>スレッド作成内容確認</title>
 	</head>
 	<body>
-		<header class="flex">
+		<header>
 			<a href="ServletThreadSearchList">スレッド一覧</a>
-			<a href="#">カテゴリー一覧</a>
+			<a href="ServletCategorySearchList">カテゴリー一覧</a>
 			<a href="#">アカウント一覧</a>	
 			<a href="ServletLogout">ログアウト</a>		
 		</header>
@@ -26,25 +32,25 @@
 		<table>
 			<tr>
 				<th>タイトル</th>
-				<td></td>
+				<td><%= newThread.getTitle() %></td>
 			</tr>
 			<tr>
 				<th>カテゴリー</th>
-				<td></td>
+				<td><%= newThread.getCategory() %></td>
 			</tr>
 			<tr>
 				<th>ユーザー名</th>
-				<td></td>
+				<td><%= newThread.getUserName() %></td>
 			</tr>
 			<tr>
 				<th>スレッド内容</th>
-				<td></td>
+				<td><%= newThread.getComment() %></td>
 			</tr>
 		</table>
 		
 		<br>
 		
-		<form action="#">
+		<form action="ServletThreadSearchList" method="post">
 			<input type="submit" value="作成">
 		</form>
 		
