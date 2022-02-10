@@ -51,7 +51,7 @@
 			</label>				
 		</div>
 		<div>
-			<input type="text" id="categoryName" name="categoryName" placeholder="カテゴリー名入力" value=<%= name %> maxlength="50" required>
+			<input type="text" id="categoryName" name="categoryName" placeholder="カテゴリー名入力" maxlength="50" required value=<%= name %>>
 		</div>
 		<div>
 			<label for="categoryKana">
@@ -59,7 +59,7 @@
 			</label>				
 		</div>
 		<div>
-			<input type="text" id="categoryKana" name="categoryKana" placeholder="カテゴリー名(カナ)入力" value=<%= kana %> maxlength="100" required>
+			<input type="text" id="categoryKana" name="categoryKana" placeholder="カテゴリー名(カナ)入力" maxlength="100" required value=<%= kana %>>
 		</div>
 		<div>
 			<input type="submit" value="確認">
