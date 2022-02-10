@@ -1,28 +1,14 @@
+/*
+	処理内容:	カテゴリー追加用のデータを保持するクラス
+			
+	作成者:大野賢一朗 作成日:2022/02/07(月)
+*/
 package bulletinBoard;
 
-public class CategoryAddInfo {
-	private String categoryName;
-	private String categoryKana;
+public class CategoryAddInfo extends CategoryInfo  {
 	
 	public CategoryAddInfo(String categoryName, String categoryKana) {
-		this.categoryName = categoryName;
-		this.categoryKana = categoryKana;
-	}
-
-	public String getCategoryName() {
-		return categoryName;
-	}
-
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
-
-	public String getCategoryKana() {
-		return categoryKana;
-	}
-
-	public void setCategoryKana(String categoryKana) {
-		this.categoryKana = categoryKana;
+		super(categoryName,categoryKana);
 	}
 	
 }

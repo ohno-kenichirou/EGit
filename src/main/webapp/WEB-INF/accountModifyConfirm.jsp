@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>カテゴリー追加確認</title>
+<title>アカウント修正確認</title>
 </head>
 <body>
 	<header class="flex">

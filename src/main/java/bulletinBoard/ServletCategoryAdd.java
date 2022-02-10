@@ -1,3 +1,8 @@
+/*
+	処理内容:	カテゴリー追加サーブレット
+			
+	作成者:大野賢一朗 作成日:2022/02/07(月)
+*/
 package bulletinBoard;
 
 import java.io.IOException;

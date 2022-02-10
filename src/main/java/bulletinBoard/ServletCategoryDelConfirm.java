@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class ServletCategoryDelConfirm
@@ -36,8 +37,21 @@ public class ServletCategoryDelConfirm extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		
+		HttpSession session = request.getSession(false);
+		CategoryDelInfo category = (CategoryDelInfo)session.getAttribute("CategoryDel");
+		UserInfo user = (UserInfo)session.getAttribute("User");
+		CategoryDAO dao = new CategoryDel(user, category);
+		if (dao.delCategory()) {
+			request.setAttribute("message", "カテゴリーが削除されました。");
+			session.removeAttribute("CategoryDel");
+			response.sendRedirect("ServletCategorySearchList");
+		} else {
+			request.setAttribute("message", "[システムエラー]処理に失敗しました。");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/categoryDelConfirm.jsp");
+			dispatcher.forward(request, response);
+		}
 	}
 
 }

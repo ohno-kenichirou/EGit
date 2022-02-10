@@ -5,6 +5,23 @@
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="bulletinBoard.UserInfo" %>
+<%@ page import="bulletinBoard.CategoryModifyInfo" %>
+<%
+	String message = (String)request.getAttribute("message");
+	UserInfo user = (UserInfo)session.getAttribute("User");
+	String userName = "";
+	if (user != null) {
+		userName = user.getUserName();
+	}
+	CategoryModifyInfo category = (CategoryModifyInfo)session.getAttribute("CategoryModify");
+	String name = "";
+	String kana = "";
+	if (category != null) {
+		name = category.getCategoryName();
+		kana = category.getCategoryKana();
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,19 +42,29 @@
 	<table>
 		<tr>
 			<th>カテゴリー名</th>
-			<td></td>
+			<td><%= name %></td>
 		</tr>
 		<tr>
 			<th>カテゴリー名(カナ)</th>
-			<td></td>
+			<td><%= kana %></td>
 		</tr>
 		<tr>
 			<th>ユーザー名</th>
-			<td></td>
+			<td><%= userName %></td>
 		</tr>
 	</table>
 	
 	<br>
+	
+	<%
+		if (message != null && !message.equals("")) {
+	%>
+			<div>
+				<%= message %>
+			</div>
+	<%	
+		}
+	%>
 	
 	<form action="ServletCategoryModifyConfirm" method="post">
 		<input type="submit" value="修正">

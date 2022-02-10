@@ -5,6 +5,17 @@
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="bulletinBoard.CategoryDelInfo" %>
+<%
+	String message = (String)request.getAttribute("message");
+	CategoryDelInfo category = (CategoryDelInfo)session.getAttribute("CategoryDel");
+	String name = "";
+	String kana = "";
+	if (category != null) {
+		name = category.getCategoryName();
+		kana = category.getCategoryKana();
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,15 +36,25 @@
 	<table>
 		<tr>
 			<th>カテゴリー名</th>
-			<td></td>
+			<td><%= name %></td>
 		</tr>
 		<tr>
 			<th>カテゴリー名(カナ)</th>
-			<td></td>
+			<td><%= kana %></td>
 		</tr>
 	</table>
 	
 	<br>
+	
+	<%
+		if (message != null && !message.equals("")) {
+	%>
+			<div>
+				<%= message %>
+			</div>
+	<%	
+		}
+	%>
 	
 	<form action="ServletCategoryDelConfirm" method="post">
 		<input type="submit" value="削除">

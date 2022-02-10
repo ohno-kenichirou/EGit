@@ -1,12 +1,20 @@
 <!-- 
-	内容:	カテゴリー追加画面
+	処理内容:	カテゴリー追加画面
 			
 	作成者:大野賢一朗 作成日:2022/02/07(月)
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="bulletinBoard.CategoryAddInfo" %>
 <%
 	String message = (String)request.getAttribute("message");
+	CategoryAddInfo category = (CategoryAddInfo)session.getAttribute("CategoryAdd");
+	String name = "";
+	String kana = "";
+	if (category != null) {
+		name = category.getCategoryName();
+		kana = category.getCategoryKana();
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -43,7 +51,7 @@
 			</label>				
 		</div>
 		<div>
-			<input type="text" id="categoryName" name="categoryName" placeholder="カテゴリー名入力" maxlength="50" required>
+			<input type="text" id="categoryName" name="categoryName" placeholder="カテゴリー名入力" value=<%= name %> maxlength="50" required>
 		</div>
 		<div>
 			<label for="categoryKana">
@@ -51,7 +59,7 @@
 			</label>				
 		</div>
 		<div>
-			<input type="text" id="categoryKana" name="categoryKana" placeholder="カテゴリー名(カナ)入力" maxlength="100" required>
+			<input type="text" id="categoryKana" name="categoryKana" placeholder="カテゴリー名(カナ)入力" value=<%= kana %> maxlength="100" required>
 		</div>
 		<div>
 			<input type="submit" value="確認">

@@ -1,3 +1,8 @@
+/*
+	処理内容:	カテゴリー追加確認サーブレット
+			
+	作成者:大野賢一朗 作成日:2022/02/07(月)
+*/
 package bulletinBoard;
 
 import java.io.IOException;
@@ -42,8 +47,16 @@ public class ServletCategoryAddConfirm extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		CategoryAddInfo category = (CategoryAddInfo)session.getAttribute("CategoryAdd");
 		UserInfo user = (UserInfo)session.getAttribute("User");
-		CategoryDAO dao = new CategoryDAO();
-		dao.insCategory(user, category);
+		CategoryDAO dao = new CategoryAdd(user, category);
+		if (dao.addCategory()) {
+			request.setAttribute("message", "カテゴリーが追加されました。");
+			session.removeAttribute("CategoryAdd");
+			response.sendRedirect("ServletCategorySearchList");
+		} else {
+			request.setAttribute("message", "[システムエラー]処理に失敗しました。");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/categoryAddConfirm.jsp");
+			dispatcher.forward(request, response);
+		}
 	}
 
 }

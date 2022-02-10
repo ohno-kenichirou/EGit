@@ -8,8 +8,19 @@
 <%@ page import="bulletinBoard.UserInfo" %>
 <%@ page import="bulletinBoard.CategoryAddInfo" %>
 <%
+	String message = (String)request.getAttribute("message");
 	UserInfo user = (UserInfo)session.getAttribute("User");
+	String userName = "";
+	if (user != null) {
+		userName = user.getUserName();
+	}
 	CategoryAddInfo category = (CategoryAddInfo)session.getAttribute("CategoryAdd");
+	String name = "";
+	String kana = "";
+	if (category != null) {
+		name = category.getCategoryName();
+		kana = category.getCategoryKana();
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -31,19 +42,29 @@
 	<table>
 		<tr>
 			<th>カテゴリー名</th>
-			<td><%= category.getCategoryName() %></td>
+			<td><%= name %></td>
 		</tr>
 		<tr>
 			<th>カテゴリー名(カナ)</th>
-			<td><%= category.getCategoryKana() %></td>
+			<td><%= kana %></td>
 		</tr>
 		<tr>
 			<th>ユーザー名</th>
-			<td><%= user.getUserName() %></td>
+			<td><%= userName %></td>
 		</tr>
 	</table>
 	
 	<br>
+	
+	<%
+		if (message != null && !message.equals("")) {
+	%>
+			<div>
+				<%= message %>
+			</div>
+	<%	
+		}
+	%>
 	
 	<form action="ServletCategoryAddConfirm" method="post">
 		<input type="submit" value="追加">
