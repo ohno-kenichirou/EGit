@@ -3,6 +3,9 @@
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="bulletinBoard.CategoryNameDisp" %>
+<%@ page import="bulletinBoard.UserInfo" %>
 <%
 	String searchCategoryWord = (String)request.getAttribute("searchCategoryWord");
 	if (searchCategoryWord == null) {
@@ -10,6 +13,17 @@
 	}
 	
 	String message = (String)request.getAttribute("message");
+	
+	String searchWord = (String)request.getAttribute("searchWord");
+	if (searchWord == null) {
+		searchWord = "タイトル入力";
+	}
+	ArrayList<CategoryNameDisp> categoryList = null;
+	if (request.getAttribute("sendCategoryList") instanceof ArrayList) {
+		categoryList = (ArrayList<CategoryNameDisp>)request.getAttribute("sendCategoryList");
+	}			
+	UserInfo user = (UserInfo)session.getAttribute("User");
+	int threadId;
 %>
 
 <!DOCTYPE html>
@@ -22,9 +36,25 @@
 	<body>
 		<header>
 			<a href="ServletThreadSearchList">スレッド一覧</a>
-			<a href="#">カテゴリー一覧</a>
-			<a href="#">アカウント一覧</a>	
-			<a href="ServletLogout">ログアウト</a>		
+			
+			<%
+				if (user != null && user.getManager() == 1) {
+			%>
+					<a href="ServletCategorySearchList">カテゴリー一覧</a>
+					<a href="ServletAccountSearchList">アカウント一覧</a>
+			<%		
+				}
+				if (user != null) {
+			%>
+					<a href="ServletLogout">ログアウト</a>	
+			<%
+				} else {
+			%>
+					<a href="ServletLogin">ログイン</a>	
+			<%
+				}
+			%>		
+				
 		</header>
 		<hr>
 		
@@ -49,24 +79,31 @@
 			}
 		%>
 		
-		<form action="#" method="post">
+		<form action="ServletCategoryAdd" method="post">
 			<input type="submit" value="カテゴリー追加">
 		</form>
 		
-		<ul>
-			<li>
-				<a href="#"></a>
-				<br>
-				<form action="#">
-					<input type="submit" value="修正">
-					<input type="hidden" name="update" value="modify">
-				</form>
-				<form action="#">
-					<input type="submit" value="削除">
-					<input type="hidden" name="update" value="delete">
-				</form>
-			</li>
-		</ul>
+		<%
+			for (CategoryNameDisp category : categoryList) {
+		%>
+				
+				<p>
+					<%= category.getCategoryName() %>
+					<form action="ServletCategorySearchList" method="post">
+						<input type="submit" value="修正">
+						<input type="hidden" name="update" value="modify">
+						<input type="hidden" name="categryId" value="<%= category.getCategoryId() %>">
+					</form>
+					<form action="ServletCategorySearchList" method="post">
+						<input type="submit" value="削除">
+						<input type="hidden" name="update" value="delete">
+						<input type="hidden" name="categoryId" value="<%= category.getCategoryId() %>">
+					</form>
+				</p>
+				
+		<%
+			}
+		%>
 		
 		<br>
 		

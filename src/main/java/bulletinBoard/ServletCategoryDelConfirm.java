@@ -1,3 +1,8 @@
+/*
+	処理内容:	カテゴリー削除確認サーブレット
+			
+	作成者:大野賢一朗 作成日:2022/02/10(木)
+*/
 package bulletinBoard;
 
 import java.io.IOException;
