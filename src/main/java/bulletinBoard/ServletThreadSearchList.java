@@ -31,26 +31,31 @@ public class ServletThreadSearchList extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-//		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession(false);
 		
-		int page;
-		
-		try {
-			page = Integer.parseInt(request.getParameter("page"));
-		} catch (NumberFormatException e) {
-			page = 1;
+		RequestDispatcher dispatcher;
+		if (session != null) {
+			int page;
+			
+			try {
+				page = Integer.parseInt(request.getParameter("page"));
+			} catch (NumberFormatException e) {
+				page = 1;
+			}
+			
+			ThreadDAO threadDao = new ThreadDAO();
+			ArrayList<ThreadDispInfo> threadList = threadDao.searchAndSetList(page);
+			request.setAttribute("sendThreadList", threadList);
+			
+			CategoryListSetPstmt categoryDao = new CategoryListSetPstmt();
+			ArrayList<CategoryListInfo> categoryList = categoryDao.findCategoryList();
+			request.setAttribute("sendCategoryList", categoryList);
+			
+			dispatcher = request.getRequestDispatcher("WEB-INF/threadSearchList.jsp");			
+		} else {
+			dispatcher = request.getRequestDispatcher("ServletLogin");
 		}
-		
-		ArrayList<ThreadDispInfo> threadList = null;
-		ThreadDAO dao = new ThreadDAO();
-		threadList = dao.searchAndSetList(page);
-		request.setAttribute("sendThreadList", threadList);
-		
-		for (ThreadDispInfo info : threadList) {
-			System.out.println(info.getThreadId());
-		}
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/threadSearchList.jsp");
+				
 		dispatcher.forward(request, response);
 	}
 
@@ -58,8 +63,17 @@ public class ServletThreadSearchList extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession(false);
+		
+		String searchWord = request.getParameter("searchWord");
+		String match = request.getParameter("match");
+//		int categoryId = Integer.parseInt("categoryId");
+		
+//		if ((searchWord == null || !searchWord.equals("")) && )
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/threadSearchList.jsp");
+		dispatcher.forward(request, response);
 	}
 
 }

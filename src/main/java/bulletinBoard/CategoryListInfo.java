@@ -5,10 +5,15 @@
 */
 package bulletinBoard;
 
-public class CategoryListInfo extends CategoryInfo {
+public class CategoryListInfo extends CategoryInfo implements Comparable<CategoryListInfo> {
 
 	public CategoryListInfo(int categoryId, String categoryName, String categoryKana) {
 		super(categoryId, categoryName, categoryKana);
+	}
+
+	@Override
+	public int compareTo(CategoryListInfo c) {
+		return this.getCategoryKana().compareTo(c.getCategoryKana());
 	}
 
 }

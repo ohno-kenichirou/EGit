@@ -55,6 +55,10 @@ public class ServletLogout extends HttpServlet {
 		ArrayList<ThreadDispInfo> threadList = dao.searchAndSetList(1);
 		request.setAttribute("sendThreadList", threadList);
 		
+		CategoryListSetPstmt categoryDao = new CategoryListSetPstmt();
+		ArrayList<CategoryListInfo> categoryList = categoryDao.findCategoryList();
+		request.setAttribute("sendCategoryList", categoryList);
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/threadSearchList.jsp");
 		dispatcher.forward(request, response);
 	}

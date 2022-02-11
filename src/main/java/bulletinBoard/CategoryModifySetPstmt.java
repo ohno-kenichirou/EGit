@@ -8,10 +8,10 @@ package bulletinBoard;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class CategoryModify extends CategoryDAO {
+public class CategoryModifySetPstmt extends CategoryDAO {
 	private CategoryModifyInfo category;
 	
-	public CategoryModify(UserInfo user, CategoryModifyInfo category) {
+	public CategoryModifySetPstmt(UserInfo user, CategoryModifyInfo category) {
 		super(user);
 		this.category = category;
 	}

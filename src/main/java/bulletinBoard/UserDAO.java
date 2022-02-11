@@ -1,5 +1,6 @@
 package bulletinBoard;
 
+import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -117,5 +118,58 @@ public class UserDAO {
 			return null;
 		}
 	}
+	
+	
+	//ハッシュ化した文字列
+	public String getHash(String pass) {
+		try {
+			Class.forName(this.getSqlserver());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
+		try (Connection con = DriverManager.getConnection(this.getConnection());) {
+			String sql = "SELECT HASHBYTES('SHA2_256', ?) AS pass";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, pass);
+			
+			ResultSet rs = pstmt.executeQuery();
+			String passHash;
+			
+			if (rs.next()) {
+				passHash =  rs.getString(pass);
+			} else {
+				passHash = null;
+			}
+							
+			rs.close();
+			pstmt.close();
+			
+			return passHash;
+				
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
+	
+//	public void getHash(String pass) {
+//		byte[] bytes;
+//		
+//		try {
+//			MessageDigest md = MessageDigest.getInstance("SHA-256");
+//			md.update(pass.getBytes());
+//			bytes = md.digest();
+//			StringBuilder sb = new StringBuilder(2 * bytes.length);
+//			for (byte b : bytes) {
+//				sb.append(String.format("%02x", b&0xff));
+//			}
+//			System.out.println(sb);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 }

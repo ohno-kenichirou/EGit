@@ -1,6 +1,7 @@
 package bulletinBoard;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class ServletThreadDetail
@@ -29,12 +31,19 @@ public class ServletThreadDetail extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession(false);
 		
 		int threadId = Integer.parseInt(request.getParameter("threadInfo"));
 		
+		ThreadDAO threadDao = new ThreadDAO();
+		request.setAttribute("sendThreadInfo", threadDao.threadDisp(threadId));
 		
-		System.out.println(threadId);
-		
+		CommentDAO commentDao = new CommentDAO();
+		ArrayList<CommentInfo> commentList = commentDao.searchAndSetList(threadId);
+		request.setAttribute("sendCommentList", commentList);
+		if (commentList.size() >= 50) {
+			request.setAttribute("sendCommentMessage", "コメント数が50件以上のため、コメントすることができません");
+		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/threadDetail.jsp");
 		dispatcher.forward(request, response);
 	}

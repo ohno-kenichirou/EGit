@@ -9,10 +9,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class CategoryList extends CategoryDAO {
+public class CategoryListSetPstmt extends CategoryDAO {
 
-	public ArrayList<CategoryListInfo> findCategoryList(String searchName, String selectMatch) {	
-		return super.findCategoryList(searchName, selectMatch);
+	public ArrayList<CategoryListInfo> findCategoryList() {	
+		return super.findCategoryList("", "");
 	}
 	
 	public PreparedStatement setPstmt (PreparedStatement pstmt) throws SQLException {

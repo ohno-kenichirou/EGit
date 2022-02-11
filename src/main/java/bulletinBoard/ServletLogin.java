@@ -64,7 +64,7 @@ public class ServletLogin extends HttpServlet {
 			
 			switch (userDao.findUser(tryLogin)) {
 				case 0:
-					dispatcher = request.getRequestDispatcher("WEB-INF/threadSearchList.jsp");
+					dispatcher = request.getRequestDispatcher("ServletThreadSearchList");
 					HttpSession session = request.getSession(false);
 					session.setAttribute("User", userDao.getUserInfo(tryLogin));
 					ArrayList<ThreadDispInfo> threadList = null;
@@ -80,7 +80,8 @@ public class ServletLogin extends HttpServlet {
 					break;
 			}
 			
-		}		
+		}
+		
 		dispatcher.forward(request, response);
 	}
 

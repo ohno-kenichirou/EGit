@@ -5,6 +5,8 @@
 */
 package bulletinBoard;
 
+import java.util.Objects;
+
 public abstract class CategoryInfo {
 	private int categoryId;
 	private String categoryName;
@@ -41,6 +43,23 @@ public abstract class CategoryInfo {
 
 	public void setCategoryKana(String categoryKana) {
 		this.categoryKana = categoryKana;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(categoryId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CategoryInfo other = (CategoryInfo) obj;
+		return categoryId == other.categoryId;
 	}
 
 }

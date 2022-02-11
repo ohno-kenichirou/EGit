@@ -1,6 +1,7 @@
 package bulletinBoard;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class ServletThreadDelConfirm
@@ -36,8 +38,32 @@ public class ServletThreadDelConfirm extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
+		
+		int threadId = Integer.parseInt(request.getParameter("threadId"));
+		String delete = request.getParameter("delete");
+		
+		RequestDispatcher dispatcher;
+		
+		if (delete != null && delete.equals("execution")) {
+			
+			ThreadDAO threadDao = new ThreadDAO();
+			threadDao.deleteThread(threadId);
+			request.setAttribute("sendMessage", "スレッドが削除されました");
+			
+			dispatcher = request.getRequestDispatcher("ServletThreadSearchList");
+		} else {
+			ThreadDAO threadDao = new ThreadDAO();
+			request.setAttribute("sendThreadInfo", threadDao.threadDisp(threadId));
+			
+			CommentDAO commentDao = new CommentDAO();
+			ArrayList<CommentInfo> commentList = commentDao.searchAndSetList(threadId);
+			request.setAttribute("sendCommentList", commentList);			
+			
+			dispatcher = request.getRequestDispatcher("WEB-INF/threadDelConfirm.jsp");	
+		}
+		dispatcher.forward(request, response);
 	}
 
 }

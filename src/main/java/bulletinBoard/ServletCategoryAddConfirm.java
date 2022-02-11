@@ -47,7 +47,7 @@ public class ServletCategoryAddConfirm extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		CategoryAddInfo category = (CategoryAddInfo)session.getAttribute("CategoryAdd");
 		UserInfo user = (UserInfo)session.getAttribute("User");
-		CategoryDAO dao = new CategoryAdd(user, category);
+		CategoryDAO dao = new CategoryAddSetPstmt(user, category);
 		if (dao.addCategory()) {
 			request.setAttribute("message", "カテゴリーが追加されました。");
 			session.removeAttribute("CategoryAdd");

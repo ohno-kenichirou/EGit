@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class ServletCommentDelConfirm
@@ -36,8 +37,28 @@ public class ServletCommentDelConfirm extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession(false);
+		
+		int threadId = Integer.parseInt(request.getParameter("threadId"));
+		int commentId = Integer.parseInt(request.getParameter("commentId"));
+		String delete = request.getParameter("delete");
+		
+		CommentDAO commentDao = new CommentDAO();
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/commentDelConfirm.jsp");
+		
+		if (delete != null && delete.equals("yes")) {
+			request.setAttribute("sendDeleteMessage", commentDao.deleteComment(threadId, commentId));
+			request.setAttribute("sendCommentList", commentDao.searchAndSetList(threadId));
+			request.setAttribute("sendThreadInfo", new ThreadDAO().threadDisp(threadId));
+			dispatcher = request.getRequestDispatcher("WEB-INF/threadDetail.jsp");
+			
+		} else {
+			request.setAttribute("sendDeleteCommentInfo", commentDao.deleteCommentDisp(threadId, commentId));
+		}
+		
+		dispatcher.forward(request, response);
+		
+	} 
 
 }
