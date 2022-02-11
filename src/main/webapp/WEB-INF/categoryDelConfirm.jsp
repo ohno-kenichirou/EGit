@@ -59,10 +59,8 @@
 	<form action="ServletCategoryDelConfirm" method="post">
 		<input type="submit" value="削除">
 	</form>
-	
 	<div>
 		<a href="ServletCategorySerchList">カテゴリー一覧画面へ戻る</a>
 	</div>
-
 </body>
 </html>

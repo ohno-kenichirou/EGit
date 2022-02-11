@@ -13,6 +13,7 @@ public abstract class CategoryInfo {
 	private String categoryKana;
 	
 	public CategoryInfo(int categoryId, String categoryName, String categoryKana) {
+		this.categoryId = categoryId;
 		this.categoryName = categoryName;
 		this.categoryKana = categoryKana;
 	}

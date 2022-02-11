@@ -25,7 +25,8 @@ public class CategoryDelSetPstmt extends CategoryDAO {
 	}
 
 	public PreparedStatement setPstmt (PreparedStatement pstmt) throws SQLException {
-		pstmt.setInt(1, this.getCategory().getCategoryId());
+		pstmt.setString(1, this.getUser().getUserId());
+		pstmt.setInt(2, this.getCategory().getCategoryId());
 		return pstmt;
 	}
 	

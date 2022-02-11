@@ -69,7 +69,6 @@
 	<form action="ServletCategoryModifyConfirm" method="post">
 		<input type="submit" value="修正">
 	</form>
-	
 	<div>
 		<a href="ServletCategoryModify">カテゴリー修正画面へ戻る</a>
 	</div>

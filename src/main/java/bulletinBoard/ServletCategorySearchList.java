@@ -48,12 +48,30 @@ public class ServletCategorySearchList extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession(false);
 		
-		CategoryListSetPstmt categoryDao = new CategoryListSetPstmt();
-		ArrayList<CategoryListInfo> categoryList = categoryDao.findCategoryList();
-		request.setAttribute("sendCategoryList", categoryList);
+		String btn = request.getParameter("btn");
+		if (btn.equals("search")) {
+			CategoryListSetPstmt categoryDao = new CategoryListSetPstmt();
+			ArrayList<CategoryListInfo> categoryList = categoryDao.findCategoryList();
+			request.setAttribute("sendCategoryList", categoryList);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/categorySearchList.jsp");
+			dispatcher.forward(request, response);
+		} else {
+			int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+			String categoryName = request.getParameter("categoryName");
+			String categoryKana = request.getParameter("categoryKana");
+			if (btn.equals("modify")) {
+				CategoryModifyInfo info = new CategoryModifyInfo(categoryId, categoryName, categoryKana);
+				session.setAttribute("CategoryModify", info);
+				session.setMaxInactiveInterval(60 * 60 * 24);
+				response.sendRedirect("ServletCategoryModify");
+			} else if (btn.equals("delete")) {
+				CategoryDelInfo info = new CategoryDelInfo(categoryId, categoryName, categoryKana);
+				session.setAttribute("CategoryDel", info);
+				session.setMaxInactiveInterval(60 * 60 * 24);
+				response.sendRedirect("ServletCategoryDelConfirm");
+			}
+		}
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/categorySearchList.jsp");
-		dispatcher.forward(request, response);
 	}
 
 }
