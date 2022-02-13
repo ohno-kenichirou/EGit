@@ -1,5 +1,5 @@
 /*
-	処理内容:	カテゴリー一覧用PreparedStatement設定クラス
+	処理内容:	カテゴリー一覧用DAO
 			
 	作成者:大野賢一朗 作成日:2022/02/10(木)
 */
@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class CategoryListSetPstmt extends CategoryDAO {
+public class CategoryListDAO extends CategoryCommonDAO {
 
 	public ArrayList<CategoryListInfo> findCategoryList() {	
 		return super.findCategoryList("", "");

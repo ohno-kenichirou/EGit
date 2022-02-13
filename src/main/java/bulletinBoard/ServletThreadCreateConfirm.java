@@ -67,7 +67,7 @@ public class ServletThreadCreateConfirm extends HttpServlet {
 			NewThreadInfo newThread = new NewThreadInfo(title, categoryId, comment);
 			request.setAttribute("sendNewThreadInfo", newThread);
 			
-			CategoryListSetPstmt categoryDao = new CategoryListSetPstmt();
+			CategoryListDAO categoryDao = new CategoryListDAO();
 			ArrayList<CategoryListInfo> categoryList = categoryDao.findCategoryList();
 			request.setAttribute("sendCategoryList", categoryList);
 			

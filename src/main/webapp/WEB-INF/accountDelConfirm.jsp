@@ -1,10 +1,33 @@
 <!-- 
 	処理内容：アカウント削除確認画面
 
-	作成者:大野賢一朗 作成日:2022/02/07
+	作成者:大野賢一朗 作成日:2022/02/10
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.sql.Date" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="bulletinBoard.UserInfo" %>
+<%@ page import="bulletinBoard.GenderInfo" %>
+<%
+	String message = (String)request.getAttribute("message");
+	UserInfo user = (UserInfo)session.getAttribute("AccountDel");
+	ArrayList<GenderInfo> genderList = (ArrayList<GenderInfo>)session.getAttribute("GenderList");
+	String id = "";
+	String email = "";
+	String name = "";
+	Date birth = null;
+	int genderId = 0;
+	int manager = 0;
+	if (user != null) {
+		id = user.getUserId();
+		email = user.getEmail();
+		name = user.getUserName();
+		birth = user.getBirth();
+		genderId = user.getGenderId();
+		manager = user.getManager();
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,27 +48,45 @@
 	<table>
 		<tr>
 			<th>会員ID</th>
-			<td></td>
+			<td><%= id %></td>
 		</tr>
 		<tr>
 			<th>メールアドレス</th>
-			<td></td>
+			<td><%= email %></td>
 		</tr>
 		<tr>
 			<th>ユーザー名</th>
-			<td></td>
+			<td><%= name %></td>
 		</tr>
 		<tr>
 			<th>生年月日</th>
-			<td></td>
+			<td><%= birth %></td>
 		</tr>
 		<tr>
 			<th>性別</th>
-			<td></td>
+			<td>
+				<%
+					if (genderList != null) { 
+						for (GenderInfo gender : genderList) {
+							if (gender.getGenderId() == genderId) {
+				%>
+								<%= gender.getGenderName() %>
+				<% 
+							}
+						}
+					} 
+				%>
+			</td>
 		</tr>
 		<tr>
 			<th>管理者権限の有無</th>
-			<td></td>
+			<td>
+				<% if (manager == 0) { %>
+					無
+				<% } else { %>
+					有
+				<% } %>
+			</td>
 		</tr>
 	</table>
 	

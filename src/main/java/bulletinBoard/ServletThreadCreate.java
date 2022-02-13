@@ -41,7 +41,7 @@ public class ServletThreadCreate extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession(false);
 		
-		CategoryListSetPstmt categoryDao = new CategoryListSetPstmt();
+		CategoryListDAO categoryDao = new CategoryListDAO();
 		ArrayList<CategoryListInfo> categoryList = categoryDao.findCategoryList();
 		request.setAttribute("sendCategoryList", categoryList);
 		

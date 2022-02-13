@@ -80,7 +80,8 @@
 			}
 		%>
 		
-		<form action="ServletCategoryAdd" method="post">
+		<form action="ServletCategorySearchList" method="post">
+			<input type="hidden" name="btn" value="add">
 			<input type="submit" value="カテゴリー追加">
 		</form>
 		

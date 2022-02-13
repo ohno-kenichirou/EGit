@@ -5,8 +5,11 @@
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="bulletinBoard.AccountListInfo" %>
 <%
 	String message = (String)request.getAttribute("message");
+	ArrayList<AccountListInfo> accountList = (ArrayList<AccountListInfo>)request.getAttribute("sendAccountList");
 %>
 <!DOCTYPE html>
 <html>
@@ -25,28 +28,22 @@
 	<form action="ServletAccountSearchList" method="post">
 		<p>
 			<span>ユーザー名:</span>
-			<input type="text" name="userName" placeholder="ユーザー名入力">
+			<input type="text" name="searchUserName" placeholder="ユーザー名入力" maxlength="100">
 			<input type="radio" name="selectMatch" value="partial" checked="checked">部分一致
 			<input type="radio" name="selectMatch" value="perfect">完全一致
+			<input type="hidden" name="btn" value="search">
 			<input type="submit" value="検索">
 		</p>
 	</form>
 	<hr>
-	
-	<%
-		if (message != null && message != "") {
-	%>
-			<div>
-				<%= message %>
-			</div>
-	<%	
-		}
-	%>
-	
+	<% if (message != null && message != "") {	%>
+		<div><%= message %>
+		</div>
+	<% } %>
 	<form action="ServletAccountRegister" method="post">
+		<input type="hidden" name="btn" value="Register">
 		<input type="submit" value="アカウント登録">
 	</form>
-	
 	<table>
 		<tr>
 			<th></th>
@@ -63,49 +60,47 @@
 			<th>更新者</th>
 			<th>更新日</th>
 		</tr>
-		
-				
-		<tr>
-			<td>
-				<form action="ServletAccountModify" method="post">
-					<input type="hidden" name="userId">
-					<input type="submit" value="修正">
-				</form>
-			</td>
-			<td>
-				<form action="ServletAccountDelConfirm" method="post">
-					<input type="hidden" name="userId">
-					<input type="submit" value="削除">
-				</form>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-		</tr>
-
-		
-	</table>
-	
+		<% for (AccountListInfo account : accountList) { %>
+			<tr>
+				<td>
+					<form action="ServletAccountModify" method="post">
+						<input type="hidden" name="userId">
+						<input type="hidden" name="btn" value="modify">
+						<input type="submit" value="修正">
+					</form>
+				</td>
+				<td>
+					<form action="ServletAccountDelConfirm" method="post">
+						<input type="hidden" name="userId">
+						<input type="hidden" name="btn" value="delete">
+						<input type="submit" value="削除">
+					</form>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+			</tr>
+		</table>
+	<% } %>
 	<a href="ServletAccountSearchList?page=">1</a>
-
 </body>
 </html>

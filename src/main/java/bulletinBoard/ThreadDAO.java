@@ -246,6 +246,22 @@ public class ThreadDAO {
 		}
 	}
 	
+	/* 追加 2022/02/10(木)　大野賢一朗 start */
+	public String findThreadIdListSql() {
+		return "SELECT	threadId "
+			 + "FROM	Thread "
+			 + "WHERE	delFlg = 0 AND ";
+	}
 	
+	public String deleteThreadSql() {
+		return "UPDATE	Thread "
+			 + "SET		delFlg = 1 "
+			 + "WHERE	delFlg = 0 AND ";
+	}
+	
+	public String ByMakeUserIdSql() {
+		return "     	makeUserId = ? ";
+	}
+	/* 追加 2022/02/10(木)　大野賢一朗 end */
 	
 }

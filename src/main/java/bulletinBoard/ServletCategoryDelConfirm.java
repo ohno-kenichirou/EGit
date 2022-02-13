@@ -47,7 +47,7 @@ public class ServletCategoryDelConfirm extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		CategoryDelInfo category = (CategoryDelInfo)session.getAttribute("CategoryDel");
 		UserInfo user = (UserInfo)session.getAttribute("User");
-		CategoryDAO dao = new CategoryDelSetPstmt(user, category);
+		CategoryCommonDAO dao = new CategoryDelDAO(user, category);
 		if (dao.delCategory()) {
 			request.setAttribute("message", "カテゴリーが削除されました。");
 			session.removeAttribute("CategoryDel");

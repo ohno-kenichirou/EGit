@@ -47,7 +47,7 @@ public class ServletCategoryModifyConfirm extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		CategoryModifyInfo category = (CategoryModifyInfo)session.getAttribute("CategoryModify");
 		UserInfo user = (UserInfo)session.getAttribute("User");
-		CategoryDAO dao = new CategoryModifySetPstmt(user, category);
+		CategoryCommonDAO dao = new CategoryModifyDAO(user, category);
 		if (dao.modifyCategory()) {
 			request.setAttribute("message", "カテゴリーが修正されました。");
 			session.removeAttribute("CategoryModify");

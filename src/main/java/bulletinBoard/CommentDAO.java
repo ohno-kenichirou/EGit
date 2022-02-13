@@ -166,4 +166,27 @@ public class CommentDAO {
 		}
 	}
 	
+	/* 追加 2022/02/10(木)　大野賢一朗 start */
+	public String findCommentIdListSql() {
+		return "SELECT	commentId "
+			 + "FROM	Comment "
+			 + "WHERE	delFlg = 0 AND ";
+	}
+	
+	public String deleteCommentSql() {
+		return "UPDATE	Comment "
+			 + "SET		delFlg = 1 "
+			 + "WHERE	delFlg = 0 AND ";
+	}
+	
+	public String ByPostUserIdSql() {
+		return "     	postUserId = ? ";
+	}
+	
+	public String ByThreadIdSql() {
+		return "     	threadId = ? ";
+	}
+	
+	/* 追加 2022/02/10(木)　大野賢一朗 end */
+	
 }

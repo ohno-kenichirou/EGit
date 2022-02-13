@@ -55,7 +55,7 @@ public class ServletLogout extends HttpServlet {
 		ArrayList<ThreadDispInfo> threadList = dao.searchAndSetList(1);
 		request.setAttribute("sendThreadList", threadList);
 		
-		CategoryListSetPstmt categoryDao = new CategoryListSetPstmt();
+		CategoryListDAO categoryDao = new CategoryListDAO();
 		ArrayList<CategoryListInfo> categoryList = categoryDao.findCategoryList();
 		request.setAttribute("sendCategoryList", categoryList);
 		

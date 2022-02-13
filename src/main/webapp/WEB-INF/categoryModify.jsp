@@ -50,7 +50,6 @@
 				<span>＊</span>カテゴリー名:
 			</label>				
 		</div>
-		<div><%= category.getCategoryId() %><%= category.getCategoryName() %><%= category.getCategoryKana() %></div>
 		<div>
 			<input type="text" id="categoryName" name="categoryName" placeholder="カテゴリー名入力" maxlength="50" required value=<%= name %>>
 		</div>

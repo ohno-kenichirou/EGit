@@ -33,7 +33,7 @@ public class ServletCategorySearchList extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession(false);
 		
-		CategoryListSetPstmt categoryDao = new CategoryListSetPstmt();
+		CategoryListDAO categoryDao = new CategoryListDAO();
 		ArrayList<CategoryListInfo> categoryList = categoryDao.findCategoryList();
 		request.setAttribute("sendCategoryList", categoryList);
 		
@@ -50,11 +50,15 @@ public class ServletCategorySearchList extends HttpServlet {
 		
 		String btn = request.getParameter("btn");
 		if (btn.equals("search")) {
-			CategoryListSetPstmt categoryDao = new CategoryListSetPstmt();
-			ArrayList<CategoryListInfo> categoryList = categoryDao.findCategoryList();
+			CategoryListDAO categoryDao = new CategoryListDAO();
+			String searchName = request.getParameter("searchCategoryWord");
+			String selectMatch = request.getParameter("selectMatch");
+			ArrayList<CategoryListInfo> categoryList = categoryDao.findCategoryList(searchName,selectMatch);
 			request.setAttribute("sendCategoryList", categoryList);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/categorySearchList.jsp");
 			dispatcher.forward(request, response);
+		} if (btn.equals("add")) {
+			response.sendRedirect("ServletCategoryAdd");
 		} else {
 			int categoryId = Integer.parseInt(request.getParameter("categoryId"));
 			String categoryName = request.getParameter("categoryName");

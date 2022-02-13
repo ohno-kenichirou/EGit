@@ -1,11 +1,11 @@
 package bulletinBoard;
 
-import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class UserDAO {
 
@@ -21,10 +21,8 @@ public class UserDAO {
 	}
 	
 	public int findUser(TryUserLogin tryLogin) {
-		
 		int check = 2;
 		//戻り値が0ならログイン可能、1ならアカウントロック状態、2ならログイン不可		
-		
 		try {
 			Class.forName(this.getSqlserver());
 		} catch (ClassNotFoundException e) {
@@ -38,9 +36,7 @@ public class UserDAO {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, tryLogin.getEmail());
 			pstmt.setString(2, tryLogin.getPass());
-			
 			ResultSet rs = pstmt.executeQuery();
-			
 			if (rs.next()) {
 				if (rs.getInt("errorCount") >= 3) {
 					check = 1;
@@ -74,12 +70,9 @@ public class UserDAO {
 					pstmt.executeUpdate();
 				}
 			}
-			
 			rs.close();
 			pstmt.close();
-			
 			return check;
-				
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return check;
@@ -87,7 +80,6 @@ public class UserDAO {
 	}
 	
 	public UserInfo getUserInfo(TryUserLogin tryLogin) {
-
 		try {
 			Class.forName(this.getSqlserver());
 		} catch (ClassNotFoundException e) {
@@ -100,25 +92,19 @@ public class UserDAO {
 					   + "WHERE email = ?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, tryLogin.getEmail());
-			
 			ResultSet rs = pstmt.executeQuery();
 			UserInfo userInfo = null;
-			
 			if (rs.next()) {
 				userInfo = new UserInfo(rs.getString("userId"), rs.getString("userName"), rs.getInt("manager"));
 			}
-							
 			rs.close();
 			pstmt.close();
-			
 			return userInfo;
-				
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
 	
 	//ハッシュ化した文字列
 	public String getHash(String pass) {
@@ -132,32 +118,24 @@ public class UserDAO {
 			String sql = "SELECT HASHBYTES('SHA2_256', ?) AS pass";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, pass);
-			
 			ResultSet rs = pstmt.executeQuery();
 			String passHash;
-			
 			if (rs.next()) {
-				passHash =  rs.getString(pass);
+				passHash =  rs.getString("pass");
 			} else {
 				passHash = null;
 			}
-							
 			rs.close();
 			pstmt.close();
-			
 			return passHash;
-				
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 	
-	
-	
 //	public void getHash(String pass) {
 //		byte[] bytes;
-//		
 //		try {
 //			MessageDigest md = MessageDigest.getInstance("SHA-256");
 //			md.update(pass.getBytes());
@@ -172,4 +150,172 @@ public class UserDAO {
 //		}
 //	}
 	
+	/* 追加 2022/02/10(木)　大野賢一朗 start */
+	public ArrayList<UserInfo> getUserInfoList(String searchName, String selectMatch) {
+		try {
+			Class.forName(this.getSqlserver());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
+		try (Connection con = DriverManager.getConnection(this.getConnection());) {
+			String sql = "SELECT userId, userName, email, birth, genderId, dispInsUserId, dispInsDate, dispUpdUserId, dispUpdDate, manager, errorCount "
+					   + "FROM [User] "
+					   + "WHERE	delFlg = 0 ";
+			
+			if (searchName != null && !searchName.equals("")) {
+				String where = "LIKE";
+				if (selectMatch.equals("partial")) {
+					where = "LIKE";
+				} else if (selectMatch.equals("perfect")) {
+					where = "=";
+				}
+				sql += " AND userName " + where + " ? ";
+			}
+			
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			
+			if (searchName != null && !searchName.equals("")) {
+				String whereSearchName = "%" + searchName + "%";
+				if (selectMatch.equals("partial")) {
+					whereSearchName = "%" + searchName + "%";
+				} else if (selectMatch.equals("perfect")) {
+					whereSearchName = searchName;
+				}
+				pstmt.setString(1, whereSearchName);
+			}
+
+			ResultSet rs = pstmt.executeQuery();
+			ArrayList<UserInfo> userList = new ArrayList<>();
+			if (rs.next()) {
+				userList.add(new UserInfo(	rs.getString("userId"),		rs.getString("userName"),		rs.getString("email"),
+											rs.getDate("birth"),		rs.getInt("genderId"),			rs.getString("dispInsUserId"),
+											rs.getDate("dispInsDate"),	rs.getString("dispUpdUserId"),	rs.getDate("dispUpdDate"),
+											rs.getInt("manager"),		rs.getInt("errorCount")
+							));
+			}
+			rs.close();
+			pstmt.close();
+			return userList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public boolean delAccount(UserInfo user, UserInfo account) {
+		try {
+			Class.forName(this.getSqlserver());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		}
+		Connection con = null;
+		boolean rtn = false;
+		try {
+			con = DriverManager.getConnection(this.getConnection());
+			con.setAutoCommit(false);
+			// ユーザーテーブル更新
+			String sql = "UPDATE	User "
+					   + "SET		delFlg = 1 "
+					   + "WHERE		userId = ? ";   
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, account.getUserId());
+			boolean resultAccount = pstmt.executeUpdate() > 0;
+			
+			// スレッドテーブル更新
+			ThreadDAO threadDao = new ThreadDAO();
+			sql = threadDao.findThreadIdListSql();
+			sql += threadDao.ByMakeUserIdSql();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, account.getUserId());
+			ResultSet rs = pstmt.executeQuery();
+			ArrayList<Integer> threadIdList = new ArrayList<>();
+			while (rs.next()) {
+				threadIdList.add(rs.getInt("threadId"));
+			}
+			boolean resultThread = true;
+			if (threadIdList.size() > 0) {
+				sql = threadDao.deleteThreadSql();		 
+				sql += threadDao.ByMakeUserIdSql();
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, account.getUserId());
+				resultThread = pstmt.executeUpdate() > 0;
+			}
+			
+			// コメントテーブル更新
+			boolean resultCommentByPostUserId = true; 
+			CommentDAO commentDao = new CommentDAO();
+			sql = commentDao.findCommentIdListSql();
+			sql += commentDao.ByPostUserIdSql();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, account.getUserId());
+			rs = pstmt.executeQuery();
+			ArrayList<Integer> commentIdList = new ArrayList<>();
+			while (rs.next()) {
+				commentIdList.add(rs.getInt("commentId"));
+			}
+			if (commentIdList.size() > 0) {
+				sql = commentDao.deleteCommentSql();		 
+				sql += commentDao.ByPostUserIdSql();
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, account.getUserId());
+				resultCommentByPostUserId = pstmt.executeUpdate() > 0;
+			}
+			
+			boolean resultCommentByThreadId = true; 
+			if (threadIdList.size() > 0) {
+				for (Integer threadId : threadIdList) {
+					sql = commentDao.findCommentIdListSql();
+					sql += commentDao.ByThreadIdSql();
+					pstmt = con.prepareStatement(sql);
+					pstmt.setInt(1, threadId);
+					rs = pstmt.executeQuery();
+					commentIdList = new ArrayList<>();
+					while (rs.next()) {
+						commentIdList.add(rs.getInt("commentId"));
+					}
+					if (commentIdList.size() > 0) {
+						sql = commentDao.deleteCommentSql();		 
+						sql += commentDao.ByThreadIdSql();
+						pstmt = con.prepareStatement(sql);
+						pstmt.setInt(1, threadId);
+						resultCommentByThreadId = pstmt.executeUpdate() > 0;
+						if (!resultCommentByThreadId) {
+							break;
+						}
+					}
+				}
+			}
+			
+			if (resultAccount && resultThread && resultCommentByPostUserId && resultCommentByThreadId) {
+				con.commit();
+				rtn = true;
+			} else {
+				con.rollback();
+				rtn = false;
+			}
+			rs.close();
+			pstmt.close();
+		} catch (SQLException e) {
+			try {
+				con.rollback();
+				rtn = false;
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+				rtn = false;
+			} 
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}	
+			} catch (SQLException e3) {
+				e3.printStackTrace();
+				return false;
+			}
+		}
+		return rtn;
+	}
+	/* 追加 2022/02/10(木)　大野賢一朗 end */
 }

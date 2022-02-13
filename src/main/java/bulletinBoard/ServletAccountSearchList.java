@@ -1,6 +1,12 @@
+/*
+	処理内容:	アカウント一覧サーブレット
+			
+	作成者:大野賢一朗 作成日:2022/02/10(木)
+*/
 package bulletinBoard;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,6 +34,11 @@ public class ServletAccountSearchList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+
+		UserDAO userDao = new UserDAO();
+		ArrayList<UserInfo> userList = null;
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/accountSearchList.jsp");
 		dispatcher.forward(request, response);
 	}

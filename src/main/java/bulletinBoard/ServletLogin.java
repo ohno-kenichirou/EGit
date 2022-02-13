@@ -61,7 +61,8 @@ public class ServletLogin extends HttpServlet {
 		} else {
 			TryUserLogin tryLogin = new TryUserLogin(email, pass);
 			UserDAO userDao = new UserDAO();
-			
+			String hash = userDao.getHash(pass);
+			System.out.println(hash);
 			switch (userDao.findUser(tryLogin)) {
 				case 0:
 					dispatcher = request.getRequestDispatcher("ServletThreadSearchList");

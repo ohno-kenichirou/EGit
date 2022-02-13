@@ -1,5 +1,5 @@
 /*
-	処理内容:	カテゴリー追加用PreparedStatement設定クラス
+	処理内容:	カテゴリー追加用DAO
 			
 	作成者:大野賢一朗 作成日:2022/02/10(木)
 */
@@ -8,10 +8,10 @@ package bulletinBoard;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class CategoryAddSetPstmt extends CategoryDAO {
+public class CategoryAddDAO extends CategoryCommonDAO {
 	private CategoryAddInfo category;
 	
-	public CategoryAddSetPstmt(UserInfo user, CategoryAddInfo category) {
+	public CategoryAddDAO(UserInfo user, CategoryAddInfo category) {
 		super(user);
 		this.category = category;
 	}
