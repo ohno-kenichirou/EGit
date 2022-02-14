@@ -354,8 +354,8 @@ public class UserDAO {
 		}
 		try(Connection con = DriverManager.getConnection(this.getConnection())) {
 			String sql = "UPDATE User "
-					   + "SET userName = ?      ,pass = ?                ,email = ?   ,birth = ?     ,genderId = ? "
-					   + "	, dispUpdUserId = ? ,dispUpdDate = GETDATE() ,manager = ? ,updUserId = ? ,updDate = GETDATE() ";
+					   + "SET userName = ?      ,pass = HASHBYTES('SHA2_256',CONVERT(NVARCHAR(32),?)) ,email = ?   ,birth = ?     ,genderId = ? "
+					   + "	, dispUpdUserId = ? ,dispUpdDate = GETDATE()                              ,manager = ? ,updUserId = ? ,updDate = GETDATE() ";
 			if (account.getErrorCount() >= 3 && Integer.parseInt(lift) == 1) {
 				sql += " , errorCount = 0 ";
 			}
