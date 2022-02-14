@@ -34,7 +34,7 @@
 		<table>
 			<tr>
 				<th>ユーザー名</th>
-				<td><%= newComment.getUserName() %></td>
+				<td><%-- <%= newComment.getUserName() %> --%></td>
 			</tr>
 			<tr>
 				<th>コメント内容</th>

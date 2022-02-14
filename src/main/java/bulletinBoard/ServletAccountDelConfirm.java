@@ -1,5 +1,5 @@
 /*
-	処理内容:	カテゴリー削除確認サーブレット
+	処理内容:	アカウント削除確認サーブレット
 			
 	作成者:大野賢一朗 作成日:2022/02/10(木)
 */
@@ -49,7 +49,7 @@ public class ServletAccountDelConfirm extends HttpServlet {
 		UserInfo user = (UserInfo)session.getAttribute("User");
 		UserDAO dao = new UserDAO();
 		if (dao.delAccount(user, account)) {
-			request.setAttribute("message", "カテゴリーが削除されました。");
+			request.setAttribute("message", account.getUserId() + "が削除されました。");
 			session.removeAttribute("AccountDel");
 			response.sendRedirect("ServletAccountSearchList");
 		} else {

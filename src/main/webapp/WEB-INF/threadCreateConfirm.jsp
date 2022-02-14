@@ -36,11 +36,11 @@
 			</tr>
 			<tr>
 				<th>カテゴリー</th>
-				<td><%= newThread.getCategory() %></td>
+				<td><%-- <%= newThread.getCategory() %> --%></td>
 			</tr>
 			<tr>
 				<th>ユーザー名</th>
-				<td><%= newThread.getUserName() %></td>
+				<td><%-- <%= newThread.getUserName() %> --%></td>
 			</tr>
 			<tr>
 				<th>スレッド内容</th>

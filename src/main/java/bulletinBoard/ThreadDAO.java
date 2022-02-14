@@ -256,6 +256,8 @@ public class ThreadDAO {
 	public String deleteThreadSql() {
 		return "UPDATE	Thread "
 			 + "SET		delFlg = 1 "
+			 + "  ,		updUserId = ? "
+			 + "  ,		updDate = GETDATE() "
 			 + "WHERE	delFlg = 0 AND ";
 	}
 	

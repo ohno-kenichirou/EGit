@@ -176,6 +176,8 @@ public class CommentDAO {
 	public String deleteCommentSql() {
 		return "UPDATE	Comment "
 			 + "SET		delFlg = 1 "
+			 + "  ,		updUserId = ? "
+			 + "  ,		updDate = GETDATE() "
 			 + "WHERE	delFlg = 0 AND ";
 	}
 	
@@ -186,7 +188,6 @@ public class CommentDAO {
 	public String ByThreadIdSql() {
 		return "     	threadId = ? ";
 	}
-	
 	/* 追加 2022/02/10(木)　大野賢一朗 end */
 	
 }

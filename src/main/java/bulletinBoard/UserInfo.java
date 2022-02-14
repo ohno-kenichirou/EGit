@@ -5,6 +5,7 @@ import java.sql.Date;
 public class UserInfo {
 	private String userId;
 	private String userName;
+	private String pass;
 	private String email;
 	private Date birth;
 	private int genderId;
@@ -21,9 +22,10 @@ public class UserInfo {
 		this.manager = manager;
 	}
 		
-	public UserInfo(String userId,			String userName,	String email,			Date birth,			int genderId,
+	public UserInfo(String userId,			String userName,	String pass,			String email,		Date birth,		int genderId,
 					String dispInsUserId,	Date dispInsDate,	String dispUpdUserId,	Date dispUpdDate,	int manager,	int errorCount) {
 		this(userId, userName, manager);
+		this.pass = pass;
 		this.email = email;
 		this.birth = birth;
 		this.genderId = genderId;
@@ -46,6 +48,13 @@ public class UserInfo {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getPass() {
+		return pass;
+	}
+	public void setPass(String pass) {
+		this.pass = pass;
 	}
 
 	public String getEmail() {

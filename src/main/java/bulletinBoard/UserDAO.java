@@ -188,10 +188,10 @@ public class UserDAO {
 			ResultSet rs = pstmt.executeQuery();
 			ArrayList<UserInfo> userList = new ArrayList<>();
 			if (rs.next()) {
-				userList.add(new UserInfo(	rs.getString("userId"),		rs.getString("userName"),		rs.getString("email"),
-											rs.getDate("birth"),		rs.getInt("genderId"),			rs.getString("dispInsUserId"),
-											rs.getDate("dispInsDate"),	rs.getString("dispUpdUserId"),	rs.getDate("dispUpdDate"),
-											rs.getInt("manager"),		rs.getInt("errorCount")
+				userList.add(new UserInfo(	rs.getString("userId"),			rs.getString("userName"),	"",
+											rs.getString("email"),			rs.getDate("birth"),		rs.getInt("genderId"),
+											rs.getString("dispInsUserId"),	rs.getDate("dispInsDate"),	rs.getString("dispUpdUserId"),
+											rs.getDate("dispUpdDate"),		rs.getInt("manager"),		rs.getInt("errorCount")
 							));
 			}
 			rs.close();
@@ -218,84 +218,27 @@ public class UserDAO {
 			// ユーザーテーブル更新
 			String sql = "UPDATE	User "
 					   + "SET		delFlg = 1 "
-					   + "WHERE		userId = ? ";   
+					   + "	,		dispUpdUserId = ? "
+					   + "	,		dispUpdDate = GETDATE() "
+					   + "	,		updUserId = ? "
+					   + "	,		updDate = GETDATE() "
+					   + "WHERE		delFlg = 0 "
+					   + "	AND		userId = ? ";
 			PreparedStatement pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, account.getUserId());
-			boolean resultAccount = pstmt.executeUpdate() > 0;
+			pstmt.setString(1, user.getUserId());
+			pstmt.setString(2, user.getUserId());
+			pstmt.setString(3, account.getUserId());
+			rtn = pstmt.executeUpdate() > 0;
 			
-			// スレッドテーブル更新
-			ThreadDAO threadDao = new ThreadDAO();
-			sql = threadDao.findThreadIdListSql();
-			sql += threadDao.ByMakeUserIdSql();
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, account.getUserId());
-			ResultSet rs = pstmt.executeQuery();
-			ArrayList<Integer> threadIdList = new ArrayList<>();
-			while (rs.next()) {
-				threadIdList.add(rs.getInt("threadId"));
+			if (rtn) {
+				rtn= delThread(pstmt, con, user, account);
 			}
-			boolean resultThread = true;
-			if (threadIdList.size() > 0) {
-				sql = threadDao.deleteThreadSql();		 
-				sql += threadDao.ByMakeUserIdSql();
-				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, account.getUserId());
-				resultThread = pstmt.executeUpdate() > 0;
-			}
-			
-			// コメントテーブル更新
-			boolean resultCommentByPostUserId = true; 
-			CommentDAO commentDao = new CommentDAO();
-			sql = commentDao.findCommentIdListSql();
-			sql += commentDao.ByPostUserIdSql();
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, account.getUserId());
-			rs = pstmt.executeQuery();
-			ArrayList<Integer> commentIdList = new ArrayList<>();
-			while (rs.next()) {
-				commentIdList.add(rs.getInt("commentId"));
-			}
-			if (commentIdList.size() > 0) {
-				sql = commentDao.deleteCommentSql();		 
-				sql += commentDao.ByPostUserIdSql();
-				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, account.getUserId());
-				resultCommentByPostUserId = pstmt.executeUpdate() > 0;
-			}
-			
-			boolean resultCommentByThreadId = true; 
-			if (threadIdList.size() > 0) {
-				for (Integer threadId : threadIdList) {
-					sql = commentDao.findCommentIdListSql();
-					sql += commentDao.ByThreadIdSql();
-					pstmt = con.prepareStatement(sql);
-					pstmt.setInt(1, threadId);
-					rs = pstmt.executeQuery();
-					commentIdList = new ArrayList<>();
-					while (rs.next()) {
-						commentIdList.add(rs.getInt("commentId"));
-					}
-					if (commentIdList.size() > 0) {
-						sql = commentDao.deleteCommentSql();		 
-						sql += commentDao.ByThreadIdSql();
-						pstmt = con.prepareStatement(sql);
-						pstmt.setInt(1, threadId);
-						resultCommentByThreadId = pstmt.executeUpdate() > 0;
-						if (!resultCommentByThreadId) {
-							break;
-						}
-					}
-				}
-			}
-			
-			if (resultAccount && resultThread && resultCommentByPostUserId && resultCommentByThreadId) {
+						
+			if (rtn) {
 				con.commit();
-				rtn = true;
 			} else {
 				con.rollback();
-				rtn = false;
 			}
-			rs.close();
 			pstmt.close();
 		} catch (SQLException e) {
 			try {
@@ -312,10 +255,127 @@ public class UserDAO {
 				}	
 			} catch (SQLException e3) {
 				e3.printStackTrace();
-				return false;
+				rtn = false;
 			}
 		}
 		return rtn;
+	}
+	
+	public boolean delThread(PreparedStatement pstmt, Connection con, UserInfo user, UserInfo account) throws SQLException {
+		// スレッドテーブル更新
+		ThreadDAO threadDao = new ThreadDAO();
+		String sql = threadDao.findThreadIdListSql();
+		sql += threadDao.ByMakeUserIdSql();
+		pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, account.getUserId());
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<Integer> threadIdList = new ArrayList<>();
+		while (rs.next()) {
+			threadIdList.add(rs.getInt("threadId"));
+		}
+		boolean rtn = true;
+		if (threadIdList.size() > 0) {
+			sql = threadDao.deleteThreadSql();		 
+			sql += threadDao.ByMakeUserIdSql();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, user.getUserId());
+			pstmt.setString(2, account.getUserId());
+			rtn = pstmt.executeUpdate() > 0;
+		}
+		if (rtn) {
+			rtn = delCommentByThreadId(pstmt, con, user, account, threadIdList);
+		}
+		rs.close();
+		return rtn;
+	}
+	
+	public boolean delCommentByThreadId(PreparedStatement pstmt, Connection con, UserInfo user, UserInfo account, ArrayList<Integer> threadIdList) throws SQLException {
+		// コメントテーブル(スレッドID)更新
+		boolean rtn = true; 
+		CommentDAO commentDao = new CommentDAO();
+		ArrayList<Integer> commentIdList = new ArrayList<>();
+		ResultSet rs = null;
+		if (threadIdList.size() > 0) {
+			for (Integer threadId : threadIdList) {
+				String sql = commentDao.findCommentIdListSql();
+				sql += commentDao.ByThreadIdSql();
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, threadId);
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					commentIdList.add(rs.getInt("commentId"));
+				}
+				if (commentIdList.size() > 0) {
+					sql = commentDao.deleteCommentSql();		 
+					sql += commentDao.ByThreadIdSql();
+					pstmt = con.prepareStatement(sql);
+					pstmt.setString(1, user.getUserId());
+					pstmt.setInt(2, threadId);
+					rtn = pstmt.executeUpdate() > 0;
+					if (!rtn) {
+						break;
+					}
+				}
+			}
+		}
+		if (rtn) {
+			rtn = delCommentByPostUserId(pstmt, con, user, account, commentDao);
+		}
+		rs.close();
+		return rtn;
+	}
+	
+	public boolean delCommentByPostUserId(PreparedStatement pstmt, Connection con, UserInfo user, UserInfo account, CommentDAO commentDao) throws SQLException {
+		// コメントテーブル(投稿ユーザーID)更新
+		boolean rtn = true; 
+		String sql = commentDao.findCommentIdListSql();
+		sql += commentDao.ByPostUserIdSql();
+		pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, account.getUserId());
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<Integer> commentIdList = new ArrayList<>();
+		while (rs.next()) {
+			commentIdList.add(rs.getInt("commentId"));
+		}
+		if (commentIdList.size() > 0) {
+			sql = commentDao.deleteCommentSql();		 
+			sql += commentDao.ByPostUserIdSql();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, user.getUserId());
+			pstmt.setString(2, account.getUserId());
+			rtn = pstmt.executeUpdate() > 0;
+		}
+		rs.close();
+		return rtn;
+	}
+	
+	public boolean modifyAccount(UserInfo user, UserInfo account, String lift) {
+		try {
+			Class.forName(this.getSqlserver());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		}
+		try(Connection con = DriverManager.getConnection(this.getConnection())) {
+			// ユーザーテーブル更新
+			String sql = "UPDATE User "
+					   + "SET userName = ?      ,pass = ?                ,email = ?   ,birth = ?     ,genderId = ? "
+					   + "	, dispUpdUserId = ? ,dispUpdDate = GETDATE() ,manager = ? ,updUserId = ? ,updDate = GETDATE() ";
+			if (account.getErrorCount() >= 3 && Integer.parseInt(lift) == 1) {
+				sql += " , errorCount = 0 ";
+			}
+			sql += "WHERE userId = ? ";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, account.getUserName());
+			pstmt.setString(2, account.getUserId());
+			pstmt.setString(3, account.getUserId());
+			boolean rtn = pstmt.executeUpdate() > 0;
+			pstmt.close();
+			return rtn;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} 		
 	}
 	/* 追加 2022/02/10(木)　大野賢一朗 end */
 }
