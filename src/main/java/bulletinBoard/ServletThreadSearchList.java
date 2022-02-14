@@ -48,7 +48,7 @@ public class ServletThreadSearchList extends HttpServlet {
 			request.setAttribute("sendThreadList", threadList);
 			
 			CategoryListDAO categoryDao = new CategoryListDAO();
-			ArrayList<CategoryListInfo> categoryList = categoryDao.findCategoryList();
+			ArrayList<CategoryInfo> categoryList = categoryDao.findCategoryList();
 			request.setAttribute("sendCategoryList", categoryList);
 			
 			dispatcher = request.getRequestDispatcher("WEB-INF/threadSearchList.jsp");			

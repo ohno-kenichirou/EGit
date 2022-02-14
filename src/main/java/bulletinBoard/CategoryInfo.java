@@ -1,5 +1,5 @@
 /*
-	処理内容:	カテゴリー用のデータを保持するクラスのスーパークラス
+	処理内容:	カテゴリー用のデータを保持するクラス
 			
 	作成者:大野賢一朗 作成日:2022/02/10(木)
 */
@@ -7,7 +7,7 @@ package bulletinBoard;
 
 import java.util.Objects;
 
-public abstract class CategoryInfo {
+public class CategoryInfo implements Comparable<CategoryInfo> {
 	private int categoryId;
 	private String categoryName;
 	private String categoryKana;
@@ -25,7 +25,6 @@ public abstract class CategoryInfo {
 	public int getCategoryId() {
 		return categoryId;
 	}
-
 	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
 	}
@@ -33,7 +32,6 @@ public abstract class CategoryInfo {
 	public String getCategoryName() {
 		return categoryName;
 	}
-
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
@@ -41,7 +39,6 @@ public abstract class CategoryInfo {
 	public String getCategoryKana() {
 		return categoryKana;
 	}
-
 	public void setCategoryKana(String categoryKana) {
 		this.categoryKana = categoryKana;
 	}
@@ -61,6 +58,16 @@ public abstract class CategoryInfo {
 			return false;
 		CategoryInfo other = (CategoryInfo) obj;
 		return categoryId == other.categoryId;
+	}
+
+	@Override
+	public int compareTo(CategoryInfo c) {
+		int ret = this.getCategoryName().compareTo(c.getCategoryName());
+		if (ret != 0) {
+			return ret;
+		} else {
+			return Integer.compare(this.getCategoryId(), c.getCategoryId());
+		}
 	}
 
 }

@@ -4,7 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="bulletinBoard.CategoryListInfo" %>
+<%@ page import="bulletinBoard.CategoryInfo" %>
 <%@ page import="bulletinBoard.UserInfo" %>
 <%
 	String searchCategoryWord = (String)request.getAttribute("searchCategoryWord");
@@ -18,9 +18,9 @@
 	if (searchWord == null) {
 		searchWord = "タイトル入力";
 	}
-	ArrayList<CategoryListInfo> categoryList = null;
+	ArrayList<CategoryInfo> categoryList = null;
 	if (request.getAttribute("sendCategoryList") instanceof ArrayList) {
-		categoryList = (ArrayList<CategoryListInfo>)request.getAttribute("sendCategoryList");
+		categoryList = (ArrayList<CategoryInfo>)request.getAttribute("sendCategoryList");
 	}			
 	UserInfo user = (UserInfo)session.getAttribute("User");
 	int threadId;
@@ -86,7 +86,7 @@
 		</form>
 		
 		<%
-			for (CategoryListInfo category : categoryList) {
+			for (CategoryInfo category : categoryList) {
 		%>
 			
 			<p>

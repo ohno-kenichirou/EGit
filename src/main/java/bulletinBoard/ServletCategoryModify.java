@@ -59,7 +59,7 @@ public class ServletCategoryModify extends HttpServlet {
 			dispatcher.forward(request, response);
 		} else {
 			HttpSession session = request.getSession(false);
-			CategoryModifyInfo category = (CategoryModifyInfo)session.getAttribute("CategoryModify");
+			CategoryInfo category = (CategoryInfo)session.getAttribute("CategoryModify");
 			category.setCategoryName(categoryName);
 			category.setCategoryKana(categoryKana);
 			session.setAttribute("CategoryModify", category);

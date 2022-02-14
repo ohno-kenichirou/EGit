@@ -34,7 +34,7 @@ public class ServletCategorySearchList extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		
 		CategoryListDAO categoryDao = new CategoryListDAO();
-		ArrayList<CategoryListInfo> categoryList = categoryDao.findCategoryList();
+		ArrayList<CategoryInfo> categoryList = categoryDao.findCategoryList();
 		request.setAttribute("sendCategoryList", categoryList);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/categorySearchList.jsp");
@@ -53,7 +53,7 @@ public class ServletCategorySearchList extends HttpServlet {
 			CategoryListDAO categoryDao = new CategoryListDAO();
 			String searchName = request.getParameter("searchCategoryWord");
 			String selectMatch = request.getParameter("selectMatch");
-			ArrayList<CategoryListInfo> categoryList = categoryDao.findCategoryList(searchName,selectMatch);
+			ArrayList<CategoryInfo> categoryList = categoryDao.findCategoryList(searchName,selectMatch);
 			request.setAttribute("sendCategoryList", categoryList);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/categorySearchList.jsp");
 			dispatcher.forward(request, response);
@@ -63,13 +63,12 @@ public class ServletCategorySearchList extends HttpServlet {
 			int categoryId = Integer.parseInt(request.getParameter("categoryId"));
 			String categoryName = request.getParameter("categoryName");
 			String categoryKana = request.getParameter("categoryKana");
+			CategoryInfo info = new CategoryInfo(categoryId, categoryName, categoryKana);
 			if (btn.equals("modify")) {
-				CategoryModifyInfo info = new CategoryModifyInfo(categoryId, categoryName, categoryKana);
 				session.setAttribute("CategoryModify", info);
 				session.setMaxInactiveInterval(60 * 60 * 24);
 				response.sendRedirect("ServletCategoryModify");
 			} else if (btn.equals("delete")) {
-				CategoryDelInfo info = new CategoryDelInfo(categoryId, categoryName, categoryKana);
 				session.setAttribute("CategoryDel", info);
 				session.setMaxInactiveInterval(60 * 60 * 24);
 				response.sendRedirect("ServletCategoryDelConfirm");

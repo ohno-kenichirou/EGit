@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class CategoryListDAO extends CategoryCommonDAO {
 
-	public ArrayList<CategoryListInfo> findCategoryList() {	
+	public ArrayList<CategoryInfo> findCategoryList() {	
 		return super.findCategoryList("", "");
 	}
 	

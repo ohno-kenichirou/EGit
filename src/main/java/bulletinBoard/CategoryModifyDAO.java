@@ -9,18 +9,18 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class CategoryModifyDAO extends CategoryCommonDAO {
-	private CategoryModifyInfo category;
+	private CategoryInfo category;
 	
-	public CategoryModifyDAO(UserInfo user, CategoryModifyInfo category) {
+	public CategoryModifyDAO(UserInfo user, CategoryInfo category) {
 		super(user);
 		this.category = category;
 	}
 
-	public CategoryModifyInfo getCategory() {
+	public CategoryInfo getCategory() {
 		return category;
 	}
 
-	public void setCategory(CategoryModifyInfo category) {
+	public void setCategory(CategoryInfo category) {
 		this.category = category;
 	}
 

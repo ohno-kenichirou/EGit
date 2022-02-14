@@ -56,7 +56,7 @@ public abstract class CategoryCommonDAO extends ProcDAO {
 		return procUpd(sql);
 	}
 	
-	public ArrayList<CategoryListInfo> findCategoryList(String searchName, String selectMatch) {
+	public ArrayList<CategoryInfo> findCategoryList(String searchName, String selectMatch) {
 		try (Connection con = connectDb()) {
 			String sql =	"SELECT	categoryId			AS id " +
 							"	  , categoryName		AS name " +
@@ -87,9 +87,9 @@ public abstract class CategoryCommonDAO extends ProcDAO {
 			}
 			
 			ResultSet rs = pstmt.executeQuery();
-			ArrayList<CategoryListInfo> resultCategoryList = new ArrayList<>();
+			ArrayList<CategoryInfo> resultCategoryList = new ArrayList<>();
 			while (rs.next()) {
-				resultCategoryList.add(new CategoryListInfo(rs.getInt("id"), rs.getString("name"), rs.getString("kana")));
+				resultCategoryList.add(new CategoryInfo(rs.getInt("id"), rs.getString("name"), rs.getString("kana")));
 			}
 			
 			rs.close();

@@ -1,8 +1,9 @@
 package bulletinBoard;
 
 import java.sql.Date;
+import java.util.Objects;
 
-public class UserInfo {
+public class UserInfo implements Comparable<UserInfo> {
 	private String userId;
 	private String userName;
 	private String pass;
@@ -118,6 +119,33 @@ public class UserInfo {
 	}
 	public void setErrorCount(int errorCount) {
 		this.errorCount = errorCount;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(userId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserInfo other = (UserInfo) obj;
+		return Objects.equals(userId, other.userId);
+	}
+
+	@Override
+	public int compareTo(UserInfo u) {
+		int ret = this.getDispInsDate().compareTo(u.getDispInsDate());
+		if (ret != 0) {
+			return ret;
+		} else {
+			return this.getUserId().compareTo(u.getUserId());
+		}
 	}
 		
 }

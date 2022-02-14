@@ -6,7 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="bulletinBoard.UserInfo" %>
-<%@ page import="bulletinBoard.CategoryModifyInfo" %>
+<%@ page import="bulletinBoard.CategoryInfo" %>
 <%
 	String message = (String)request.getAttribute("message");
 	UserInfo user = (UserInfo)session.getAttribute("User");
@@ -14,7 +14,7 @@
 	if (user != null) {
 		userName = user.getUserName();
 	}
-	CategoryModifyInfo category = (CategoryModifyInfo)session.getAttribute("CategoryModify");
+	CategoryInfo category = (CategoryInfo)session.getAttribute("CategoryModify");
 	String name = "";
 	String kana = "";
 	if (category != null) {

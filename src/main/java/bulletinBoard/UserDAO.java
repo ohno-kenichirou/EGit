@@ -162,7 +162,6 @@ public class UserDAO {
 			String sql = "SELECT userId, userName, email, birth, genderId, dispInsUserId, dispInsDate, dispUpdUserId, dispUpdDate, manager, errorCount "
 					   + "FROM [User] "
 					   + "WHERE	delFlg = 0 ";
-			
 			if (searchName != null && !searchName.equals("")) {
 				String where = "LIKE";
 				if (selectMatch.equals("partial")) {
@@ -172,9 +171,7 @@ public class UserDAO {
 				}
 				sql += " AND userName " + where + " ? ";
 			}
-			
 			PreparedStatement pstmt = con.prepareStatement(sql);
-			
 			if (searchName != null && !searchName.equals("")) {
 				String whereSearchName = "%" + searchName + "%";
 				if (selectMatch.equals("partial")) {
@@ -184,7 +181,6 @@ public class UserDAO {
 				}
 				pstmt.setString(1, whereSearchName);
 			}
-
 			ResultSet rs = pstmt.executeQuery();
 			ArrayList<UserInfo> userList = new ArrayList<>();
 			if (rs.next()) {
@@ -211,7 +207,7 @@ public class UserDAO {
 			return false;
 		}
 		Connection con = null;
-		boolean rtn = false;
+		boolean ret = false;
 		try {
 			con = DriverManager.getConnection(this.getConnection());
 			con.setAutoCommit(false);
@@ -228,13 +224,13 @@ public class UserDAO {
 			pstmt.setString(1, user.getUserId());
 			pstmt.setString(2, user.getUserId());
 			pstmt.setString(3, account.getUserId());
-			rtn = pstmt.executeUpdate() > 0;
+			ret = pstmt.executeUpdate() > 0;
 			
-			if (rtn) {
-				rtn= delThread(pstmt, con, user, account);
+			if (ret) {
+				ret= delThread(pstmt, con, user, account);
 			}
 						
-			if (rtn) {
+			if (ret) {
 				con.commit();
 			} else {
 				con.rollback();
@@ -243,10 +239,10 @@ public class UserDAO {
 		} catch (SQLException e) {
 			try {
 				con.rollback();
-				rtn = false;
+				ret = false;
 			} catch (SQLException e2) {
 				e2.printStackTrace();
-				rtn = false;
+				ret = false;
 			} 
 		} finally {
 			try {
@@ -255,10 +251,10 @@ public class UserDAO {
 				}	
 			} catch (SQLException e3) {
 				e3.printStackTrace();
-				rtn = false;
+				ret = false;
 			}
 		}
-		return rtn;
+		return ret;
 	}
 	
 	public boolean delThread(PreparedStatement pstmt, Connection con, UserInfo user, UserInfo account) throws SQLException {
@@ -273,25 +269,25 @@ public class UserDAO {
 		while (rs.next()) {
 			threadIdList.add(rs.getInt("threadId"));
 		}
-		boolean rtn = true;
+		boolean ret = true;
 		if (threadIdList.size() > 0) {
 			sql = threadDao.deleteThreadSql();		 
 			sql += threadDao.ByMakeUserIdSql();
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, user.getUserId());
 			pstmt.setString(2, account.getUserId());
-			rtn = pstmt.executeUpdate() > 0;
+			ret = pstmt.executeUpdate() > 0;
 		}
-		if (rtn) {
-			rtn = delCommentByThreadId(pstmt, con, user, account, threadIdList);
+		if (ret) {
+			ret = delCommentByThreadId(pstmt, con, user, account, threadIdList);
 		}
 		rs.close();
-		return rtn;
+		return ret;
 	}
 	
 	public boolean delCommentByThreadId(PreparedStatement pstmt, Connection con, UserInfo user, UserInfo account, ArrayList<Integer> threadIdList) throws SQLException {
 		// コメントテーブル(スレッドID)更新
-		boolean rtn = true; 
+		boolean ret = true; 
 		CommentDAO commentDao = new CommentDAO();
 		ArrayList<Integer> commentIdList = new ArrayList<>();
 		ResultSet rs = null;
@@ -311,23 +307,23 @@ public class UserDAO {
 					pstmt = con.prepareStatement(sql);
 					pstmt.setString(1, user.getUserId());
 					pstmt.setInt(2, threadId);
-					rtn = pstmt.executeUpdate() > 0;
-					if (!rtn) {
+					ret = pstmt.executeUpdate() > 0;
+					if (!ret) {
 						break;
 					}
 				}
 			}
 		}
-		if (rtn) {
-			rtn = delCommentByPostUserId(pstmt, con, user, account, commentDao);
+		if (ret) {
+			ret = delCommentByPostUserId(pstmt, con, user, account, commentDao);
 		}
 		rs.close();
-		return rtn;
+		return ret;
 	}
 	
 	public boolean delCommentByPostUserId(PreparedStatement pstmt, Connection con, UserInfo user, UserInfo account, CommentDAO commentDao) throws SQLException {
 		// コメントテーブル(投稿ユーザーID)更新
-		boolean rtn = true; 
+		boolean ret = true; 
 		String sql = commentDao.findCommentIdListSql();
 		sql += commentDao.ByPostUserIdSql();
 		pstmt = con.prepareStatement(sql);
@@ -343,10 +339,10 @@ public class UserDAO {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, user.getUserId());
 			pstmt.setString(2, account.getUserId());
-			rtn = pstmt.executeUpdate() > 0;
+			ret = pstmt.executeUpdate() > 0;
 		}
 		rs.close();
-		return rtn;
+		return ret;
 	}
 	
 	public boolean modifyAccount(UserInfo user, UserInfo account, String lift) {
@@ -357,7 +353,6 @@ public class UserDAO {
 			return false;
 		}
 		try(Connection con = DriverManager.getConnection(this.getConnection())) {
-			// ユーザーテーブル更新
 			String sql = "UPDATE User "
 					   + "SET userName = ?      ,pass = ?                ,email = ?   ,birth = ?     ,genderId = ? "
 					   + "	, dispUpdUserId = ? ,dispUpdDate = GETDATE() ,manager = ? ,updUserId = ? ,updDate = GETDATE() ";
@@ -367,11 +362,17 @@ public class UserDAO {
 			sql += "WHERE userId = ? ";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, account.getUserName());
-			pstmt.setString(2, account.getUserId());
-			pstmt.setString(3, account.getUserId());
-			boolean rtn = pstmt.executeUpdate() > 0;
+			pstmt.setString(2, account.getPass());
+			pstmt.setString(3, account.getEmail());
+			pstmt.setDate(4, account.getBirth());
+			pstmt.setInt(5, account.getGenderId());
+			pstmt.setString(6, user.getUserId());
+			pstmt.setInt(7, account.getManager());
+			pstmt.setString(8, user.getUserId());
+			pstmt.setString(9, account.getUserId());
+			boolean ret = pstmt.executeUpdate() > 0;
 			pstmt.close();
-			return rtn;
+			return ret;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;

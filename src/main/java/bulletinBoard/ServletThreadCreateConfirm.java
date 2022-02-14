@@ -68,7 +68,7 @@ public class ServletThreadCreateConfirm extends HttpServlet {
 			request.setAttribute("sendNewThreadInfo", newThread);
 			
 			CategoryListDAO categoryDao = new CategoryListDAO();
-			ArrayList<CategoryListInfo> categoryList = categoryDao.findCategoryList();
+			ArrayList<CategoryInfo> categoryList = categoryDao.findCategoryList();
 			request.setAttribute("sendCategoryList", categoryList);
 			
 			dispatcher = request.getRequestDispatcher("WEB-INF/threadCreateConfirm.jsp");

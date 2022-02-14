@@ -9,18 +9,18 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class CategoryDelDAO extends CategoryCommonDAO {
-	private CategoryDelInfo category;
+	private CategoryInfo category;
 	
-	public CategoryDelDAO(UserInfo user, CategoryDelInfo category) {
+	public CategoryDelDAO(UserInfo user, CategoryInfo category) {
 		super(user);
 		this.category = category;
 	}
 
-	public CategoryDelInfo getCategory() {
+	public CategoryInfo getCategory() {
 		return category;
 	}
 
-	public void setCategory(CategoryDelInfo category) {
+	public void setCategory(CategoryInfo category) {
 		this.category = category;
 	}
 

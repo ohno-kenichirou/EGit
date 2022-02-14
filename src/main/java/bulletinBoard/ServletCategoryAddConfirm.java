@@ -45,7 +45,7 @@ public class ServletCategoryAddConfirm extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		HttpSession session = request.getSession(false);
-		CategoryAddInfo category = (CategoryAddInfo)session.getAttribute("CategoryAdd");
+		CategoryInfo category = (CategoryInfo)session.getAttribute("CategoryAdd");
 		UserInfo user = (UserInfo)session.getAttribute("User");
 		CategoryCommonDAO dao = new CategoryAddDAO(user, category);
 		if (dao.addCategory()) {

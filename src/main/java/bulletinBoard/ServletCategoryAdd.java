@@ -58,7 +58,7 @@ public class ServletCategoryAdd extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/categoryAdd.jsp");
 			dispatcher.forward(request, response);
 		} else {
-			CategoryAddInfo category = new CategoryAddInfo(categoryName,categoryKana);
+			CategoryInfo category = new CategoryInfo(categoryName,categoryKana);
 			HttpSession session = request.getSession(false);
 			session.setAttribute("CategoryAdd", category);
 			session.setMaxInactiveInterval(60 * 60 * 24);		// セッションの有効期限

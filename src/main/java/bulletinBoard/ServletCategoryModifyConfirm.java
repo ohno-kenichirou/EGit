@@ -45,7 +45,7 @@ public class ServletCategoryModifyConfirm extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		HttpSession session = request.getSession(false);
-		CategoryModifyInfo category = (CategoryModifyInfo)session.getAttribute("CategoryModify");
+		CategoryInfo category = (CategoryInfo)session.getAttribute("CategoryModify");
 		UserInfo user = (UserInfo)session.getAttribute("User");
 		CategoryCommonDAO dao = new CategoryModifyDAO(user, category);
 		if (dao.modifyCategory()) {
