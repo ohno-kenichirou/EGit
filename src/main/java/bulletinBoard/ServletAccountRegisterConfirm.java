@@ -1,3 +1,8 @@
+/*
+	処理内容:	アカウント登録確認サーブレット
+			
+	作成者:大野賢一朗 作成日:2022/02/14(月)
+*/
 package bulletinBoard;
 
 import java.io.IOException;
@@ -8,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class ServletAccountRegisterConfirm
@@ -36,8 +42,21 @@ public class ServletAccountRegisterConfirm extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		
+		HttpSession session = request.getSession(false);
+		UserInfo account = (UserInfo)session.getAttribute("AccountRegister");
+		UserInfo user = (UserInfo)session.getAttribute("User");
+		UserDAO dao = new UserDAO();
+		if (dao.registerAccount(user, account)) {
+			request.setAttribute("message", "新規アカウントを登録しました。");
+			session.removeAttribute("AccountRegister");
+			response.sendRedirect("ServletAccountSearchList");
+		} else {
+			request.setAttribute("message", "[システムエラー]処理に失敗しました。");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/accountRegisterConfirm.jsp");
+			dispatcher.forward(request, response);
+		}
 	}
 
 }

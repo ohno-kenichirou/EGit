@@ -102,13 +102,11 @@
 						<td><%= gender.getGenderName() %></td>
 			<%		}
 				}	%>
-			
 			<%	for (GenderInfo gender : genderList) { 
 					if (gender.getGenderId() == genderId) {	%>
 						<td><%= gender.getGenderName() %></td>
 			<%		}
 				}	%>
-			
 		</tr>
 		<tr>
 			<th>管理者権限の有無</th>

@@ -199,6 +199,35 @@ public class UserDAO {
 		}
 	}
 	
+	public ArrayList<UserInfo> getAllUserList() {
+		try {
+			Class.forName(this.getSqlserver());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
+		try (Connection con = DriverManager.getConnection(this.getConnection());) {
+			String sql = "SELECT userId, userName, email, birth, genderId, dispInsUserId, dispInsDate, dispUpdUserId, dispUpdDate, manager, errorCount "
+					   + "FROM [User] ";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			ArrayList<UserInfo> userList = new ArrayList<>();
+			if (rs.next()) {
+				userList.add(new UserInfo(	rs.getString("userId"),			rs.getString("userName"),	"",
+											rs.getString("email"),			rs.getDate("birth"),		rs.getInt("genderId"),
+											rs.getString("dispInsUserId"),	rs.getDate("dispInsDate"),	rs.getString("dispUpdUserId"),
+											rs.getDate("dispUpdDate"),		rs.getInt("manager"),		rs.getInt("errorCount")
+							));
+			}
+			rs.close();
+			pstmt.close();
+			return userList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public boolean delAccount(UserInfo user, UserInfo account) {
 		try {
 			Class.forName(this.getSqlserver());
@@ -370,6 +399,39 @@ public class UserDAO {
 			pstmt.setInt(7, account.getManager());
 			pstmt.setString(8, user.getUserId());
 			pstmt.setString(9, account.getUserId());
+			boolean ret = pstmt.executeUpdate() > 0;
+			pstmt.close();
+			return ret;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} 		
+	}
+	
+	public boolean registerAccount(UserInfo user, UserInfo account) {
+		try {
+			Class.forName(this.getSqlserver());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		}
+		try(Connection con = DriverManager.getConnection(this.getConnection())) {
+			String sql = "INSERT INTO User "
+					   + "( userId        ,userName    ,pass    ,email     ,birth   ,genderId "
+					   + ", dispInsUserId ,dispInsDate ,manager ,insUserId ,insDate "
+					   + ") VALUES "
+					   + "( ? ,? ,HASHBYTES('SHA2_256',CONVERT(NVARCHAR(32),?)) ,? ,? ,? "
+					   + ", ? ,GETDATE() ,? ,? ,GETDATE())";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, account.getUserId());
+			pstmt.setString(2, account.getUserName());
+			pstmt.setString(3, account.getPass());
+			pstmt.setString(4, account.getEmail());
+			pstmt.setDate(5, account.getBirth());
+			pstmt.setInt(6, account.getGenderId());
+			pstmt.setString(7, user.getUserId());
+			pstmt.setInt(8, account.getManager());
+			pstmt.setString(9, user.getUserId());
 			boolean ret = pstmt.executeUpdate() > 0;
 			pstmt.close();
 			return ret;

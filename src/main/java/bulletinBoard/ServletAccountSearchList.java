@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class ServletAccountSearchList
@@ -35,9 +36,19 @@ public class ServletAccountSearchList extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-
+		
+		HttpSession session = request.getSession(false);
 		UserDAO userDao = new UserDAO();
-		ArrayList<UserInfo> userList = null;
+		String searchName = (String)session.getAttribute("searchUserName");
+		String selectMatch = (String)session.getAttribute("selectMatch");
+		ArrayList<UserInfo> accountList = (ArrayList<UserInfo>)session.getAttribute("AccountSearchList");
+		ArrayList<UserInfo> userList = (ArrayList<UserInfo>)session.getAttribute("UserList");
+		accountList = userDao.getUserInfoList(searchName, selectMatch);
+		session.setAttribute("AccountSearchList", accountList);
+		if (userList == null) {
+			userList = userDao.getAllUserList();
+			session.setAttribute("UserList", userList);
+		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/accountSearchList.jsp");
 		dispatcher.forward(request, response);

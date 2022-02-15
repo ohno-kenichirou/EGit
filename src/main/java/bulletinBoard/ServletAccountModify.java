@@ -1,5 +1,5 @@
 /*
-	処理内容:	アカウント削除確認サーブレット
+	処理内容:	アカウント修正確認サーブレット
 			
 	作成者:大野賢一朗 作成日:2022/02/14(月)
 */
@@ -91,7 +91,7 @@ public class ServletAccountModify extends HttpServlet {
 			session.setAttribute("AccountModify", user);
 			session.setMaxInactiveInterval(60 * 60 * 24);		// セッションの有効期限
 			request.setAttribute("lift", lift);
-			response.sendRedirect("ServletCategoryModifyConfirm");
+			response.sendRedirect("ServletAccountModifyConfirm");
 		}
 	}
 

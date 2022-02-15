@@ -16,16 +16,12 @@ public class UserInfo implements Comparable<UserInfo> {
 	private Date dispUpdDate;
 	private int manager;
 	private int errorCount;
-
-	public UserInfo(String userId, String userName, int manager) {
-		this.userId = userId;
-		this.userName = userName;
-		this.manager = manager;
-	}
 		
 	public UserInfo(String userId,			String userName,	String pass,			String email,		Date birth,		int genderId,
 					String dispInsUserId,	Date dispInsDate,	String dispUpdUserId,	Date dispUpdDate,	int manager,	int errorCount) {
-		this(userId, userName, manager);
+		this.userId = userId;
+		this.userName = userName;
+		this.manager = manager;
 		this.pass = pass;
 		this.email = email;
 		this.birth = birth;
@@ -35,6 +31,14 @@ public class UserInfo implements Comparable<UserInfo> {
 		this.dispUpdUserId = dispUpdUserId;
 		this.dispUpdDate = dispUpdDate;
 		this.errorCount = errorCount;
+	}
+
+	public UserInfo(String userId, String userName, int manager) {
+		this(userId, userName, "", "", null, 0, "", null, null, null, manager, 0);
+	}
+	
+	public UserInfo() {
+		this("", "", 0);
 	}
 
 	public String getUserId() {
