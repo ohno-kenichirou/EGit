@@ -135,6 +135,7 @@
 			</div>
 		<% }%>
 		<input type="hidden" name="errorCount" value="<%= errorCount %>">
+		<input type="hidden" name="fromPage" value="accountModify">
 		<div>
 			<input type="submit" value="確認">
 		</div>

@@ -45,8 +45,12 @@ public class ServletAccountDelConfirm extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		HttpSession session = request.getSession(false);
-		UserInfo account = (UserInfo)session.getAttribute("AccountDel");
 		UserInfo user = (UserInfo)session.getAttribute("User");
+		UserInfo account = (UserInfo)session.getAttribute("AccountDel");
+		if (account == null) {
+			doGet(request,response);
+			return;
+		}
 		UserDAO dao = new UserDAO();
 		if (dao.delAccount(user, account)) {
 			request.setAttribute("message", account.getUserId() + "が削除されました。");

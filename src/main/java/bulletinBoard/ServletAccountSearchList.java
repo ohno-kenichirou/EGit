@@ -50,7 +50,7 @@ public class ServletAccountSearchList extends HttpServlet {
 		request.setAttribute("accountPageNo", pageNo);
 		UserDAO userDao = new UserDAO();
 		int userCnt = userDao.findCntUserInfo(searchName, selectMatch);
-		int totalNum = ((Double)Math.ceil(userCnt/10)).intValue();
+		int totalNum = ((Double)Math.ceil(userCnt/10.0)).intValue();
 		request.setAttribute("totalNum", totalNum);
 		accountList = userDao.findUserInfoList(searchName, selectMatch, pageNo);
 		session.setAttribute("AccountSearchList", accountList);
@@ -58,6 +58,12 @@ public class ServletAccountSearchList extends HttpServlet {
 			userList = userDao.getAllUserList();
 			session.setAttribute("UserList", userList);
 		}
+		ArrayList<GenderInfo> genderList = (ArrayList<GenderInfo>)session.getAttribute("GenderList");
+		if (genderList == null) {
+			GenderDAO genderDao = new GenderDAO();
+			genderList = genderDao.findGenderList();
+			session.setAttribute("GenderList", genderList);
+		}		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/accountSearchList.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -67,10 +73,14 @@ public class ServletAccountSearchList extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		HttpSession session = request.getSession(false);
 		
 		String searchName = request.getParameter("searchUserName");
 		String selectMatch = request.getParameter("selectMatch");
+		if (searchName == null) {
+			doGet(request,response);
+			return;
+		}
+		HttpSession session = request.getSession(false);
 		session.setAttribute("searchUserName", searchName);
 		session.setAttribute("selectMatch", selectMatch);
 		session.setMaxInactiveInterval(60 * 60 * 24);
@@ -78,7 +88,7 @@ public class ServletAccountSearchList extends HttpServlet {
 		if (btn.equals("search")) {
 			UserDAO userDao = new UserDAO();
 			int userCnt = userDao.findCntUserInfo(searchName, selectMatch);
-			int totalNum = ((Double)Math.ceil(userCnt/10)).intValue();
+			int totalNum = ((Double)Math.ceil(userCnt/10.0)).intValue();
 			request.setAttribute("totalNum", totalNum);
 			String pageNo = "1";
 			request.setAttribute("accountPageNo", pageNo);

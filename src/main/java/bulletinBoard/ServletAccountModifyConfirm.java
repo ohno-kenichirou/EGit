@@ -45,8 +45,12 @@ public class ServletAccountModifyConfirm extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		HttpSession session = request.getSession(false);
-		UserInfo account = (UserInfo)session.getAttribute("AccountModify");
 		UserInfo user = (UserInfo)session.getAttribute("User");
+		UserInfo account = (UserInfo)session.getAttribute("AccountModify");
+		if (account == null) {
+			doGet(request,response);
+			return;
+		}
 		UserDAO dao = new UserDAO();
 		String lift = (String)request.getAttribute("lift");
 		if (dao.modifyAccount(user, account, lift)) {

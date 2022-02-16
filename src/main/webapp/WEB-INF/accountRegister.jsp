@@ -127,6 +127,7 @@
 				<input type="radio" name="manager" value="0" checked="checked">無：会員ユーザー
 			<% }%>
 		</div>
+		<input type="hidden" name="fromPage" value="accountRegister">
 		<div>
 			<input type="submit" value="確認">
 		</div>

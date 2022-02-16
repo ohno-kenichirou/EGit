@@ -62,11 +62,16 @@ public class CategoryInfo implements Comparable<CategoryInfo> {
 
 	@Override
 	public int compareTo(CategoryInfo c) {
-		int ret = this.getCategoryName().compareTo(c.getCategoryName());
+		int ret = this.getCategoryKana().compareTo(c.getCategoryKana());
 		if (ret != 0) {
 			return ret;
 		} else {
-			return Integer.compare(this.getCategoryId(), c.getCategoryId());
+			ret = this.getCategoryName().compareTo(c.getCategoryName());
+			if (ret != 0) {
+				return ret;
+			} else {
+				return Integer.compare(this.getCategoryId(), c.getCategoryId());
+			}
 		}
 	}
 

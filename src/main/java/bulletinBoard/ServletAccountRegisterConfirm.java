@@ -45,8 +45,12 @@ public class ServletAccountRegisterConfirm extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		HttpSession session = request.getSession(false);
-		UserInfo account = (UserInfo)session.getAttribute("AccountRegister");
 		UserInfo user = (UserInfo)session.getAttribute("User");
+		UserInfo account = (UserInfo)session.getAttribute("AccountRegister");
+		if (account == null) {
+			doGet(request,response);
+			return;
+		}
 		UserDAO dao = new UserDAO();
 		if (dao.registerAccount(user, account)) {
 			request.setAttribute("message", "新規アカウントを登録しました。");

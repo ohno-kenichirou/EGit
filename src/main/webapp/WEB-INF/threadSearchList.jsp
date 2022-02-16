@@ -46,11 +46,11 @@
 	</head>
 	<body>
 		<header>
-			<a href="ServletThreadSearchList">スレッド一覧</a>
-			
-			<%
-				if (user != null && user.getManager() == 1) {
-			%>
+	<a href="ServletThreadSearchList">スレッド一覧</a>
+	
+	<%
+		if (user != null && user.getManager() == 1) {
+%>
 					<a href="ServletCategorySearchList">カテゴリー一覧</a>
 					<a href="ServletAccountSearchList">アカウント一覧</a>
 			<%		

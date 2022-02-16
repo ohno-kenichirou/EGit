@@ -77,7 +77,7 @@ public class ServletCategorySearchList extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession(false);
 		
-		String btn = request.getParameter("btn");
+		String btn = request.getParameter("update");
 		if (btn.equals("search")) {
 			CategoryListDAO categoryDao = new CategoryListDAO();
 			String searchName = request.getParameter("searchCategoryWord");

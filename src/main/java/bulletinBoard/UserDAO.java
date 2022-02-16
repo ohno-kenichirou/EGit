@@ -194,7 +194,7 @@ public class UserDAO {
 		}
 		try (Connection con = DriverManager.getConnection(this.getConnection());) {
 			String sql = "SELECT COUNT(*) AS cnt "
-					   + "FROM FROM [User] "
+					   + "FROM [User] "
 					   + "WHERE delFlg = 0 ";
 			if (searchName != null && !searchName.equals("")) {
 				String where = "LIKE";

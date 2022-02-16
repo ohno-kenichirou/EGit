@@ -45,8 +45,12 @@ public class ServletCategoryDelConfirm extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		HttpSession session = request.getSession(false);
-		CategoryInfo category = (CategoryInfo)session.getAttribute("CategoryDel");
 		UserInfo user = (UserInfo)session.getAttribute("User");
+		CategoryInfo category = (CategoryInfo)session.getAttribute("CategoryDel");
+		if (category == null) {
+			doGet(request, response);
+			return;
+		}
 		CategoryCommonDAO dao = new CategoryDelDAO(user, category);
 		if (dao.delCategory()) {
 			request.setAttribute("message", "カテゴリーが削除されました。");

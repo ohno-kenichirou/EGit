@@ -49,7 +49,7 @@ public class MakeUserIdDAO {
 			rs.last();
 			int rowNum = rs.getRow();
 			rs.beforeFirst();
-		
+			System.out.println("rowNum:" + rowNum); // テストコメント
 			// 現在年月日のデータが無ければ作成
 			if (rowNum <= 0) {
 				isRes = insMakeUserId(con);
@@ -57,33 +57,37 @@ public class MakeUserIdDAO {
 					rs = getMakeUserIdData(con);
 				}
 			}
-			
+			System.out.println("isRes:" + isRes); // テストコメント
 			Date thisDate = rs.getDate("thisDate");
 			String idAlphabet = rs.getString("idAlphabet");
 			int idNo = rs.getInt("idNo");
+			System.out.println("thisDate:" + thisDate); // テストコメント
+			System.out.println("idAlphabet:" + idAlphabet); // テストコメント
+			System.out.println("idNo:" + idNo); // テストコメント
 			
 			// ユーザーID作成テーブルの更新
 			if (isRes) {
 				isRes = updMakeUserId(con, idAlphabet, idNo);
 			}
-		
+			System.out.println("isRes:" + isRes); // テストコメント
 			// 返すユーザーIDを作成
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 			ret = idAlphabet + sdf.format(thisDate) + String.format("%02d", idNo);
 			
 			if (isRes) {
 				con.commit();
+				System.out.println("commit:"); // テストコメント
 			} else {
 				con.rollback();
+				System.out.println("rollback:"); // テストコメント
 			}
 			rs.close();
 		} catch (SQLException e) {
 			try {
+				e.printStackTrace();
 				con.rollback();
-				isRes = false;
 			} catch (SQLException e2) {
 				e2.printStackTrace();
-				isRes = false;
 			} 
 		} finally {
 			try {
@@ -92,7 +96,6 @@ public class MakeUserIdDAO {
 				}	
 			} catch (SQLException e3) {
 				e3.printStackTrace();
-				isRes = false;
 			}
 		}
 		return ret;
@@ -136,8 +139,8 @@ public class MakeUserIdDAO {
 		String updAlphabet = "";
 		int updNo = 0;
 		if (idNo >= 99) {
-			updNo = 1;
 			updAlphabet = getIncAlphabet(idAlphabet);
+			updNo = 1;
 		} else {
 			updAlphabet = idAlphabet;
 			updNo = ++idNo;
