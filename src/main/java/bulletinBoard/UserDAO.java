@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class UserDAO {
 
@@ -200,6 +201,7 @@ public class UserDAO {
 			}
 			rs.close();
 			pstmt.close();
+			Collections.sort(userList);
 			return userList;
 		} catch (SQLException e) {
 			e.printStackTrace();
