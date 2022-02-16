@@ -151,7 +151,7 @@ public class UserDAO {
 //	}
 	
 	/* 追加 2022/02/10(木)　大野賢一朗 start */
-	public ArrayList<UserInfo> getUserInfoList(String searchName, String selectMatch) {
+	public ArrayList<UserInfo> findUserInfoList(String searchName, String selectMatch, String pageNo) {
 		try {
 			Class.forName(this.getSqlserver());
 		} catch (ClassNotFoundException e) {
@@ -159,9 +159,12 @@ public class UserDAO {
 			return null;
 		}
 		try (Connection con = DriverManager.getConnection(this.getConnection());) {
+			int pageNum = 1;
+			if (pageNo != null && !pageNo.equals("")) {
+				pageNum = Integer.parseInt(pageNo);
+			}
 			String sql = "SELECT userId, userName, email, birth, genderId, dispInsUserId, dispInsDate, dispUpdUserId, dispUpdDate, manager, errorCount "
-					   + "FROM [User] "
-					   + "WHERE	delFlg = 0 ";
+					   + "FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY dispInsDate, userId) AS rowNum FROM [User] WHERE delFlg = 0 ";
 			if (searchName != null && !searchName.equals("")) {
 				String where = "LIKE";
 				if (selectMatch.equals("partial")) {
@@ -171,7 +174,10 @@ public class UserDAO {
 				}
 				sql += " AND userName " + where + " ? ";
 			}
+			sql += ") AS t "
+				+  "WHERE rowNum BETWEEN ? AND ? ";
 			PreparedStatement pstmt = con.prepareStatement(sql);
+			int parameterIndex = 1;
 			if (searchName != null && !searchName.equals("")) {
 				String whereSearchName = "%" + searchName + "%";
 				if (selectMatch.equals("partial")) {
@@ -179,8 +185,10 @@ public class UserDAO {
 				} else if (selectMatch.equals("perfect")) {
 					whereSearchName = searchName;
 				}
-				pstmt.setString(1, whereSearchName);
+				pstmt.setString(parameterIndex++, whereSearchName);
 			}
+			pstmt.setInt(parameterIndex++, pageNum * 10 - 9);
+			pstmt.setInt(parameterIndex++, pageNum * 10);
 			ResultSet rs = pstmt.executeQuery();
 			ArrayList<UserInfo> userList = new ArrayList<>();
 			if (rs.next()) {
@@ -196,6 +204,51 @@ public class UserDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	public int findCntUserInfo(String searchName, String selectMatch) {
+		int ret = 0;
+		try {
+			Class.forName(this.getSqlserver());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return ret;
+		}
+		try (Connection con = DriverManager.getConnection(this.getConnection());) {
+			String sql = "SELECT COUNT(*) AS cnt "
+					   + "FROM FROM [User] "
+					   + "WHERE delFlg = 0 ";
+			if (searchName != null && !searchName.equals("")) {
+				String where = "LIKE";
+				if (selectMatch.equals("partial")) {
+					where = "LIKE";
+				} else if (selectMatch.equals("perfect")) {
+					where = "=";
+				}
+				sql += " AND userName " + where + " ? ";
+			}
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			int parameterIndex = 1;
+			if (searchName != null && !searchName.equals("")) {
+				String whereSearchName = "%" + searchName + "%";
+				if (selectMatch.equals("partial")) {
+					whereSearchName = "%" + searchName + "%";
+				} else if (selectMatch.equals("perfect")) {
+					whereSearchName = searchName;
+				}
+				pstmt.setString(parameterIndex++, whereSearchName);
+			}
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				ret = rs.getInt("cnt");
+			}
+			rs.close();
+			pstmt.close();
+			return ret;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return ret;
 		}
 	}
 	

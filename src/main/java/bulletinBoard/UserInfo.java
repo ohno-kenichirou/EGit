@@ -33,8 +33,12 @@ public class UserInfo implements Comparable<UserInfo> {
 		this.errorCount = errorCount;
 	}
 
+	public UserInfo(String userId, String userName, String email, Date birth, int genderId, int manager, int errorCount) {
+		this(userId, userName, "", email, birth, genderId, "", null, null, null, manager, errorCount);
+	}
+
 	public UserInfo(String userId, String userName, int manager) {
-		this(userId, userName, "", "", null, 0, "", null, null, null, manager, 0);
+		this(userId, userName, "", null, 0, manager, 0);
 	}
 	
 	public UserInfo() {

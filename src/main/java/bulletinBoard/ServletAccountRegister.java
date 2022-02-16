@@ -60,7 +60,7 @@ public class ServletAccountRegister extends HttpServlet {
 		String pass = request.getParameter("pass");
 		String userName = request.getParameter("userName");
 		String birth = request.getParameter("birth");
-		String gender = request.getParameter("gender");
+		String genderId = request.getParameter("genderId");
 		String manager = request.getParameter("manager");
 				
 		String msg = null;
@@ -75,7 +75,7 @@ public class ServletAccountRegister extends HttpServlet {
 			msg = "ユーザー名が入力されていません。";
 		} else if (birth == null || birth.equals("")) {
 			msg = "生年月日が入力されていません。";
-		} else if (gender == null || gender.equals("")) {
+		} else if (genderId == null || genderId.equals("")) {
 			msg = "性別が選択されていません。";
 		} else if (manager == null || manager.equals("")) {
 			msg = "管理者権限の有無が選択されていません。";
@@ -92,7 +92,7 @@ public class ServletAccountRegister extends HttpServlet {
 			user.setPass(pass);
 			user.setEmail(email);
 			user.setBirth(java.sql.Date.valueOf(birth));
-			user.setGenderId(Integer.parseInt(gender));
+			user.setGenderId(Integer.parseInt(genderId));
 			user.setManager(Integer.parseInt(manager));
 			session.setAttribute("AccountRegister", user);
 			session.setMaxInactiveInterval(60 * 60 * 24);		// セッションの有効期限

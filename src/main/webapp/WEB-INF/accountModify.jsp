@@ -103,9 +103,9 @@
 		<div>
 			<% for (GenderInfo gender : genderList) { 
 					if (gender.getGenderId() == genderId) { %>
-						<input type="radio" name="gender" checked="checked" value="<%= gender.getGenderId() %>"><%= gender.getGenderName() %>
+						<input type="radio" name="genderId" checked="checked" value="<%= gender.getGenderId() %>"><%= gender.getGenderName() %>
 			<%		} else { %>
-						<input type="radio" name="gender" value="<%= gender.getGenderId() %>"><%= gender.getGenderName() %>
+						<input type="radio" name="genderId" value="<%= gender.getGenderId() %>"><%= gender.getGenderName() %>
 			<%		}
 				} %>
 		</div>

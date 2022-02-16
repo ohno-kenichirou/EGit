@@ -14,6 +14,8 @@
 	String message = (String)request.getAttribute("message");
 	String searchName = (String)session.getAttribute("searchUserName");
 	String selectMatch = (String)session.getAttribute("selectMatch");
+	int pageNo = (Integer)session.getAttribute("accountPageNo"); 
+	int totalNum = (Integer)session.getAttribute("totalNum"); 
 	ArrayList<UserInfo> accountList = (ArrayList<UserInfo>)request.getAttribute("sendAccountList");
 	ArrayList<GenderInfo> genderList = (ArrayList<GenderInfo>)session.getAttribute("GenderList");
 	ArrayList<UserInfo> userList = (ArrayList<UserInfo>)session.getAttribute("UserList");
@@ -80,36 +82,41 @@
 			<tr>
 				<td>
 					<form action="ServletAccountModify" method="post">
-						<input type="hidden" name="userId">
-						<input type="hidden" name="btn" value="modify">
+						<input type="hidden" name="userId"		value="<%= account.getUserId() %>">
+						<input type="hidden" name="email"		value="<%= account.getEmail() %>">
+						<input type="hidden" name="userName"	value="<%= account.getUserName() %>">
+						<input type="hidden" name="birth"		value="<%= account.getBirth() %>">
+						<input type="hidden" name="genderId"	value="<%= account.getGenderId() %>">
+						<input type="hidden" name="manager"		value="<%= account.getManager() %>">
+						<input type="hidden" name="errorCount"	value="<%= account.getErrorCount() %>">
+						<input type="hidden" name="btn"			value="modify">
 						<input type="submit" value="修正">
 					</form>
 				</td>
 				<td>
 					<form action="ServletAccountDelConfirm" method="post">
-						<input type="hidden" name="userId">
-						<input type="hidden" name="btn" value="delete">
+						<input type="hidden" name="userId"		value="<%= account.getUserId() %>">
+						<input type="hidden" name="email"		value="<%= account.getEmail() %>">
+						<input type="hidden" name="userName"	value="<%= account.getUserName() %>">
+						<input type="hidden" name="birth"		value="<%= account.getBirth() %>">
+						<input type="hidden" name="genderId"	value="<%= account.getGenderId() %>">
+						<input type="hidden" name="manager"		value="<%= account.getManager() %>">
+						<input type="hidden" name="errorCount"	value="<%= account.getErrorCount() %>">
+						<input type="hidden" name="btn"			value="modify">
+						<input type="hidden" name="btn"			value="delete">
 						<input type="submit" value="削除">
 					</form>
 				</td>
+				<td><%= account.getUserId() %></td>
+				<td><%= account.getEmail() %></td>
+				<td><%= account.getUserName() %></td>
+				<td><%= sdf.format(account.getBirth()) %></td>
 				<td>
-					<%= account.getUserId() %>
-				</td>
-				<td>
-					<%= account.getEmail() %>
-				</td>
-				<td>
-					<%= account.getUserName() %>
-				</td>
-				<td>
-					<%= sdf.format(account.getBirth()) %>
-				</td>
-				<td>
-				<%	for (GenderInfo gender : genderList) { 
-						if (gender.getGenderId() == account.getGenderId()) {	%>
+					<% for (GenderInfo gender : genderList) { 
+						if (gender.getGenderId() == account.getGenderId()) { %>
 							<%= gender.getGenderName() %>
-				<%		}
-					}	%>
+					<%	}
+					} %>
 				</td>
 				<td>
 					<% if (account.getManager() == 1) { %>
@@ -118,24 +125,36 @@
 						無
 					<% } %>
 				</td>
+				<td><%= account.getErrorCount() %></td>
 				<td>
-					<%= account.getErrorCount() %>
+					<% for (UserInfo user : userList) { 
+						if (user.getUserId().equals(account.getDispInsUserId())) { %>
+							<%= user.getUserName() %>
+						<% }
+					} %>
+				</td>
+				<td><%= sdf.format(account.getDispInsDate()) %></td>
+				<td>
+					<% for (UserInfo user : userList) { 
+						if (user.getUserId().equals(account.getDispUpdUserId())) { %>
+							<%= user.getUserName() %>
+						<% }
+					} %>
 				</td>
 				<td>
-					<%= account.getDispInsUserId() %>
-				</td>
-				<td>
-					<%= account.getDispInsDate() %>
-				</td>
-				<td>
-					<%= account.getDispUpdUserId() %>
-				</td>
-				<td>
-					<%= account.getDispUpdDate() %>
+					<% if (account.getDispUpdDate() != null) { %>
+						<%= sdf.format(account.getDispUpdDate()) %>
+					<% } %>
 				</td>
 			</tr>
 		</table>
 	<% } %>
-	<a href="ServletAccountSearchList?page=">1</a>
+	<% for (int i = 1; i <= totalNum; i++) {
+		if (i == pageNo) { %>
+			<span><%= i %></span>
+		<% } else { %>
+			<a href="ServletAccountSearchList?page=<%= i %>"><%= i %></a>
+		<% }
+	} %>
 </body>
 </html>
