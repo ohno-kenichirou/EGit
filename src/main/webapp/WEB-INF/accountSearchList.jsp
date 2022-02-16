@@ -16,7 +16,7 @@
 	String selectMatch = (String)session.getAttribute("selectMatch");
 	int pageNo = (Integer)session.getAttribute("accountPageNo"); 
 	int totalNum = (Integer)session.getAttribute("totalNum"); 
-	ArrayList<UserInfo> accountList = (ArrayList<UserInfo>)request.getAttribute("sendAccountList");
+	ArrayList<UserInfo> accountList = (ArrayList<UserInfo>)session.getAttribute("AccountSearchList");
 	ArrayList<GenderInfo> genderList = (ArrayList<GenderInfo>)session.getAttribute("GenderList");
 	ArrayList<UserInfo> userList = (ArrayList<UserInfo>)session.getAttribute("UserList");
 	if (searchName == null) {

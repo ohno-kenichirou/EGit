@@ -42,8 +42,8 @@ public class ServletThreadCreate extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		
 		CategoryListDAO categoryDao = new CategoryListDAO();
-		ArrayList<CategoryInfo> categoryList = categoryDao.findCategoryList();
-		request.setAttribute("sendCategoryList", categoryList);
+		ArrayList<CategoryNameDisp> categoryList = categoryDao.searchAndSetList();
+		session.setAttribute("CategoryList", categoryList);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/threadCreate.jsp");
 		dispatcher.forward(request, response);

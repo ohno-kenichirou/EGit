@@ -30,6 +30,13 @@ public class ServletLogout extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			session.removeAttribute("ThreadSearchInfo");
+			session.removeAttribute("CategorySearchInfo");
+		}
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/logout.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -51,15 +58,8 @@ public class ServletLogout extends HttpServlet {
 				break;
 		}
 		
-		ThreadDAO dao = new ThreadDAO();
-		ArrayList<ThreadDispInfo> threadList = dao.searchAndSetList(1);
-		request.setAttribute("sendThreadList", threadList);
-		
-		CategoryListDAO categoryDao = new CategoryListDAO();
-		ArrayList<CategoryInfo> categoryList = categoryDao.findCategoryList();
-		request.setAttribute("sendCategoryList", categoryList);
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/threadSearchList.jsp");
+		request.setAttribute("logout", "logoutExecution");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("ServletThreadSearchList");
 		dispatcher.forward(request, response);
 	}
 

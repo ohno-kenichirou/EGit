@@ -59,17 +59,14 @@ public class ServletThreadCreateConfirm extends HttpServlet {
 			
 			if (dao.newThread(newThread, user)) {
 				dispatcher = request.getRequestDispatcher("ServletThreadSearchList");
+				session.removeAttribute("NewThreadInfo");
 			} else {
 				dispatcher = request.getRequestDispatcher("ServletThreadCreate");
 			}
 						
 		} else {
 			NewThreadInfo newThread = new NewThreadInfo(title, categoryId, comment);
-			request.setAttribute("sendNewThreadInfo", newThread);
-			
-			CategoryListDAO categoryDao = new CategoryListDAO();
-			ArrayList<CategoryInfo> categoryList = categoryDao.findCategoryList();
-			request.setAttribute("sendCategoryList", categoryList);
+			session.setAttribute("NewThreadInfo", newThread);
 			
 			dispatcher = request.getRequestDispatcher("WEB-INF/threadCreateConfirm.jsp");
 		}

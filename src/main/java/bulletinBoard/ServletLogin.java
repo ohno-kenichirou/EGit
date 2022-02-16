@@ -39,8 +39,12 @@ public class ServletLogin extends HttpServlet {
 		if (session == null) {
 			session = request.getSession();
 			session.setAttribute("User", null);
+			session.setMaxInactiveInterval(60 * 60 * 24);
+		} else {
+			session.removeAttribute("ThreadSearchInfo");
+			session.removeAttribute("CategorySearchInfo");
 		}
-		
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/login.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -61,8 +65,7 @@ public class ServletLogin extends HttpServlet {
 		} else {
 			TryUserLogin tryLogin = new TryUserLogin(email, pass);
 			UserDAO userDao = new UserDAO();
-			String hash = userDao.getHash(pass);
-			System.out.println(hash);
+			
 			switch (userDao.findUser(tryLogin)) {
 				case 0:
 					dispatcher = request.getRequestDispatcher("ServletThreadSearchList");
@@ -71,7 +74,7 @@ public class ServletLogin extends HttpServlet {
 					ArrayList<ThreadDispInfo> threadList = null;
 					ThreadDAO threadDao = new ThreadDAO();
 					threadList = threadDao.searchAndSetList(1);
-					request.setAttribute("sendThreadList", threadList);
+					session.setAttribute("ThreadList", threadList);
 					break;
 				case 1:
 					request.setAttribute("message", "このアカウントはロックされています");

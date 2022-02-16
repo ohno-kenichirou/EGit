@@ -31,7 +31,7 @@
 							Email 
 						</label>
 					</th>
-					<td class="border">
+					<td>
 						<input type="email" id="email" name="email" required>
 					</td>
 				</tr>

@@ -4,26 +4,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="bulletinBoard.CategoryInfo" %>
+<%@ page import="bulletinBoard.CategoryNameDisp" %>
 <%@ page import="bulletinBoard.UserInfo" %>
+<%@ page import="bulletinBoard.CategorySearchInfo" %>
 <%
-	String searchCategoryWord = (String)request.getAttribute("searchCategoryWord");
-	if (searchCategoryWord == null) {
-		searchCategoryWord = "カテゴリー名入力";
+	CategorySearchInfo categorySearch = (CategorySearchInfo)session.getAttribute("CategorySearchInfo");
+	String searchWord = null;
+	if (categorySearch != null) {
+		searchWord = categorySearch.getSearchWord();
 	}
 	
 	String message = (String)request.getAttribute("message");
 	
-	String searchWord = (String)request.getAttribute("searchWord");
-	if (searchWord == null) {
-		searchWord = "タイトル入力";
+	ArrayList<CategoryNameDisp> categoryList = null;
+	if (session.getAttribute("CategoryList") instanceof ArrayList) {
+		categoryList = (ArrayList<CategoryNameDisp>)session.getAttribute("CategoryList");
+	}	
+	
+	Integer pagination = 1;
+	if (session.getAttribute("CategoryPagination") instanceof Integer) {
+		pagination = (Integer)session.getAttribute("CategoryPagination");
 	}
-	ArrayList<CategoryInfo> categoryList = null;
-	if (request.getAttribute("sendCategoryList") instanceof ArrayList) {
-		categoryList = (ArrayList<CategoryInfo>)request.getAttribute("sendCategoryList");
-	}			
+	
 	UserInfo user = (UserInfo)session.getAttribute("User");
 	int threadId;
+	
 %>
 
 <!DOCTYPE html>
@@ -34,38 +39,35 @@
 		<link rel="stylesheet" type="text.css" href="../css.css">
 	</head>
 	<body>
-		<header>
-			<a href="ServletThreadSearchList">スレッド一覧</a>
-			
-			<%
-				if (user != null && user.getManager() == 1) {
-			%>
-					<a href="ServletCategorySearchList">カテゴリー一覧</a>
-					<a href="ServletAccountSearchList">アカウント一覧</a>
-			<%		
-				}
-				if (user != null) {
-			%>
-					<a href="ServletLogout">ログアウト</a>	
-			<%
-				} else {
-			%>
-					<a href="ServletLogin">ログイン</a>	
-			<%
-				}
-			%>		
-				
-		</header>
-		<hr>
+	 	<jsp:include page="header.jsp" flush="true" />
 		
 		<form action="ServletCategorySearchList" method="post">
 			<label>
 				<span>カテゴリー名:</span>
 			</label>			
-			<input type="text" id="searchCategoryWord" name="searchCategoryWord" placeholder="<%= searchCategoryWord %>">
-			<input type="radio" name="selectMatch" value="partial" checked="checked">部分一致
-			<input type="radio" name="selectMatch" value="perfect">完全一致
-			<input type="hidden" name="btn" value="search">
+			<input type="text" name="searchWord" placeholder="カテゴリー名入力" <%
+			  																	if (searchWord != null) {
+			  																%>
+			  																		value="<%= searchWord %>"
+			  																<%		
+			  																	}
+																			%>>
+				<input type="radio" name="match" value="part" id="part" <%
+																			if (categorySearch == null || (categorySearch != null && categorySearch.getMatch().equals("part"))) {	
+																		%>
+																				checked="checked"
+																		<%
+																			}
+																		%>		
+																		><label for="part">部分一致</label>
+				<input type="radio" name="match" value="all" id="all" <%
+																			if (categorySearch != null && categorySearch.getMatch().equals("all")) {	
+																	   %>
+																	   			checked="checked"
+																	  <%
+																			}
+																	  %>
+																	  ><label for="all">完全一致</label>
 			<input type="submit" value="検索">
 		</form>
 		<hr>
@@ -80,53 +82,44 @@
 			}
 		%>
 		
-		<form action="ServletCategorySearchList" method="post">
-			<input type="hidden" name="btn" value="add">
+		<form action="ServletCategoryAdd" method="get">
 			<input type="submit" value="カテゴリー追加">
 		</form>
 		
 		<%
-			for (CategoryInfo category : categoryList) {
+			for (CategoryNameDisp category : categoryList) {
 		%>
-			
-			<p>
-				<div style="display:inline-flex;">
+				
+				<p>
 					<%= category.getCategoryName() %>
-				</div>
-				<div style="display:inline-flex;">
 					<form action="ServletCategorySearchList" method="post">
 						<input type="submit" value="修正">
-						<input type="hidden" name="btn" value="modify">
-						<input type="hidden" name="categoryId" value=<%= category.getCategoryId() %>>
-						<input type="hidden" name="categoryName" value=<%= category.getCategoryName() %>>
-						<input type="hidden" name="categoryKana" value=<%= category.getCategoryKana() %>>
+						<input type="hidden" name="update" value="modify">
+						<input type="hidden" name="categoryId" value="<%= category.getCategoryId() %>">
 					</form>
-				</div>
-				<div style="display:inline-flex;">
 					<form action="ServletCategorySearchList" method="post">
 						<input type="submit" value="削除">
-						<input type="hidden" name="btn" value="delete">
-						<input type="hidden" name="categoryId" value=<%= category.getCategoryId() %>>
-						<input type="hidden" name="categoryName" value=<%= category.getCategoryName() %>>
-						<input type="hidden" name="categoryKana" value=<%= category.getCategoryKana() %>>
+						<input type="hidden" name="update" value="delete">
+						<input type="hidden" name="categoryId" value="<%= category.getCategoryId() %>">
 					</form>
-				</div>
-			</p>
-			
+				</p>
+				
 		<%
 			}
 		%>
 		
-		<a href="#">1</a>
-		<a href="#">2</a>
-		<a href="#">3</a>
-		<a href="#">4</a>
-		<a href="#">5</a>
-		<a href="#">6</a>
-		<a href="#">7</a>
-		<a href="#">8</a>
-		<a href="#">9</a>
-		<a href="#">10</a>
+		<br>
+		
+		<%
+			for (int i = 1; i <= pagination; i++) {
+		%>
+				<a href="ServletCategorySearchList?page=<%= i  %>"><%= i %></a>	
+		<%
+				if (i == 10) {
+					break;
+				}
+			}
+		%>
 	
 	</body>
 </html>

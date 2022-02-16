@@ -49,9 +49,9 @@ public class ServletCommentDelConfirm extends HttpServlet {
 		
 		if (delete != null && delete.equals("yes")) {
 			request.setAttribute("sendDeleteMessage", commentDao.deleteComment(threadId, commentId));
-			request.setAttribute("sendCommentList", commentDao.searchAndSetList(threadId));
-			request.setAttribute("sendThreadInfo", new ThreadDAO().threadDisp(threadId));
-			dispatcher = request.getRequestDispatcher("WEB-INF/threadDetail.jsp");
+			session.setAttribute("CommentList", commentDao.searchAndSetList(threadId));
+			session.setAttribute("ThreadInfo", new ThreadDAO().threadDisp(threadId));
+			dispatcher = request.getRequestDispatcher("ServletThreadDetail");
 			
 		} else {
 			request.setAttribute("sendDeleteCommentInfo", commentDao.deleteCommentDisp(threadId, commentId));

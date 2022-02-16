@@ -35,21 +35,45 @@ public class ServletThreadSearchList extends HttpServlet {
 		
 		RequestDispatcher dispatcher;
 		if (session != null) {
-			int page;
+			session.removeAttribute("CategorySearchInfo");
 			
+			int page;
 			try {
 				page = Integer.parseInt(request.getParameter("page"));
 			} catch (NumberFormatException e) {
 				page = 1;
+				session.removeAttribute("ThreadSearchInfo");
 			}
 			
-			ThreadDAO threadDao = new ThreadDAO();
-			ArrayList<ThreadDispInfo> threadList = threadDao.searchAndSetList(page);
-			request.setAttribute("sendThreadList", threadList);
+			ThreadSearchInfo threadSearch = (ThreadSearchInfo)session.getAttribute("ThreadSearchInfo");
+			if (threadSearch != null) {
+				
+				String searchWord = threadSearch.getSearchWord();
+				String match = threadSearch.getMatch();
+				Integer categoryId = threadSearch.getCategoryId();
+				
+				if (searchWord != null && match != null && categoryId != null) {
+					
+					ThreadDAO threadDao = new ThreadDAO();
+					ArrayList<ThreadDispInfo> threadList = threadDao.threadSearch(threadSearch, page);
+					session.setAttribute("ThreadList", threadList);
+					session.setAttribute("ThreadPagination", new ThreadDAO().threadSearchCount(threadSearch));
+				} else {
+					ThreadDAO threadDao = new ThreadDAO();
+					ArrayList<ThreadDispInfo> threadList = threadDao.searchAndSetList(page);
+					session.setAttribute("ThreadList", threadList);
+					session.setAttribute("ThreadPagination", new ThreadDAO().searchAndSetListCount());
+				}
+			} else {
+				ThreadDAO threadDao = new ThreadDAO();
+				ArrayList<ThreadDispInfo> threadList = threadDao.searchAndSetList(page);
+				session.setAttribute("ThreadList", threadList);
+				session.setAttribute("ThreadPagination", new ThreadDAO().searchAndSetListCount());
+			}
 			
 			CategoryListDAO categoryDao = new CategoryListDAO();
-			ArrayList<CategoryInfo> categoryList = categoryDao.findCategoryList();
-			request.setAttribute("sendCategoryList", categoryList);
+			ArrayList<CategoryNameDisp> categoryList = categoryDao.searchAndSetList();
+			session.setAttribute("CategoryList", categoryList);
 			
 			dispatcher = request.getRequestDispatcher("WEB-INF/threadSearchList.jsp");			
 		} else {
@@ -66,13 +90,77 @@ public class ServletThreadSearchList extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession(false);
 		
-		String searchWord = request.getParameter("searchWord");
-		String match = request.getParameter("match");
-//		int categoryId = Integer.parseInt("categoryId");
+		String logout = request.getParameter("logout");
 		
-//		if ((searchWord == null || !searchWord.equals("")) && )
+		int page;
+		try {
+			page = Integer.parseInt(request.getParameter("page"));
+		} catch (NumberFormatException e) {
+			page = 1;
+		}
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/threadSearchList.jsp");
+		RequestDispatcher dispatcher;
+		if (logout != null && logout.equals("logoutExecution")) {
+			
+			ThreadDAO threadDao = new ThreadDAO();
+			ArrayList<ThreadDispInfo> threadList = threadDao.searchAndSetList(page);
+			session.setAttribute("ThreadList", threadList);
+			session.setAttribute("ThreadPagination", new ThreadDAO().searchAndSetListCount());
+			
+			CategoryListDAO categoryDao = new CategoryListDAO();
+			ArrayList<CategoryNameDisp> categoryList = categoryDao.searchAndSetList();
+			session.setAttribute("CategoryList", categoryList);
+			
+			dispatcher = request.getRequestDispatcher("WEB-INF/threadSearchList.jsp");		
+			
+		} else {
+			
+			String searchWord = request.getParameter("searchWord");
+			String match = request.getParameter("match");
+			int categoryId;
+			
+			try {
+				categoryId = Integer.parseInt(request.getParameter("categoryId"));
+			} catch (NumberFormatException e) {
+				categoryId = 0;	
+			}
+			
+			if (match == null) {
+				
+				ThreadDAO threadDao = new ThreadDAO();
+				ArrayList<ThreadDispInfo> threadList = threadDao.searchAndSetList(page);
+				session.setAttribute("ThreadList", threadList);
+				session.setAttribute("ThreadPagination", new ThreadDAO().searchAndSetListCount());
+				
+				CategoryListDAO categoryDao = new CategoryListDAO();
+				ArrayList<CategoryNameDisp> categoryList = categoryDao.searchAndSetList();
+				session.setAttribute("CategoryList", categoryList);
+				
+				dispatcher = request.getRequestDispatcher("WEB-INF/threadSearchList.jsp");	
+				
+			} else {
+				
+				if (session != null) {
+					ThreadSearchInfo threadSearch = new ThreadSearchInfo(searchWord, match, categoryId);
+					session.setAttribute("ThreadSearchInfo", threadSearch);
+					
+					ThreadDAO threadDao = new ThreadDAO();
+					ArrayList<ThreadDispInfo> threadList = threadDao.threadSearch(threadSearch, page);
+					session.setAttribute("ThreadList", threadList);
+					session.setAttribute("ThreadPagination", new ThreadDAO().threadSearchCount(threadSearch));
+					
+					CategoryListDAO categoryDao = new CategoryListDAO();
+					ArrayList<CategoryNameDisp> categoryList = categoryDao.searchAndSetList();
+					session.setAttribute("CategoryList", categoryList);
+					
+					dispatcher = request.getRequestDispatcher("WEB-INF/threadSearchList.jsp");			
+				} else {
+					dispatcher = request.getRequestDispatcher("ServletLogin");
+				}
+			}
+				
+		}
+				
 		dispatcher.forward(request, response);
 	}
 

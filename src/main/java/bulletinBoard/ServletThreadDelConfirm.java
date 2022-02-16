@@ -30,7 +30,17 @@ public class ServletThreadDelConfirm extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/threadDelConfirm.jsp");
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession(false);
+		UserInfo user = (UserInfo)session.getAttribute("User");
+		
+		RequestDispatcher dispatcher;
+		if (user == null || session == null) {
+			dispatcher = request.getRequestDispatcher("ServletLogin");
+		} else {
+			dispatcher = request.getRequestDispatcher("ServletThreadSearchList");
+		}
+		
 		dispatcher.forward(request, response);
 	}
 

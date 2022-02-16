@@ -54,21 +54,18 @@ public class ServletCommentPostConfirm extends HttpServlet {
 		if (newComment != null && newComment.equals("yes")) {
 			UserInfo user = (UserInfo)session.getAttribute("User");
 			if (commentDao.postComment(user, commentInfo)) {
-				dispatcher = request.getRequestDispatcher("WEB-INF/threadDetail.jsp");
-				
-				ThreadDAO threadDao = new ThreadDAO();
-				request.setAttribute("sendThreadInfo", threadDao.threadDisp(threadId));
-				
+				dispatcher = request.getRequestDispatcher("ServletThreadDetail");
+				request.setAttribute("threadId", threadId);
 				ArrayList<CommentInfo> commentList = commentDao.searchAndSetList(threadId);
-				request.setAttribute("sendCommentList", commentList);
+				session.setAttribute("CommentList", commentList);
+				session.removeAttribute("NewCommentInfo");
 				if (commentList.size() >= 50) {
 					request.setAttribute("sendCommentMessage", "コメント数が50件以上のため、コメントすることができません");
-				}
-				
+				}	
 			}
 						
 		} else {
-			request.setAttribute("sendNewCommentInfo", commentInfo);
+			session.setAttribute("NewCommentInfo", commentInfo);
 		}
 					
 		dispatcher.forward(request, response);

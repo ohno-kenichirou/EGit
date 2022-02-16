@@ -33,14 +33,14 @@ public class ServletThreadDetail extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession(false);
 		
-		int threadId = Integer.parseInt(request.getParameter("threadInfo"));
+		int threadId = Integer.parseInt(request.getParameter("threadId"));
 		
 		ThreadDAO threadDao = new ThreadDAO();
-		request.setAttribute("sendThreadInfo", threadDao.threadDisp(threadId));
+		session.setAttribute("ThreadInfo", threadDao.threadDisp(threadId));
 		
 		CommentDAO commentDao = new CommentDAO();
 		ArrayList<CommentInfo> commentList = commentDao.searchAndSetList(threadId);
-		request.setAttribute("sendCommentList", commentList);
+		session.setAttribute("CommentList", commentList);
 		if (commentList.size() >= 50) {
 			request.setAttribute("sendCommentMessage", "コメント数が50件以上のため、コメントすることができません");
 		}
@@ -52,8 +52,15 @@ public class ServletThreadDetail extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession(false);
+		
+		ArrayList<CommentInfo> commentList = (ArrayList<CommentInfo>)session.getAttribute("CommentList");
+		if (commentList.size() >= 50) {
+			request.setAttribute("sendCommentMessage", "コメント数が50件以上のため、コメントすることができません");
+		}
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/threadDetail.jsp");
+		dispatcher.forward(request, response);
 	}
 
 }

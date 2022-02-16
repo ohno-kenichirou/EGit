@@ -6,18 +6,36 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="bulletinBoard.ThreadDispInfo" %>
 <%@ page import="bulletinBoard.UserInfo" %>
+<%@ page import="bulletinBoard.CategoryNameDisp" %>
+<%@ page import="bulletinBoard.ThreadSearchInfo" %>
 <%
-	String searchWord = (String)request.getAttribute("searchWord");
-	if (searchWord == null) {
-		searchWord = "タイトル入力";
+	ThreadSearchInfo threadSearch = (ThreadSearchInfo)session.getAttribute("ThreadSearchInfo");
+	
+	String searchWord = null;
+	if (threadSearch != null) {
+		searchWord = threadSearch.getSearchWord();
 	}
-	String message = (String)request.getAttribute("message");
+	
+	String message = (String)request.getAttribute("sendMessage");
+	
 	ArrayList<ThreadDispInfo> threadList = null;
-	if (request.getAttribute("sendThreadList") instanceof ArrayList) {
-		threadList = (ArrayList<ThreadDispInfo>)request.getAttribute("sendThreadList");
-	}			
+	if (session.getAttribute("ThreadList") instanceof ArrayList) {
+		threadList = (ArrayList<ThreadDispInfo>)session.getAttribute("ThreadList");
+	}
+	
+	ArrayList<CategoryNameDisp> categoryList = null;
+	if (session.getAttribute("CategoryList") instanceof ArrayList) {
+		categoryList = (ArrayList<CategoryNameDisp>)session.getAttribute("CategoryList");
+	}
+	
 	UserInfo user = (UserInfo)session.getAttribute("User");
-	int i;
+	
+	Integer pagination = 1;
+	if (session.getAttribute("ThreadPagination") instanceof Integer) {
+		pagination = (Integer)session.getAttribute("ThreadPagination");
+	}
+	
+	int threadId;
 %>
 <!DOCTYPE html>
 <html>
@@ -34,7 +52,7 @@
 				if (user != null && user.getManager() == 1) {
 			%>
 					<a href="ServletCategorySearchList">カテゴリー一覧</a>
-					<a href="#">アカウント一覧</a>
+					<a href="ServletAccountSearchList">アカウント一覧</a>
 			<%		
 				}
 				if (user != null) {
@@ -51,17 +69,40 @@
 		</header>
 		<hr>
 		
-		<form action="#">
+		<form action="ServletThreadSearchList" method="post">
 			<p>
 				<span>タイトル:</span>
-				<input type="text" name="searchWord	" placeholder="<%= searchWord %>">
-				<input type="radio" neme="match" value="部分一致" checked="checked">部分一致
-				<input type="radio" neme="match" value="完全一致">完全一致
+				<input type="text" name="searchWord" placeholder="タイトル入力" <%
+																				if (searchWord != null) {
+																			%>
+																					value="<%= searchWord %>"
+																			<%
+																				}
+																			%>>
+				<input type="radio" name="match" value="part" id="part" checked="checked"><label for="part">部分一致</label>
+				<input type="radio" name="match" value="all" id="all"><label for="all">完全一致</label>
 			</p>
 			<p>
 				<span>カテゴリー:</span>
-				<select name="searchCategory">
-					<option value="no">検索条件に含まない</option>
+				<select name="categoryId">
+					<option value="0">検索条件に含まない</option>
+					<%
+						if (categoryList != null && categoryList.size() != 0) {
+							for (CategoryNameDisp category : categoryList) {
+					%>
+								<option value="<%= category.getCategoryId() %>" <%
+																					if (threadSearch != null && threadSearch.getCategoryId() == category.getCategoryId()) {
+																				%>
+																						selected
+																				<%
+																					}
+																				%>>
+									<%= category.getCategoryName() %>
+								</option>
+					<%			
+							}
+						}
+					%>
 				</select>
 				<input type="submit" value="検索">
 			</p>
@@ -76,47 +117,57 @@
 				</div>
 		<%	
 			}
+			if (user != null) {
 		%>
 		
-		<form action="ServletThreadCreate" method="post">
-			<input type="submit" value="スレッドを立てる">
-		</form>
-		
-		
+				<form action="ServletThreadCreate" method="post">
+					<input type="submit" value="スレッドを立てる">
+				</form>
 		
 		<%
-			for (ThreadDispInfo thread : threadList) {
-				i = thread.getThreadId();
+			}
+			
+			if (threadList != null) {
+				for (ThreadDispInfo thread : threadList) {
+					
 		%>
 				
-				<p>
-					<a href="ServletThreadDetail?threadInfo=<%= i %>"><%= thread.getTitle() %></a>
-					<br>
-					<span>カテゴリー:<%= thread.getCategory() %></span>
-					<span>作成者:<%= thread.getCreateUserName() %></span>
-					<span>作成日:<%= thread.getCreateDate().substring(0, 11) %></span>
-					<form action="ServletThreadDelConfirm" method="post">
-						<input type="submit" value="削除">
-						<input type="hidden" name="update" value="delete">
-						<input type="hidden" name="threadId" value="<%= thread.getThreadId() %>">
-					</form>
-				</p>
-				
+					<p>
+						<a href="ServletThreadDetail?threadId=<%= thread.getThreadId() %>"><%= thread.getTitle() %></a>
+						<br>
+						<span>カテゴリー:<%= thread.getCategory() %></span>
+						<span>作成者:<%= thread.getCreateUserName() %></span>
+						<span>作成日:<%= thread.getCreateDate().substring(0, 11) %></span>
+						
+						<%
+							if (user != null && user.getManager() == 1) {
+						%>
+								<form action="ServletThreadDelConfirm" method="post">
+									<input type="submit" value="削除">
+									<input type="hidden" name="threadId" value="<%= thread.getThreadId() %>">
+								</form>
+						<%
+							}
+						%>
+						
+					</p>
+					
 		<%
+				}
 			}
 		%>
 		
 		<br>
 		
-		<a href="ServletThreadSearchList?page=1">1</a>
-		<a href="ServletThreadSearchList?page=2">2</a>
-		<a href="ServletThreadSearchList?page=3">3</a>
-		<a href="ServletThreadSearchList?page=4">4</a>
-		<a href="ServletThreadSearchList?page=5">5</a>
-		<a href="ServletThreadSearchList?page=6">6</a>
-		<a href="ServletThreadSearchList?page=7">7</a>
-		<a href="ServletThreadSearchList?page=8">8</a>
-		<a href="ServletThreadSearchList?page=9">9</a>
-		<a href="ServletThreadSearchList?page=10">10</a>
+		<%
+			for (int i = 1; i <= pagination; i++) {
+		%>
+				<a href="ServletThreadSearchList?page=<%= i  %>"><%= i %></a>	
+		<%
+				if (i == 10) {
+					break;
+				}
+			}
+		%>
 	</body>
 </html>

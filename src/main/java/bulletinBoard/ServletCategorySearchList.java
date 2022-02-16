@@ -32,10 +32,39 @@ public class ServletCategorySearchList extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession(false);
+		if (session != null) {
+			session.removeAttribute("ThreadSearchInfo");
+		}
+
+		int page;
+		try {
+			page = Integer.parseInt(request.getParameter("page"));
+		} catch (NumberFormatException e) {
+			page = 1;
+			session.removeAttribute("CategorySearchInfo");
+		}
 		
-		CategoryListDAO categoryDao = new CategoryListDAO();
-		ArrayList<CategoryInfo> categoryList = categoryDao.findCategoryList();
-		request.setAttribute("sendCategoryList", categoryList);
+		CategorySearchInfo categorySearch = (CategorySearchInfo)session.getAttribute("CategorySearchInfo");
+		if (categorySearch != null) {
+			String searchWord = categorySearch.getSearchWord();
+			String match = categorySearch.getMatch();
+			
+			if (searchWord != null && match != null) {
+				ArrayList<CategoryNameDisp> categoryList = new CategoryListDAO().searchCategory(categorySearch, page);
+				session.setAttribute("CategoryList", categoryList);
+				session.setAttribute("CategoryPagination", new CategoryListDAO().searchCategoryCount(categorySearch));
+			} else {
+				CategoryListDAO categoryDao = new CategoryListDAO();
+				ArrayList<CategoryNameDisp> categoryList = categoryDao.searchAndSetList(page);
+				session.setAttribute("CategoryList", categoryList);
+				session.setAttribute("CategoryPagination", new CategoryListDAO().searchAndSetListCount());
+			}
+		} else {
+			CategoryListDAO categoryDao = new CategoryListDAO();
+			ArrayList<CategoryNameDisp> categoryList = categoryDao.searchAndSetList(page);
+			session.setAttribute("CategoryList", categoryList);
+			session.setAttribute("CategoryPagination", new CategoryListDAO().searchAndSetListCount());
+		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/categorySearchList.jsp");
 		dispatcher.forward(request, response);
