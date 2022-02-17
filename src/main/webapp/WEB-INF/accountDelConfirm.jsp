@@ -35,13 +35,7 @@
 <title>アカウント削除確認</title>
 </head>
 <body>
-	<header class="flex">
-		<a href="ServletThreadSearchList">スレッド一覧</a>
-		<a href="#">カテゴリー一覧</a>
-		<a href="#">アカウント一覧</a>	
-		<a href="ServletLogout">ログアウト</a>		
-	</header>
-	<hr>
+	<jsp:include page="header.jsp" flush="true" />
 	
 	<p>対象のユーザーが作成したスレッドとコメントが全て削除されます。<br>本当に削除してもよろしいですか？</p>
 	

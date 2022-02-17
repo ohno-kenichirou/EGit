@@ -41,13 +41,7 @@
 <title>アカウント登録確認</title>
 </head>
 <body>
-	<header class="flex">
-		<a href="ServletThreadSearchList">スレッド一覧</a>
-		<a href="#">カテゴリー一覧</a>
-		<a href="#">アカウント一覧</a>	
-		<a href="ServletLogout">ログアウト</a>		
-	</header>
-	<hr>
+	<jsp:include page="header.jsp" flush="true" />
 	
 	<p>入力内容を確認して下さい</p>
 	
