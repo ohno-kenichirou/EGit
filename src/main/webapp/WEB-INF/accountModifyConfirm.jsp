@@ -14,7 +14,7 @@
 	UserInfo user_before = (UserInfo)session.getAttribute("AccountBefore");
 	UserInfo user = (UserInfo)session.getAttribute("AccountModify");
 	ArrayList<GenderInfo> genderList = (ArrayList<GenderInfo>)session.getAttribute("GenderList");
-	String lift = (String)request.getParameter("lift");
+	String lift = (String)session.getAttribute("lift");
 	String id = "";
 	String email = "";
 	String pass = "";
@@ -130,7 +130,7 @@
 			<th>ロック解除の有無</th>
 			<td>-</td>
 			<td>
-				<% if (Integer.parseInt(lift) == 1) { %>
+				<% if (lift.equals("1")) { %>
 					有
 				<% } else { %>
 					無

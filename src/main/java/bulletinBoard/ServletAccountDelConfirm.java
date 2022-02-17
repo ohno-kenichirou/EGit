@@ -45,18 +45,22 @@ public class ServletAccountDelConfirm extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		HttpSession session = request.getSession(false);
-		UserInfo account = (UserInfo)session.getAttribute("AccountDel");
 		UserInfo user = (UserInfo)session.getAttribute("User");
+		UserInfo account = (UserInfo)session.getAttribute("AccountDel");
+		if (account == null) {
+			doGet(request,response);
+			return;
+		}
 		UserDAO dao = new UserDAO();
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/accountDelConfirm.jsp");
 		if (dao.delAccount(user, account)) {
 			request.setAttribute("message", account.getUserId() + "が削除されました。");
 			session.removeAttribute("AccountDel");
-			response.sendRedirect("ServletAccountSearchList");
+			dispatcher = request.getRequestDispatcher("ServletAccountSearchList");
 		} else {
 			request.setAttribute("message", "[システムエラー]処理に失敗しました。");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/accountDelConfirm.jsp");
-			dispatcher.forward(request, response);
 		}
+		dispatcher.forward(request, response);
 	}
 
 }

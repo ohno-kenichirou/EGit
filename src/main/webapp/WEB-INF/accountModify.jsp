@@ -31,6 +31,7 @@
 		manager = user.getManager();
 		errorCount = user.getErrorCount();
 	}
+	String lift = (String)session.getAttribute("lift");
 %>
 <!DOCTYPE html>
 <html>
@@ -61,7 +62,7 @@
 			</label>				
 		</div>
 		<div>
-			<input type="text" id="userId" name="userId" disabled="disabled" value="<%= id %>">
+			<input type="text" id="userId" name="userId" readonly="readonly" value="<%= id %>">
 		</div>
 		<div>
 			<label for="email">
@@ -85,7 +86,7 @@
 			</label>				
 		</div>
 		<div>
-			<input type="text" id=userName name="userName" placeholder="ユーザー名入力" maxlength="100" required value="<%= name %>">
+			<input type="text" id="userName" name="userName" placeholder="ユーザー名入力" maxlength="100" required value="<%= name %>">
 		</div>
 		<div>
 			<label for="birth">
@@ -93,7 +94,7 @@
 			</label>				
 		</div>
 		<div>
-			<input type="date" id=birth name="birth" placeholder="生年月日入力" required value="<%= birth %>">
+			<input type="date" id="birth" name="birth" placeholder="生年月日入力" required value="<%= birth %>">
 		</div>
 		<div>
 			<label>
@@ -130,11 +131,17 @@
 				</label>				
 			</div>
 			<div>
-				<input type="radio" name="lift" value="1">有：解除する
-				<input type="radio" name="lift" value="0" checked="checked">無
+				<% if (lift != null && lift.equals("1")) { %>
+					<input type="radio" name="lift" value="1" checked="checked">有：解除する
+					<input type="radio" name="lift" value="0">無
+				<% } else { %>
+					<input type="radio" name="lift" value="1">有：解除する
+					<input type="radio" name="lift" value="0" checked="checked">無
+				<% } %>
 			</div>
 		<% }%>
 		<input type="hidden" name="errorCount" value="<%= errorCount %>">
+		<input type="hidden" name="fromPage" value="accountModify">
 		<div>
 			<input type="submit" value="確認">
 		</div>

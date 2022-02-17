@@ -1,0 +1,88 @@
+@charset "UTF-8";
+
+header {
+	background-color: #fffeee;
+	padding: 30px;
+	text-align: center;
+}
+
+.navigationLink {
+	margin: 0px 80px;
+	display: inline;
+}
+
+.loginForm {
+	position: absolute;
+	top: 0;
+  	right: 0;
+  	bottom: 0;
+  	left: 0;
+  	margin: auto;
+   	width: 400px;
+  	height: 250px;
+}
+
+.logoutForm {
+	position: absolute;
+	top: 0;
+  	right: 0;
+  	bottom: 0;
+  	left: 0;
+  	margin: auto;
+   	width: 400px;
+  	height: 150px;
+}
+
+.inline {
+	display: inline;
+}
+
+.inline-block {
+	display: inline-block;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.loginWidth {
+	width: 60px;
+	margin: 0px 10px;
+}
+
+.loginHeight {
+	margin: 10px 0px;
+}
+
+.caution-text {
+	text-align: center;
+	color: #ce0000;
+}
+
+.button-margin {
+	margin: 10px;
+}
+
+.search-margin {
+	margin: 0px 15px;
+}
+
+.thread {
+	padding: 0px 30px;
+}
+
+.thread-info {
+	padding: 20px 30px;
+}
+
+.thread-infoMargin {
+	margin: 0px 10px;
+}
+
+.thread-linkFont {
+	font-size: 26px;
+}
+
+.pagination-margin {
+	margin: 30px;
+}

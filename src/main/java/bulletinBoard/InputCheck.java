@@ -25,5 +25,16 @@ public class InputCheck {
 		  result = mat.matches();							// 照合結果をtrueかfalseで取得
 		  return result;
 	  }
+	    
+	  /**
+	  * 指定した正規表現でメールアドレスのチェックを実施するためのメソッド。
+	  * @param target 検査対象文字列
+	  * @return result 検査対象が正規表現にマッチする場合はtrue、それ以外はfalse
+	  */
+	  public boolean isCheckEmail(String target) {
+		  String pattern = "^[\\w!#%&'/=~`\\*\\+\\?\\{\\}\\^\\$\\-\\|]+(\\.[\\w!#%&'/=~`\\*\\+\\?\\{\\}\\^\\$\\-\\|]+)*@[\\w!#%&'/=~`\\*\\+\\?\\{\\}\\^\\$\\-\\|]+(\\.[\\w!#%&'/=~`\\*\\+\\?\\{\\}\\^\\$\\-\\|]+)*$";
+		  Pattern p = Pattern.compile(pattern);
+		  return p.matcher(target).find();
+	  }
 	  
 }

@@ -61,6 +61,7 @@
 		<div>
 			<input type="text" id="categoryKana" name="categoryKana" placeholder="カテゴリー名(カナ)入力" maxlength="100" required value=<%= kana %>>
 		</div>
+		<input type="hidden" name="fromPage" value="categoryAdd">
 		<div>
 			<input type="submit" value="確認">
 		</div>

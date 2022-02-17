@@ -6,7 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.Date" %>
-<%@ page import=java.text.SimpleDateFormat %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="bulletinBoard.UserInfo" %>
 <%@ page import="bulletinBoard.GenderInfo" %>
@@ -14,13 +14,17 @@
 	String message = (String)request.getAttribute("message");
 	String searchName = (String)session.getAttribute("searchUserName");
 	String selectMatch = (String)session.getAttribute("selectMatch");
-	int pageNo = (Integer)session.getAttribute("accountPageNo"); 
-	int totalNum = (Integer)session.getAttribute("totalNum"); 
+	String pageNo = (String)request.getAttribute("accountPageNo"); 
+	int totalNum = (int)request.getAttribute("totalNum"); 
 	ArrayList<UserInfo> accountList = (ArrayList<UserInfo>)session.getAttribute("AccountSearchList");
 	ArrayList<GenderInfo> genderList = (ArrayList<GenderInfo>)session.getAttribute("GenderList");
 	ArrayList<UserInfo> userList = (ArrayList<UserInfo>)session.getAttribute("UserList");
 	if (searchName == null) {
 		searchName ="";
+	}
+	int pageNum = 0;
+	if (pageNo != null && !pageNo.equals("")) {
+		pageNum = Integer.parseInt(pageNo);
 	}
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 %>
@@ -54,12 +58,11 @@
 		</p>
 	</form>
 	<hr>
-	<% if (message != null && message != "") {	%>
-		<div><%= message %>
-		</div>
+	<% if (message != null && message != "") { %>
+		<div><%= message %></div>
 	<% } %>
-	<form action="ServletAccountRegister" method="post">
-		<input type="hidden" name="btn" value="Register">
+	<form action="ServletAccountSearchList" method="post">
+		<input type="hidden" name="btn" value="register">
 		<input type="submit" value="アカウント登録">
 	</form>
 	<table>
@@ -81,7 +84,7 @@
 		<% for (UserInfo account : accountList) { %>
 			<tr>
 				<td>
-					<form action="ServletAccountModify" method="post">
+					<form action="ServletAccountSearchList" method="post">
 						<input type="hidden" name="userId"		value="<%= account.getUserId() %>">
 						<input type="hidden" name="email"		value="<%= account.getEmail() %>">
 						<input type="hidden" name="userName"	value="<%= account.getUserName() %>">
@@ -94,7 +97,7 @@
 					</form>
 				</td>
 				<td>
-					<form action="ServletAccountDelConfirm" method="post">
+					<form action="ServletAccountSearchList" method="post">
 						<input type="hidden" name="userId"		value="<%= account.getUserId() %>">
 						<input type="hidden" name="email"		value="<%= account.getEmail() %>">
 						<input type="hidden" name="userName"	value="<%= account.getUserName() %>">
@@ -102,7 +105,6 @@
 						<input type="hidden" name="genderId"	value="<%= account.getGenderId() %>">
 						<input type="hidden" name="manager"		value="<%= account.getManager() %>">
 						<input type="hidden" name="errorCount"	value="<%= account.getErrorCount() %>">
-						<input type="hidden" name="btn"			value="modify">
 						<input type="hidden" name="btn"			value="delete">
 						<input type="submit" value="削除">
 					</form>
@@ -149,12 +151,14 @@
 			</tr>
 		</table>
 	<% } %>
+	<div>
 	<% for (int i = 1; i <= totalNum; i++) {
-		if (i == pageNo) { %>
+		if (i == pageNum) { %>
 			<span><%= i %></span>
 		<% } else { %>
-			<a href="ServletAccountSearchList?page=<%= i %>"><%= i %></a>
+			<a href="ServletAccountSearchList?accountPageNo=<%= i %>"><%= i %></a>
 		<% }
 	} %>
+	</div>
 </body>
 </html>

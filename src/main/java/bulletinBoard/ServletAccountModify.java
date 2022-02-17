@@ -44,6 +44,11 @@ public class ServletAccountModify extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");		
 		
+		String fromPage = request.getParameter("fromPage");
+		if (fromPage == null || !fromPage.equals("accountModify")) {
+			doGet(request,response);
+			return;
+		}
 		String userId = request.getParameter("userId");
 		String email = request.getParameter("email");
 		String pass = request.getParameter("pass");
@@ -53,12 +58,16 @@ public class ServletAccountModify extends HttpServlet {
 		String manager = request.getParameter("manager");
 		String lift = request.getParameter("lift");
 		int errorCount = Integer.parseInt(request.getParameter("errorCount"));
-				
 		String msg = null;
+		InputCheck check = new InputCheck(); 
 		if (email == null || email.equals("")) {
 			msg = "メールアドレスが入力されていません。";
+		} else if (!check.isCheckEmail(email)) {
+			msg = "メールアドレスが正しく入力されていません。";
 		} else if (pass == null || pass.equals("")) {
 			msg = "パスワードが入力されていません。";
+		} else if (!check.checkLogic(pass)) {
+			msg = "パスワードは半角英数字のみです。";
 		} else if (userName == null || userName.equals("")) {
 			msg = "ユーザー名が入力されていません。";
 		} else if (birth == null || birth.equals("")) {
@@ -80,17 +89,21 @@ public class ServletAccountModify extends HttpServlet {
 			dispatcher.forward(request, response);
 		} else {
 			HttpSession session = request.getSession(false);
-			UserInfo user = (UserInfo)session.getAttribute("AccountModify");
-			user.setUserId(userId);
-			user.setUserName(userName);
-			user.setPass(pass);
-			user.setEmail(email);
-			user.setBirth(java.sql.Date.valueOf(birth));
-			user.setGenderId(Integer.parseInt(genderId));
-			user.setManager(Integer.parseInt(manager));
-			session.setAttribute("AccountModify", user);
+			UserInfo account = (UserInfo)session.getAttribute("AccountModify");
+			if (account == null) {
+				doGet(request,response);
+				return;
+			}
+			account.setUserId(userId);
+			account.setUserName(userName);
+			account.setPass(pass);
+			account.setEmail(email);
+			account.setBirth(java.sql.Date.valueOf(birth));
+			account.setGenderId(Integer.parseInt(genderId));
+			account.setManager(Integer.parseInt(manager));
+			session.setAttribute("AccountModify", account);
+			session.setAttribute("lift", lift);
 			session.setMaxInactiveInterval(60 * 60 * 24);		// セッションの有効期限
-			request.setAttribute("lift", lift);
 			response.sendRedirect("ServletAccountModifyConfirm");
 		}
 	}

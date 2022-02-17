@@ -96,11 +96,15 @@
 						<input type="submit" value="修正">
 						<input type="hidden" name="update" value="modify">
 						<input type="hidden" name="categoryId" value="<%= category.getCategoryId() %>">
+						<input type="hidden" name="categoryName" value="<%= category.getCategoryName() %>">
+						<input type="hidden" name="categoryKana" value="<%= category.getCategoryKana() %>">
 					</form>
 					<form action="ServletCategorySearchList" method="post">
 						<input type="submit" value="削除">
 						<input type="hidden" name="update" value="delete">
 						<input type="hidden" name="categoryId" value="<%= category.getCategoryId() %>">
+						<input type="hidden" name="categoryName" value="<%= category.getCategoryName() %>">
+						<input type="hidden" name="categoryKana" value="<%= category.getCategoryKana() %>">
 					</form>
 				</p>
 				

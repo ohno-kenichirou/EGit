@@ -8,24 +8,28 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>ログアウト画面</title>
-		<link rel="stylesheet" type="text.css" href="css.css">
+		<link rel="stylesheet" type="text/css" href="css/design.css">
 	</head>
 	<body>
-		<p>ログアウトします。よろしいですか？</p>
+		<div class="logoutForm">
 		
-		<div>
-			<div>
-				<form action="ServletLogout" method="post">
-					<input type="submit" value="はい">
-					<input type="hidden" name="logout" value="yes">
-				</form>
+			<p class="text-center">ログアウトします。よろしいですか？</p>
+			
+			<div class="text-center">
+				<div class="inline-block button-margin">
+					<form action="ServletLogout" method="post">
+						<input type="submit" value="はい">
+						<input type="hidden" name="logout" value="yes">
+					</form>
+				</div>
+				<div class="inline-block button-margin">
+					<form action="ServletLogout" method="post">
+						<input type="submit" value="いいえ">
+						<input type="hidden" name="logout" value="no">
+					</form>
+				</div>
 			</div>
-			<div>
-				<form action="ServletLogout" method="post">
-					<input type="submit" value="いいえ">
-					<input type="hidden" name="logout" value="no">
-				</form>
-			</div>
+		
 		</div>
 		
 	</body>

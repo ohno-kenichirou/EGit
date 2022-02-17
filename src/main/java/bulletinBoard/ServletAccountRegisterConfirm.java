@@ -45,18 +45,23 @@ public class ServletAccountRegisterConfirm extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		HttpSession session = request.getSession(false);
-		UserInfo account = (UserInfo)session.getAttribute("AccountRegister");
 		UserInfo user = (UserInfo)session.getAttribute("User");
+		UserInfo account = (UserInfo)session.getAttribute("AccountRegister");
+		System.out.println(account);
+		if (account == null) {
+			doGet(request,response);
+			return;
+		}
 		UserDAO dao = new UserDAO();
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/accountRegisterConfirm.jsp");
 		if (dao.registerAccount(user, account)) {
 			request.setAttribute("message", "新規アカウントを登録しました。");
 			session.removeAttribute("AccountRegister");
-			response.sendRedirect("ServletAccountSearchList");
+			dispatcher = request.getRequestDispatcher("ServletAccountSearchList");
 		} else {
 			request.setAttribute("message", "[システムエラー]処理に失敗しました。");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/accountRegisterConfirm.jsp");
-			dispatcher.forward(request, response);
 		}
+		dispatcher.forward(request, response);
 	}
 
 }

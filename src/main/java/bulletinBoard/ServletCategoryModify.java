@@ -44,9 +44,13 @@ public class ServletCategoryModify extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");		
 		
+		String fromPage = request.getParameter("fromPage");
+		if (fromPage == null || !fromPage.equals("categoryModify")) {
+			doGet(request,response);
+			return;
+		}
 		String categoryName = request.getParameter("categoryName");
 		String categoryKana = request.getParameter("categoryKana");
-		
 		String msg = null;
 		if (categoryName == null || categoryName.equals("")) {
 			msg = "カテゴリー名が入力されていません。";

@@ -39,10 +39,10 @@ public class ServletAccountRegister extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		UserInfo account = (UserInfo)session.getAttribute("AccountRegister");
 		if (account == null) {
-			UserInfo user = new UserInfo();
+			account = new UserInfo();
 			MakeUserIdDAO dao = new MakeUserIdDAO();
-			user.setUserId(dao.getUserId());
-			session.setAttribute("AccountRegister",user);
+			account.setUserId(dao.getUserId());
+			session.setAttribute("AccountRegister", account);
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/accountRegister.jsp");
@@ -55,6 +55,11 @@ public class ServletAccountRegister extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");		
 		
+		String fromPage = request.getParameter("fromPage");
+		if (fromPage == null || !fromPage.equals("accountRegister")) {
+			doGet(request,response);
+			return;
+		}
 		String userId = request.getParameter("userId");
 		String email = request.getParameter("email");
 		String pass = request.getParameter("pass");
@@ -62,11 +67,12 @@ public class ServletAccountRegister extends HttpServlet {
 		String birth = request.getParameter("birth");
 		String genderId = request.getParameter("genderId");
 		String manager = request.getParameter("manager");
-				
 		String msg = null;
 		InputCheck check = new InputCheck(); 
 		if (email == null || email.equals("")) {
 			msg = "メールアドレスが入力されていません。";
+		} else if (!check.isCheckEmail(email)) {
+			msg = "メールアドレスが正しく入力されていません。";
 		} else if (pass == null || pass.equals("")) {
 			msg = "パスワードが入力されていません。";
 		} else if (!check.checkLogic(pass)) {
@@ -86,15 +92,15 @@ public class ServletAccountRegister extends HttpServlet {
 			dispatcher.forward(request, response);
 		} else {
 			HttpSession session = request.getSession(false);
-			UserInfo user = (UserInfo)session.getAttribute("AccountRegister");
-			user.setUserId(userId);
-			user.setUserName(userName);
-			user.setPass(pass);
-			user.setEmail(email);
-			user.setBirth(java.sql.Date.valueOf(birth));
-			user.setGenderId(Integer.parseInt(genderId));
-			user.setManager(Integer.parseInt(manager));
-			session.setAttribute("AccountRegister", user);
+			UserInfo account = (UserInfo)session.getAttribute("AccountRegister");
+			account.setUserId(userId);
+			account.setUserName(userName);
+			account.setPass(pass);
+			account.setEmail(email);
+			account.setBirth(java.sql.Date.valueOf(birth));
+			account.setGenderId(Integer.parseInt(genderId));
+			account.setManager(Integer.parseInt(manager));
+			session.setAttribute("AccountRegister", account);
 			session.setMaxInactiveInterval(60 * 60 * 24);		// セッションの有効期限
 			response.sendRedirect("ServletAccountRegisterConfirm");
 		}

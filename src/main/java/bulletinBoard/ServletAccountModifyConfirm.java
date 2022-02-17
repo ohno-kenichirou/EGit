@@ -45,19 +45,25 @@ public class ServletAccountModifyConfirm extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		HttpSession session = request.getSession(false);
-		UserInfo account = (UserInfo)session.getAttribute("AccountModify");
 		UserInfo user = (UserInfo)session.getAttribute("User");
+		UserInfo account = (UserInfo)session.getAttribute("AccountModify");
+		if (account == null) {
+			doGet(request,response);
+			return;
+		}
 		UserDAO dao = new UserDAO();
-		String lift = (String)request.getAttribute("lift");
+		String lift = (String)session.getAttribute("lift");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/accountModifyConfirm.jsp");
 		if (dao.modifyAccount(user, account, lift)) {
 			request.setAttribute("message", account.getUserId() + "を修正しました。");
 			session.removeAttribute("AccountModify");
-			response.sendRedirect("ServletAccountSearchList");
+			session.removeAttribute("AccountBefore");
+			session.removeAttribute("lift");
+			dispatcher = request.getRequestDispatcher("ServletAccountSearchList");
 		} else {
 			request.setAttribute("message", "[システムエラー]処理に失敗しました。");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/accountModifyConfirm.jsp");
-			dispatcher.forward(request, response);
 		}
+		dispatcher.forward(request, response);
 	}
 
 }

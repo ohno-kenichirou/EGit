@@ -11,7 +11,7 @@
 <%@ page import="bulletinBoard.GenderInfo" %>
 <%
 	String message = (String)request.getAttribute("message");
-	UserInfo user = (UserInfo)session.getAttribute("accountyRegister");
+	UserInfo user = (UserInfo)session.getAttribute("AccountRegister");
 	ArrayList<GenderInfo> genderList = (ArrayList<GenderInfo>)session.getAttribute("GenderList");
 	String id = "";
 	String email = "";
@@ -65,7 +65,7 @@
 			</label>				
 		</div>
 		<div>
-			<input type="text" id="userId" name="userId" disabled="disabled" value="<%= id %>">
+			<input type="text" id="userId" name="userId" readonly="readonly" value="<%= id %>">
 		</div>
 		<div>
 			<label for="email">
@@ -107,9 +107,9 @@
 		<div>
 			<% for (GenderInfo gender : genderList) { 
 				if (gender.getGenderId() == genderId) { %>
-						<input type="radio" name="gender" checked="checked" value="<%= gender.getGenderId() %>"><%= gender.getGenderName() %>
+						<input type="radio" name="genderId" checked="checked" value="<%= gender.getGenderId() %>"><%= gender.getGenderName() %>
 			<%		} else { %>
-						<input type="radio" name="gender" value="<%= gender.getGenderId() %>"><%= gender.getGenderName() %>
+						<input type="radio" name="genderId" value="<%= gender.getGenderId() %>"><%= gender.getGenderName() %>
 			<%		}
 				} %>
 		</div>
@@ -127,6 +127,7 @@
 				<input type="radio" name="manager" value="0" checked="checked">無：会員ユーザー
 			<% }%>
 		</div>
+		<input type="hidden" name="fromPage" value="accountRegister">
 		<div>
 			<input type="submit" value="確認">
 		</div>

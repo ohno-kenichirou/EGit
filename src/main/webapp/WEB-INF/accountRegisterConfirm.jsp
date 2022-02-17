@@ -11,7 +11,7 @@
 <%@ page import="bulletinBoard.GenderInfo" %>
 <%
 	String message = (String)request.getAttribute("message");
-	UserInfo acount = (UserInfo)session.getAttribute("accountyRegister");
+	UserInfo acount = (UserInfo)session.getAttribute("AccountRegister");
 	UserInfo user = (UserInfo)session.getAttribute("User");
 	ArrayList<GenderInfo> genderList = (ArrayList<GenderInfo>)session.getAttribute("GenderList");
 	String lift = (String)request.getParameter("lift");

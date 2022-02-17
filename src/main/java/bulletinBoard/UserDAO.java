@@ -141,17 +141,21 @@ public class UserDAO {
 			}
 			String sql = "SELECT userId, userName, email, birth, genderId, dispInsUserId, dispInsDate, dispUpdUserId, dispUpdDate, manager, errorCount "
 					   + "FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY dispInsDate, userId) AS rowNum FROM [User] WHERE delFlg = 0 ";
+			System.out.println(searchName);
 			if (searchName != null && !searchName.equals("")) {
 				String where = "LIKE";
+				System.out.println(selectMatch);
 				if (selectMatch.equals("partial")) {
 					where = "LIKE";
 				} else if (selectMatch.equals("perfect")) {
 					where = "=";
 				}
 				sql += " AND userName " + where + " ? ";
+				System.out.println(sql);
 			}
 			sql += ") AS t "
 				+  "WHERE rowNum BETWEEN ? AND ? ";
+			System.out.println(sql);
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			int parameterIndex = 1;
 			if (searchName != null && !searchName.equals("")) {
@@ -161,13 +165,14 @@ public class UserDAO {
 				} else if (selectMatch.equals("perfect")) {
 					whereSearchName = searchName;
 				}
+				System.out.println(whereSearchName);
 				pstmt.setString(parameterIndex++, whereSearchName);
 			}
 			pstmt.setInt(parameterIndex++, pageNum * 10 - 9);
 			pstmt.setInt(parameterIndex++, pageNum * 10);
 			ResultSet rs = pstmt.executeQuery();
 			ArrayList<UserInfo> userList = new ArrayList<>();
-			if (rs.next()) {
+			while (rs.next()) {
 				userList.add(new UserInfo(	rs.getString("userId"),			rs.getString("userName"),	"",
 											rs.getString("email"),			rs.getDate("birth"),		rs.getInt("genderId"),
 											rs.getString("dispInsUserId"),	rs.getDate("dispInsDate"),	rs.getString("dispUpdUserId"),
@@ -177,6 +182,7 @@ public class UserDAO {
 			rs.close();
 			pstmt.close();
 			Collections.sort(userList);
+			System.out.println(userList);
 			return userList;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -194,7 +200,7 @@ public class UserDAO {
 		}
 		try (Connection con = DriverManager.getConnection(this.getConnection());) {
 			String sql = "SELECT COUNT(*) AS cnt "
-					   + "FROM FROM [User] "
+					   + "FROM [User] "
 					   + "WHERE delFlg = 0 ";
 			if (searchName != null && !searchName.equals("")) {
 				String where = "LIKE";
@@ -217,7 +223,7 @@ public class UserDAO {
 				pstmt.setString(parameterIndex++, whereSearchName);
 			}
 			ResultSet rs = pstmt.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				ret = rs.getInt("cnt");
 			}
 			rs.close();
@@ -242,7 +248,7 @@ public class UserDAO {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			ArrayList<UserInfo> userList = new ArrayList<>();
-			if (rs.next()) {
+			while (rs.next()) {
 				userList.add(new UserInfo(	rs.getString("userId"),			rs.getString("userName"),	"",
 											rs.getString("email"),			rs.getDate("birth"),		rs.getInt("genderId"),
 											rs.getString("dispInsUserId"),	rs.getDate("dispInsDate"),	rs.getString("dispUpdUserId"),
@@ -271,7 +277,7 @@ public class UserDAO {
 			con = DriverManager.getConnection(this.getConnection());
 			con.setAutoCommit(false);
 			// ユーザーテーブル更新
-			String sql = "UPDATE	User "
+			String sql = "UPDATE	[User] "
 					   + "SET		delFlg = 1 "
 					   + "	,		dispUpdUserId = ? "
 					   + "	,		dispUpdDate = GETDATE() "
@@ -284,19 +290,22 @@ public class UserDAO {
 			pstmt.setString(2, user.getUserId());
 			pstmt.setString(3, account.getUserId());
 			ret = pstmt.executeUpdate() > 0;
-			
+			System.out.println("1:" + ret);		// テストコメント
 			if (ret) {
 				ret= delThread(pstmt, con, user, account);
 			}
 						
 			if (ret) {
 				con.commit();
+				System.out.println("commit");		// テストコメント
 			} else {
 				con.rollback();
+				System.out.println("rollback");		// テストコメント
 			}
 			pstmt.close();
 		} catch (SQLException e) {
 			try {
+				e.printStackTrace();
 				con.rollback();
 				ret = false;
 			} catch (SQLException e2) {
@@ -337,10 +346,13 @@ public class UserDAO {
 			pstmt.setString(2, account.getUserId());
 			ret = pstmt.executeUpdate() > 0;
 		}
+		if (rs != null) {
+			rs.close();
+		}
 		if (ret) {
 			ret = delCommentByThreadId(pstmt, con, user, account, threadIdList);
 		}
-		rs.close();
+		System.out.println("2:" + ret);		// テストコメント
 		return ret;
 	}
 	
@@ -373,10 +385,13 @@ public class UserDAO {
 				}
 			}
 		}
+		if (rs != null) {
+			rs.close();
+		}
 		if (ret) {
 			ret = delCommentByPostUserId(pstmt, con, user, account, commentDao);
 		}
-		rs.close();
+		System.out.println("3:" + ret);		// テストコメント
 		return ret;
 	}
 	
@@ -400,7 +415,10 @@ public class UserDAO {
 			pstmt.setString(2, account.getUserId());
 			ret = pstmt.executeUpdate() > 0;
 		}
-		rs.close();
+		if (rs != null) {
+			rs.close();
+		}
+		System.out.println("4:" + ret);		// テストコメント
 		return ret;
 	}
 	
@@ -412,10 +430,10 @@ public class UserDAO {
 			return false;
 		}
 		try(Connection con = DriverManager.getConnection(this.getConnection())) {
-			String sql = "UPDATE User "
+			String sql = "UPDATE [User] "
 					   + "SET userName = ?      ,pass = HASHBYTES('SHA2_256',CONVERT(NVARCHAR(32),?)) ,email = ?   ,birth = ?     ,genderId = ? "
 					   + "	, dispUpdUserId = ? ,dispUpdDate = GETDATE()                              ,manager = ? ,updUserId = ? ,updDate = GETDATE() ";
-			if (account.getErrorCount() >= 3 && Integer.parseInt(lift) == 1) {
+			if (account.getErrorCount() >= 3 && lift.equals("1")) {
 				sql += " , errorCount = 0 ";
 			}
 			sql += "WHERE userId = ? ";
@@ -446,7 +464,7 @@ public class UserDAO {
 			return false;
 		}
 		try(Connection con = DriverManager.getConnection(this.getConnection())) {
-			String sql = "INSERT INTO User "
+			String sql = "INSERT INTO [User] "
 					   + "( userId        ,userName    ,pass    ,email     ,birth   ,genderId "
 					   + ", dispInsUserId ,dispInsDate ,manager ,insUserId ,insDate "
 					   + ") VALUES "
