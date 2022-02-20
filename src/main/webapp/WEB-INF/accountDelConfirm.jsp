@@ -31,70 +31,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>アカウント削除確認</title>
-<link rel="shortcut icon" href="img/bulletin_board.ico">
-<link rel="stylesheet" type="text/css" href="css/design.css">
-<link rel="stylesheet" type="text/css" href="css/design2.css">
+	<meta charset="UTF-8">
+	<title>アカウント削除確認</title>
+	<link rel="shortcut icon" href="img/bulletin_board.ico">
+	<link rel="stylesheet" type="text/css" href="css/design.css" media="all">
+	<link rel="stylesheet" type="text/css" href="css/design2.css" media="all">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="all">
+	<link rel="stylesheet" type="text/css" href="css/main.min.css" media="all">
+	<link rel="stylesheet" type="text/css" href="css/style.css" media="all">
 </head>
 <body>
-	<jsp:include page="header.jsp" flush="true" />
-	
-	<p>対象のユーザーが作成したスレッドとコメントが全て削除されます。<br>本当に削除してもよろしいですか？</p>
-	
-	<table>
-		<tr>
-			<th>会員ID</th>
-			<td><%= id %></td>
-		</tr>
-		<tr>
-			<th>メールアドレス</th>
-			<td><%= email %></td>
-		</tr>
-		<tr>
-			<th>ユーザー名</th>
-			<td><%= name %></td>
-		</tr>
-		<tr>
-			<th>生年月日</th>
-			<td><%= birth %></td>
-		</tr>
-		<tr>
-			<th>性別</th>
-			<td>
-				<%
-					if (genderList != null) { 
-						for (GenderInfo gender : genderList) {
-							if (gender.getGenderId() == genderId) {
-				%>
-								<%= gender.getGenderName() %>
-				<% 
-							}
-						}
-					} 
-				%>
-			</td>
-		</tr>
-		<tr>
-			<th>管理者権限の有無</th>
-			<td>
-				<% if (manager == 0) { %>
-					無
-				<% } else { %>
-					有
-				<% } %>
-			</td>
-		</tr>
-	</table>
-	
-	<br>
-	
-	<form action="ServletAccountDelConfirm" method="post">
-		<input type="submit" value="削除">
-	</form>
-	
-	<div>
-		<a href="ServletAccountSearchList">アカウント一覧画面へ戻る</a>
+	<div id="wrap">
+		<div class="mb-45">
+			<div class="row">
+				<div class="col-md-12">
+					<jsp:include page="header.jsp" flush="true" />
+					
+					<p>対象のユーザーが作成したスレッドとコメントが全て削除されます。<br>本当に削除してもよろしいですか？</p>
+					
+					<table>
+						<tr>
+							<th>会員ID</th>
+							<td><%= id %></td>
+						</tr>
+						<tr>
+							<th>メールアドレス</th>
+							<td><%= email %></td>
+						</tr>
+						<tr>
+							<th>ユーザー名</th>
+							<td><%= name %></td>
+						</tr>
+						<tr>
+							<th>生年月日</th>
+							<td><%= birth %></td>
+						</tr>
+						<tr>
+							<th>性別</th>
+							<td>
+								<%
+									if (genderList != null) { 
+										for (GenderInfo gender : genderList) {
+											if (gender.getGenderId() == genderId) {
+								%>
+												<%= gender.getGenderName() %>
+								<% 
+											}
+										}
+									} 
+								%>
+							</td>
+						</tr>
+						<tr>
+							<th>管理者権限の有無</th>
+							<td>
+								<% if (manager == 0) { %>
+									無
+								<% } else { %>
+									有
+								<% } %>
+							</td>
+						</tr>
+					</table>
+					
+					<br>
+					
+					<% if (message != null && !message.equals("")) { %>
+						<div class="caution-text"><%= message %></div>
+					<% } %>
+					
+					<form action="ServletAccountDelConfirm" method="post">
+						<input type="submit" value="削除">
+					</form>
+					
+					<div>
+						<a href="ServletAccountSearchList">アカウント一覧画面へ戻る</a>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

@@ -39,10 +39,10 @@ public class ServletAccountRegister extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		UserInfo account = (UserInfo)session.getAttribute("AccountRegister");
 		if (account == null) {
-			UserInfo user = new UserInfo();
+			account = new UserInfo();
 			MakeUserIdDAO dao = new MakeUserIdDAO();
-			user.setUserId(dao.getUserId());
-			session.setAttribute("AccountRegister", user);
+			account.setUserId(dao.getUserId());
+			session.setAttribute("AccountRegister", account);
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/accountRegister.jsp");
@@ -71,6 +71,8 @@ public class ServletAccountRegister extends HttpServlet {
 		InputCheck check = new InputCheck(); 
 		if (email == null || email.equals("")) {
 			msg = "メールアドレスが入力されていません。";
+		} else if (!check.isCheckEmail(email)) {
+			msg = "メールアドレスが正しく入力されていません。";
 		} else if (pass == null || pass.equals("")) {
 			msg = "パスワードが入力されていません。";
 		} else if (!check.checkLogic(pass)) {

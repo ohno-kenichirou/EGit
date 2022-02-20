@@ -16,3 +16,27 @@ th {
 td {
 	border: #000000 1px solid;
 }
+
+.blue-color {
+    color:blue;
+}
+ 
+.green-color {
+    color:green;
+}
+ 
+.teal-color {
+    color:teal;
+}
+ 
+.yellow-color {
+	color:yellow;
+}
+
+.red-color {
+	color:red;
+}
+
+.mb-45 {
+	margin-bottom: 45px
+}

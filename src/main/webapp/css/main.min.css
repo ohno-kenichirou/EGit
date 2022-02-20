@@ -1,0 +1,2164 @@
+@charset "UTF-8";
+
+html,
+body {
+	height: 100%
+}
+
+body {
+	background-color: #fff;
+	color: #333;
+	font-family: "SF Pro JP", "SF Pro Display", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", メイリオ, Meiryo, "ＭＳ Ｐゴシック", sans-serif
+}
+
+#wrap,
+#wrapFrontPage,
+#wrapKidsFrontPage {
+	min-height: 100%;
+	height: auto;
+	margin: 0 auto -250px;
+	padding: 130px 0 250px
+}
+
+#wrap2 {
+	padding-top: 90px
+}
+
+#wrap-wide {
+	min-height: 100%;
+	height: auto;
+	margin: 0 auto -250px;
+	padding: 95px 0 250px
+}
+
+#wrapFrontPage {
+	padding-top: 96px
+}
+
+#wrapKidsFrontPage {
+	padding-top: 50px
+}
+
+.btn {
+	border-radius: 3px
+}
+
+.head {
+	border-top: 3px #839cdb solid;
+	background-color: #c9c9c9
+}
+
+.logo {
+	display: inline-block;
+	margin: 10px 7px 10px 0;
+	padding: 0;
+	font-size: 14px
+}
+
+#my-input-search {
+	margin-top: 8px
+}
+
+#my-input-search .btn,
+#my-input-search .form-control {
+	border-color: #fff;
+	height: 24px;
+	padding-bottom: 3px;
+	padding-top: 3px
+}
+
+#frontPageImg {
+	background-color: #3c3c3c;
+	background-image: url(../images/background4.jpg);
+	background-repeat: no-repeat;
+	background-position: center top;
+	background-size: cover;
+	padding-top: 30px;
+	margin-bottom: 30px
+}
+
+.frontPageImgBox {
+	min-height: 250px;
+	padding-bottom: 100px
+}
+
+.frontPageImgBox-lego {
+	background-image: url(../images/front_lego.png);
+	background-repeat: no-repeat;
+	background-position: bottom right
+}
+
+#frontPageImg h1 {
+	font-weight: bold;
+	margin-top: 0
+}
+
+#frontPageImg h6 {
+	margin: 7px
+}
+
+#kidsfrontPageImg {
+	background-image: url(../images/background3.jpg);
+	background-repeat: no-repeat;
+	background-position: center top;
+	background-size: cover;
+	padding-top: 30px;
+	margin-bottom: 30px
+}
+
+#uc-imgbox {
+	min-height: 480px;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover
+}
+
+.uc-imgbox-titleBox {
+	margin-top: 45px;
+	margin-left: 30px
+}
+
+.top-img-box {
+	min-height: 480px;
+	background-image: url(../images/kids_lego_top_bg.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+	padding: 30px;
+	margin-bottom: 30px
+}
+
+.myLabelRed {
+	padding: 2px 6px;
+	background-color: #d9534f;
+	color: #fff;
+	border-radius: 10px
+}
+
+.myLabelLegoRed {
+	padding: 3px 12px;
+	background-color: #b0132c;
+	color: #fff;
+	border-radius: 10px;
+	font-weight: bold
+}
+
+.myLabelLegoRed2 {
+	padding: 3px 12px;
+	background-color: #ee294a;
+	color: #fff;
+	border-radius: 10px;
+	font-weight: bold
+}
+
+.myLabelLegoSkyBlue {
+	padding: 3px 12px;
+	background-color: #1c96d4;
+	color: #fff;
+	border-radius: 10px;
+	font-weight: bold
+}
+
+.myLabelOrange {
+	padding: 3px 12px;
+	background-color: #e9a515;
+	color: #fff;
+	border-radius: 10px;
+	font-weight: bold
+}
+
+.myLabelGray {
+	padding: 2px 6px;
+	background-color: #ddd;
+	color: #fff;
+	border-radius: 10px
+}
+
+.myLabelBlack {
+	padding: 2px 6px;
+	background-color: #000;
+	color: #fff;
+	border-radius: 10px
+}
+
+.myLabel-large {
+	padding: 2px 8px;
+	line-height: 14px;
+	font-size: 12px;
+	border-radius: 9px;
+	display: inline-block
+}
+
+.my-bg-black {
+	background-color: #000
+}
+
+.my-bg-green {
+	background-color: #13bb75
+}
+
+.nav .dropdown-menu {
+	background-color: #303e5e;
+	box-shadow: none
+}
+
+.nav .dropdown-menu a {
+	color: #c5cfe5
+}
+
+.nav .dropdown-menu a:hover {
+	color: #fff;
+	background-color: #27334d
+}
+
+.nav .dropdown-menu .active a {
+	color: #fff;
+	background-color: #1f283c
+}
+
+.navbar-default .nav .dropdown-menu {
+	background-color: #2850a2;
+	box-shadow: none
+}
+
+.navbar-default .nav .dropdown-menu a {
+	color: #fff
+}
+
+.navbar-default .nav .dropdown-menu a:hover {
+	color: #eee;
+	background-color: #244993
+}
+
+.navbar-default .nav .dropdown-menu .active a {
+	color: #fff;
+	background-color: #214387
+}
+
+.myNavSubMenu {
+	list-style-type: none;
+	margin-left: 1em
+}
+
+.myNavSubMenu a {
+	display: block;
+	text-decoration: none
+}
+
+.pager li a {
+	background-color: #f5f5f5;
+	border-radius: 3px;
+	color: #222
+}
+
+.img-rounded {
+	border-radius: 3px
+}
+
+.current-page-ancestor>a,
+.current-menu-ancestor>a,
+.current-menu-parent>a {
+	color: #fff;
+	background-color: #1f283c
+}
+
+.my-side .panel-heading {
+	background-color: #4d6387;
+	border-color: #4d6387;
+	border-radius: 1px 1px 0 0
+}
+
+.my-form-control-small {
+	font-size: 12px;
+	padding: 2px 6px;
+	height: 26px
+}
+
+h1.myH1 {
+	font-weight: bold;
+	color: #c62455;
+	text-shadow: -1px -1px 1px #111, 1px -1px 1px #111, 1px 1px 1px #111, -1px 1px 1px #111
+}
+
+h2.myH2 {
+	font-weight: bold;
+	text-shadow: -1px -1px 1px #111, 1px -1px 1px #111, 1px 1px 1px #111, -1px 1px 1px #111
+}
+
+.myText1 {
+	line-height: 2em
+}
+
+.myImgLeft {
+	float: left;
+	margin-right: 7px
+}
+
+.myDecs>dt {
+	float: left
+}
+
+.myDecs>dd {
+	margin-left: 6em;
+	margin-bottom: 1em
+}
+
+.myDecs2>dd {
+	margin-left: 10em;
+	margin-bottom: 1em
+}
+
+.myDecs3>dd {
+	margin-left: 12em;
+	margin-bottom: 1em
+}
+
+.myDecs4>dd {
+	margin-left: 4em;
+	margin-bottom: 1em
+}
+
+.myDecs5>dd {
+	margin-left: 3em;
+	margin-top: 1em;
+	margin-bottom: 2em
+}
+
+.myDecs6>dd {
+	margin-left: 8em;
+	margin-top: 1em;
+	margin-bottom: 1em
+}
+
+.myDecs7>dd {
+	margin-left: 1.5em;
+	margin-bottom: 1em
+}
+
+.myBox {
+	border-radius: 3px;
+	margin-bottom: 45px;
+	background-color: #f5f5f5
+}
+
+.myBox .myBoxTitle {
+	font-size: 16px;
+	color: #fff;
+	margin: 1px;
+	padding: 8px 13px 8px 13px;
+	border-radius: 3px 3px 0 0
+}
+
+.myBox .myBoxTitleSingle {
+	border-radius: 3px
+}
+
+.myBox .myBoxTitle a {
+	color: #fff
+}
+
+.myBoxDefault .myBoxTitle {
+	border-bottom: 1px #838d9d solid;
+	background-color: #838d9d
+}
+
+.myBoxPlain .myBoxTitle {
+	border-bottom: 1px #ddd solid;
+	padding-top: 15px
+}
+
+.myBoxPlain .myBoxTitle a {
+	color: #303e5e
+}
+
+.myBox .myBoxTitle .fa {
+	font-size: 14px
+}
+
+.myBox .myBoxBody {
+	padding: 7px 14px 7px 14px
+}
+
+.myBox .myBoxBodyInList {
+	padding: 7px 0
+}
+
+.myMenuSubList {
+	list-style-type: none;
+	margin-left: 1em
+}
+
+.myListInfo li {
+	display: block;
+	position: relative;
+	border-bottom: solid #e0e0e0 1px
+}
+
+.myListInfo li:after {
+	font-family: "FontAwesome";
+	content: "\f054";
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	margin-top: -12px;
+	color: #ccc
+}
+
+.myListInfo a {
+	display: block;
+	color: #222;
+	padding: 14px 35px 14px 7px;
+	position: relative
+}
+
+.myListInfo a h2 {
+	padding-bottom: 16px
+}
+
+.myListInfoThumb a {
+	padding-bottom: 28px
+}
+
+.myListInfo a:hover {
+	text-decoration: none;
+	background-color: #eee
+}
+
+.myListInfoThumb a img {
+	margin-right: 14px;
+	margin-bottom: -7px;
+	float: left
+}
+
+.myListInfo a .myList-Date {
+	font-size: 10px;
+	display: block;
+	position: absolute;
+	bottom: 30px;
+	left: 111px
+}
+
+.myListInfo a .myList-Title {
+	margin-top: 7px;
+	margin-bottom: 7px;
+	font-size: 14px;
+	font-weight: 600;
+	word-wrap: break-word;
+	overflow: hidden;
+	color: #303e5e
+}
+
+.myListInfo a .myList-Categories {
+	position: absolute;
+	bottom: 12px;
+	right: 7px
+}
+
+.myListInfo a .myList-Categories .label {
+	font-weight: 500;
+	margin-right: 1px
+}
+
+.myListPost {
+	margin-left: 7px
+}
+
+.myListPost li {
+	border-bottom: 1px #f5f5f5 solid
+}
+
+.myListPost a {
+	display: block;
+	padding: 3px
+}
+
+.myListPost a:hover {
+	text-decoration: none
+}
+
+.myListPost .myList-Date {
+	float: left;
+	display: block
+}
+
+.myListPost .myList-Title {
+	display: block;
+	padding-left: 3px;
+	overflow: auto
+}
+
+.myListCat li {
+	margin-bottom: 4px
+}
+
+.myListCat li a {
+	display: block;
+	padding: 1px;
+	color: #222
+}
+
+.myListCat a:hover {
+	text-decoration: none;
+	background-color: #eee
+}
+
+.myListGrayMark {
+	color: #ccc
+}
+
+.myListInfoMain li {
+	border-bottom: 1px #f5f5f5 solid
+}
+
+.myListInfoMain li:first-child {
+	border-top: 1px #f5f5f5 solid
+}
+
+.myListInfoMain a:hover {
+	background-color: #f5f5f5
+}
+
+.myHeadLine-Education {
+	background-color: #8ca6d8;
+	border-radius: 3px;
+	padding: 7px;
+	color: #fff
+}
+
+.myHeadLine-Seminar {
+	background-color: #f1b380;
+	border-radius: 3px;
+	padding: 7px;
+	color: #fff
+}
+
+.myHeadLine-Blue {
+	background-color: #366bb4;
+	border-radius: 3px;
+	padding: 7px;
+	color: #fff
+}
+
+.myHeadLine-Gray {
+	background-color: #999;
+	border-radius: 3px;
+	padding: 7px;
+	color: #fff
+}
+
+.myTable {
+	width: 100%
+}
+
+.myTable th,
+.myTable td {
+	padding: 7px
+}
+
+.myTableStyleA th,
+.myTableStyleA td {
+	border-right: 1px #fff solid;
+	border-bottom: 1px #fff solid
+}
+
+.myTableStyleA th {
+	background-color: #eee;
+	text-align: center
+}
+
+.myTableStyleA td {
+	color: #fff
+}
+
+.myTableStyleA .myTable-Green td {
+	background-color: #42a4a8
+}
+
+.myTableStyleA .myTable-Orange td {
+	background-color: #f0ae1e
+}
+
+.myTableStyleA .myTable-Red td {
+	background-color: #c62455
+}
+
+.myTableStyleA .myTable-Gray td {
+	background-color: #a7a7a7
+}
+
+.myCalendar2>thead>tr>th,
+.myCalendar2>thead>tr>td,
+.myCalendar2>tbody>tr>th,
+.myCalendar2>tbody>tr>td {
+	text-align: center;
+	vertical-align: middle;
+	padding: 2px;
+	font-size: 10px
+}
+
+.td-w2em {
+	width: 2em
+}
+
+.td-w4em {
+	width: 4em
+}
+
+.td-w5em {
+	width: 5em
+}
+
+.td-w6em {
+	width: 6em
+}
+
+.td-w7em {
+	width: 7em
+}
+
+.td-w8em {
+	width: 8em
+}
+
+.td-w10em {
+	width: 10em
+}
+
+.td-w12em {
+	width: 12em
+}
+
+.td-w14em {
+	width: 14em
+}
+
+.td-w16em {
+	width: 16em
+}
+
+.td-w18em {
+	width: 18em
+}
+
+.td-v-center {
+	vertical-align: center
+}
+
+.td-v-bottom {
+	vertical-align: bottom
+}
+
+.myPageTitle {
+	color: #366bb4;
+	font-weight: bold
+}
+
+.myPageTitle2 {
+	color: #666
+}
+
+.myPageTitle .myPageTitle-subTitle {
+	display: block;
+	font-size: 11px
+}
+
+.myTitlePost {
+	font-weight: bold;
+	font-size: 28px
+}
+
+.myTitleStyleA {
+	position: relative;
+	padding-right: 90px
+}
+
+.myTitleStyleA-pr0 {
+	padding-right: 0
+}
+
+.myTitleStyleA .myTitleStyleA-shadow {
+	color: #f5f5f5;
+	font-weight: bold;
+	text-shadow: -1px -1px 1px #666, 1px -1px 1px #666, 1px 1px 1px #666, -1px 1px 1px #666
+}
+
+.myTitleStyleA .myTitleStyleA-shadow2 {
+	color: #b0132c;
+	font-weight: bold;
+	text-shadow: -1px -1px 1px #fff, 1px -1px 1px #fff, 1px 1px 1px #fff, -1px 1px 1px #fff
+}
+
+.myTitleStyleA .myTitleStyleA-shadow3 {
+	color: #f64440;
+	font-weight: bold;
+	text-shadow: -1px -1px 1px #555, 1px -1px 1px #555, 1px 1px 1px #555, -1px 1px 1px #555
+}
+
+.myTitleStyleA .myTitleStyleA-shadow4 {
+	color: #fff;
+	font-weight: bold;
+	text-shadow: -1px -1px 1px #3f9f0a, 1px -1px 1px #3f9f0a, 1px 1px 1px #3f9f0a, -1px 1px 1px #3f9f0a
+}
+
+.myTitleStyleA .myTitleStyleA-shadow5 {
+	color: #1c96d4;
+	font-weight: bold;
+	text-shadow: -1px -1px 1px #fff, 1px -1px 1px #fff, 1px 1px 1px #fff, -1px 1px 1px #fff
+}
+
+.myTitleStyleA .myTitleStyleA-shadow6 {
+	color: #2fabe3;
+	font-weight: bold;
+	text-shadow: -1px -1px 1px #ddd, 1px -1px 1px #ddd, 1px 1px 1px #ddd, -1px 1px 1px #ddd
+}
+
+.myTitleStyleA .myTitleStyleA-shadow7 {
+	color: #fff100;
+	font-weight: bold;
+	text-shadow: -1px -1px 1px #000, 1px -1px 1px #000, 1px 1px 1px #000, -1px 1px 1px #000
+}
+
+.myTitleStyleA .myTitleStyleA-shadow8 {
+	color: #13bb75;
+	font-weight: bold;
+	text-shadow: -1px -1px 1px rgba(3, 70, 35, 0.7), 1px -1px 1px rgba(3, 70, 35, 0.7), 1px 1px 1px rgba(3, 70, 35, 0.7), -1px 1px 1px rgba(3, 70, 35, 0.7)
+}
+
+.myTitleStyleA .myTitleStyleA-circleBox {
+	display: block;
+	width: 90px;
+	height: 90px;
+	background-color: #bbb;
+	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	position: absolute;
+	top: -35px;
+	right: 0
+}
+
+.myTitleStyleA .myTitleStyleA-circleBox .myTitleStyleA-circleBox-text {
+	font-size: 18px;
+	font-weight: bold;
+	color: #fff
+}
+
+.myTitleStyleA .myTitleStyleA-circleBox .myTitleStyleA-circleBox-text span {
+	display: block;
+	text-align: center
+}
+
+.myTitleStyleA .myTitleStyleA-circleBox-bgBlue {
+	background-color: #1a9cff
+}
+
+.myTitleStyleA .myTitleStyleA-circleBox-bgRed {
+	background-color: #e02d35
+}
+
+.myTitleStyleA .myTitleStyleA-circleBox-bgRed2 {
+	background-color: #e83828
+}
+
+.myTitleStyleA .myTitleStyleA-circleBox-bgGreen {
+	background-color: #13ae67
+}
+
+.myArtTitle {
+	font-weight: bold;
+	font-size: 22px;
+	margin-bottom: 0
+}
+
+.myArtTitle .myArtTitle-Date {
+	color: #aaa;
+	font-size: 14px
+}
+
+.boxFlame {
+	border-radius: 3px;
+	border: 1px #c9c9c9 solid
+}
+
+.boxP7 {
+	padding: 7px
+}
+
+#subMenu2 .myBoxBody {
+	padding-left: 0;
+	padding-right: 0
+}
+
+#subMenu2Title {
+	position: relative
+}
+
+.subMenu2TitleText {
+	position: relative
+}
+
+#subMenu2Title a {
+	color: #fff;
+	padding-left: 18px;
+	margin-right: 6px;
+	display: block;
+	word-wrap: break-word
+}
+
+#subMenu2 .subMenu2TitleText:after {
+	font-family: "FontAwesome";
+	content: "\f138";
+	position: absolute;
+	top: 50%;
+	left: 10px;
+	margin-top: -7px;
+	color: #fff;
+	line-height: 14px;
+	font-size: 14px
+}
+
+#subMenu2 .myActive:after {
+	content: "\f137"
+}
+
+#subMenu2Box ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0
+}
+
+#subMenu2Box ul li {
+	margin: 0 0 1px 0;
+	padding: 0
+}
+
+#subMenu2Box ul li a {
+	display: block;
+	position: relative;
+	padding: 6px 12px 6px 30px;
+	color: #222;
+	word-wrap: break-word
+}
+
+#subMenu2Box ul li a:after {
+	font-family: "FontAwesome";
+	content: "\f138";
+	position: absolute;
+	top: 50%;
+	left: 10px;
+	margin-top: -7px;
+	color: #222;
+	line-height: 14px;
+	font-size: 12px
+}
+
+#subMenu2Box ul li a:hover {
+	text-decoration: none;
+	background-color: #eee
+}
+
+#subMenu2Box ul li.active {
+	background-color: #ddd
+}
+
+#subMenu2BtnWrap {
+	display: none
+}
+
+#footer {
+	height: 250px;
+	padding-top: 15px;
+	border-top: 1px #839cdb solid;
+	background-color: #f7f7f7
+}
+
+#footer a {
+	text-decoration: none;
+	color: #222
+}
+
+#footer a:hover {
+	text-decoration: underline
+}
+
+#footer .copyright {
+	color: #333
+}
+
+.wp-pagenavi {
+	padding: 15px
+}
+
+.wp-pagenavi span,
+.wp-pagenavi a {
+	display: inline-block;
+	border-radius: 3px;
+	background-color: #f5f5f5;
+	margin-right: 6px;
+	padding-top: 6px;
+	padding-right: 10px;
+	padding-bottom: 6px;
+	padding-left: 10px
+}
+
+.wp-pagenavi a {
+	text-decoration: none
+}
+
+.wp-pagenavi .current,
+.wp-pagenavi a:hover {
+	background-color: rgba(0, 0, 0, 0.10)
+}
+
+.inLabel .label {
+	margin-left: 1px
+}
+
+.my-list-parentheses {
+	margin-left: 0;
+	padding-left: 1.5em
+}
+
+.inImgBox img {
+	float: left
+}
+
+.inImgBox p {
+	word-wrap: break-word;
+	overflow: hidden
+}
+
+.note {
+	padding-left: 1em;
+	text-indent: -1em
+}
+
+.myFloatLeft {
+	float: left
+}
+
+.disp-inline-block {
+	display: inline-block
+}
+
+a.btn-default-Active {
+	background-color: #e6e6e6
+}
+
+.myPanel-Box {
+	padding: 15px;
+	background-color: #ddd;
+	border-radius: 5px
+}
+
+.myPanel-Box2 {
+	padding: 30px;
+	background-color: #efefef;
+	border-radius: 5px
+}
+
+.row-0 {
+	margin-left: 0;
+	margin-right: 0
+}
+
+.row-0>div {
+	padding-right: 0;
+	padding-left: 0
+}
+
+.row-10 {
+	margin-left: -5px;
+	margin-right: -5px
+}
+
+.row-10>div {
+	padding-right: 5px;
+	padding-left: 5px
+}
+
+.row-20 {
+	margin-left: -10px;
+	margin-right: -10px
+}
+
+.row-20>div {
+	padding-right: 10px;
+	padding-left: 10px
+}
+
+.row-30 {
+	margin-left: -15px;
+	margin-right: -15px
+}
+
+.row-30>div {
+	padding-right: 15px;
+	padding-left: 15px
+}
+
+.row-40 {
+	margin-left: -20px;
+	margin-right: -20px
+}
+
+.row-40>div {
+	padding-right: 20px;
+	padding-left: 20px
+}
+
+.row-50 {
+	margin-left: -25px;
+	margin-right: -25px
+}
+
+.row-50>div {
+	padding-right: 25px;
+	padding-left: 25px
+}
+
+.row-eq-height {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	flex-wrap: wrap
+}
+
+.row-eq-height>.col-sm-6 {
+	margin: 0 -1px
+}
+
+.myHeight100percent {
+	height: 100%
+}
+
+.row.flexthis:after,
+.row.flexthis:before {
+	display: none
+}
+
+.row-eq-height>div.mb-30 {
+	margin-bottom: 30px
+}
+
+.mt-00 {
+	margin-top: 0
+}
+
+.mt-01 {
+	margin-top: 1px
+}
+
+.mt-02 {
+	margin-top: 2px
+}
+
+.mt-05 {
+	margin-top: 5px
+}
+
+.mt-10 {
+	margin-top: 10px
+}
+
+.mt-15 {
+	margin-top: 15px
+}
+
+.mt-20 {
+	margin-top: 20px
+}
+
+.mt-30 {
+	margin-top: 30px
+}
+
+.mt-35 {
+	margin-top: 35px
+}
+
+.mt-40 {
+	margin-top: 40px
+}
+
+.mt-45 {
+	margin-top: 45px
+}
+
+.mt-50 {
+	margin-top: 50px
+}
+
+.mt-55 {
+	margin-top: 55px
+}
+
+.mt-60 {
+	margin-top: 60px
+}
+
+.mb-00 {
+	margin-bottom: 0
+}
+
+.mb-03 {
+	margin-bottom: 3px
+}
+
+.mb-05 {
+	margin-bottom: 5px
+}
+
+.mb-10 {
+	margin-bottom: 10px
+}
+
+.mb-15 {
+	margin-bottom: 15px
+}
+
+.mb-20 {
+	margin-bottom: 20px
+}
+
+.mb-30 {
+	margin-bottom: 30px
+}
+
+.mb-35 {
+	margin-bottom: 35px
+}
+
+.mb-45 {
+	margin-bottom: 45px
+}
+
+.mb-50 {
+	margin-bottom: 50px
+}
+
+.mb-55 {
+	margin-bottom: 55px
+}
+
+.mb-60 {
+	margin-bottom: 60px
+}
+
+.mb-75 {
+	margin-bottom: 75px
+}
+
+.mb-90 {
+	margin-bottom: 90px
+}
+
+.ml-ng05 {
+	margin-left: -5px
+}
+
+.ml-ng10 {
+	margin-left: -10px
+}
+
+.ml-ng15 {
+	margin-left: -15px
+}
+
+.ml-ng20 {
+	margin-left: -20px
+}
+
+.ml-00 {
+	margin-left: 0
+}
+
+.ml-05,
+.mf-05 {
+	margin-left: 5px
+}
+
+.ml-10,
+.mf-10 {
+	margin-left: 10px
+}
+
+.ml-15,
+.mf-15 {
+	margin-left: 15px
+}
+
+.ml-20,
+.mf-20 {
+	margin-left: 20px
+}
+
+.ml-22,
+.mf-22 {
+	margin-left: 22px
+}
+
+.ml-25,
+.mf-25 {
+	margin-left: 25px
+}
+
+.ml-30,
+.mf-30 {
+	margin-left: 30px
+}
+
+.ml-35,
+.mf-35 {
+	margin-left: 35px
+}
+
+.ml-40,
+.mf-40 {
+	margin-left: 40px
+}
+
+.ml-45,
+.mf-45 {
+	margin-left: 45px
+}
+
+.mr-00 {
+	margin-right: 0
+}
+
+.mr-05 {
+	margin-right: 5px
+}
+
+.mr-10 {
+	margin-right: 10px
+}
+
+.mr-15 {
+	margin-right: 15px
+}
+
+.mr-20 {
+	margin-right: 20px
+}
+
+.mr-22 {
+	margin-right: 22px
+}
+
+.mr-25 {
+	margin-right: 25px
+}
+
+.mr-30 {
+	margin-right: 30px
+}
+
+.mr-35 {
+	margin-right: 35px
+}
+
+.mr-40 {
+	margin-right: 40px
+}
+
+.mr-45 {
+	margin-right: 45px
+}
+
+.pd-5 {
+	padding: 5px
+}
+
+.pd-10 {
+	padding: 10px
+}
+
+.pd-15 {
+	padding: 15px
+}
+
+.pdRight-0 {
+	padding-right: 0
+}
+
+.pdLeft-1dot5Em {
+	padding-left: 1.5em
+}
+
+.myBlock {
+	display: block
+}
+
+.myInlineBlock {
+	display: inline-block
+}
+
+.myBgGrayD {
+	background-color: #ddd
+}
+
+.myBgGrayE9 {
+	background-color: #e9e9e9
+}
+
+.myBgGrayEC {
+	background-color: #ececec
+}
+
+.myBgGrayED {
+	background-color: #ededed
+}
+
+.myBgGrayE {
+	background-color: #eee
+}
+
+.myBgGrayF {
+	background-color: #efefef
+}
+
+.myBgBlue1 {
+	background-color: #1a9cff
+}
+
+.myBgLightBlue1 {
+	background-color: #f4faff
+}
+
+.myBgLightBlue2 {
+	background-color: #eaf4ff
+}
+
+.myBgLightBlue3 {
+	background-color: #d5eaff
+}
+
+.myBgLightBlue4 {
+	background-color: #aad5ff
+}
+
+.myBgLightBlue5 {
+	background-color: #edf4fc
+}
+
+.myBgLightBlue6 {
+	background-color: #80bfff
+}
+
+.myBgLightBlue7 {
+	background-color: #5af
+}
+
+.myBgOrange2 {
+	background-color: #ff8c00
+}
+
+.myBgBlue2 {
+	background-color: #1e90ff
+}
+
+.myBgBluishGreen1 {
+	background-color: #f4fffa
+}
+
+.myBgLightYellow1 {
+	background-color: #fffff4
+}
+
+.myBgSun {
+	background-color: #ffeaea
+}
+
+.myBorder2-Orange2 {
+	border: #ff8c00 solid 2px
+}
+
+.myBorder2-Blue2 {
+	border: #1e90ff solid 2px
+}
+
+.myAttention {
+	margin-left: 1em;
+	text-indent: -1em
+}
+
+.myAttention2 {
+	margin-left: 1.5em;
+	text-indent: -1.5em
+}
+
+.myAttention3 {
+	margin-left: 3em;
+	text-indent: -3em
+}
+
+.myAttention4 {
+	margin-left: 3em;
+	text-indent: -1.5em
+}
+
+.myTimeline>li {
+	overflow: hidden;
+	margin: 0;
+	position: relative
+}
+
+.myTimeline-date {
+	width: 110px;
+	float: left;
+	margin-top: 20px
+}
+
+.myTimeline-content {
+	width: 75%;
+	float: left;
+	border-left: 3px #e5e5d1 solid;
+	padding-left: 30px
+}
+
+.myTimeline-content:before {
+	content: '';
+	width: 12px;
+	height: 12px;
+	background: #6fc173;
+	position: absolute;
+	left: 106px;
+	top: 24px;
+	border-radius: 100%
+}
+
+.myTimeline2 {
+	padding-left: 20px
+}
+
+.myTimeline2>li {
+	list-style: none;
+	margin: 0;
+	position: relative
+}
+
+.myTimeline-content2 {
+	border-left: 4px #ccc solid;
+	padding-left: 15px;
+	padding-top: 20px;
+	padding-bottom: 20px
+}
+
+.myTimeline-content2:before {
+	content: '';
+	width: 12px;
+	height: 12px;
+	background: #6fc173;
+	position: absolute;
+	left: -4px;
+	top: 24px;
+	border-radius: 100%
+}
+
+.myTimeline-content2-red:before {
+	background: #e83828
+}
+
+span.wpcf7-list-item {
+	display: block
+}
+
+.my-wpcf7-list-item-inline span.wpcf7-list-item {
+	display: inline
+}
+
+.fBold {
+	font-weight: bold
+}
+
+.fNotBold {
+	font-weight: normal
+}
+
+.fcBlack {
+	color: #222
+}
+
+.fcRed {
+	color: #d9534f
+}
+
+.fcNormalRed {
+	color: red
+}
+
+.fcOrange {
+	color: #f2b756
+}
+
+.fcOrange2 {
+	color: #ff8c00
+}
+
+.fcCornflowerblue {
+	color: #8ca6d8
+}
+
+.fcRoyalBlue {
+	color: #5169aa
+}
+
+.fcGkiBlue2018 {
+	color: #2850a2
+}
+
+.fcKidsBlue {
+	color: #366bb4
+}
+
+.fcBlue2 {
+	color: #1e90ff
+}
+
+.fcHotpink {
+	color: #db467e
+}
+
+.fcDarkgray {
+	color: #a9a9a9
+}
+
+.fcGray3 {
+	color: #333
+}
+
+.fcGrayD {
+	color: #ddd
+}
+
+.fcGray6 {
+	color: #666
+}
+
+.fcGray9 {
+	color: #999
+}
+
+.fcLegoRed {
+	color: #b0132c
+}
+
+.fcLegoRed2 {
+	color: #ee294a
+}
+
+.fcGreen {
+	color: #3e8f3e
+}
+
+.fcWhite {
+	color: #fff
+}
+
+.fcYellow {
+	color: #fff100
+}
+
+.txtCenter {
+	text-align: center
+}
+
+.txtRight {
+	text-align: right
+}
+
+.txtLeft {
+	text-align: left
+}
+
+.txtNegative {
+	text-decoration: line-through
+}
+
+.table>tbody>tr>td.txtVCenter,
+.table>tfoot>tr>td.txtVCenter {
+	vertical-align: middle
+}
+
+.table>tbody>tr>td.txtVBottom,
+.table>tfoot>tr>td.txtVBottom {
+	vertical-align: bottom
+}
+
+.table>tbody>tr>td.txtVTop,
+.table>tfoot>tr>td.txtVTop {
+	vertical-align: top
+}
+
+.table>tbody>tr>td.txtRight,
+.table>tfoot>tr>td.texRight {
+	text-align: right
+}
+
+.table>tbody>tr>td.txtLeft,
+.table>tfoot>tr>td.texLeft {
+	text-align: left
+}
+
+.lh-1 {
+	line-height: 1
+}
+
+.lh-1_2 {
+	line-height: 1.2
+}
+
+.lh-1_5 {
+	line-height: 1.5
+}
+
+.lh-1_75 {
+	line-height: 1.75
+}
+
+.lh-2 {
+	line-height: 2
+}
+
+.lh-18px {
+	line-height: 18px
+}
+
+.lh-36px {
+	line-height: 36px
+}
+
+.myFlexiblebox2 {
+	display: -webkit-flex;
+	display: flex;
+	-webkit-align-items: center;
+	align-items: center
+}
+
+p.oAuto {
+	overflow: auto
+}
+
+.fSize10 {
+	font-size: 10px
+}
+
+.fSize12 {
+	font-size: 12px
+}
+
+.fSize14 {
+	font-size: 14px
+}
+
+.fSize16 {
+	font-size: 16px
+}
+
+.fSize18 {
+	font-size: 18px
+}
+
+.fSize20 {
+	font-size: 20px
+}
+
+.fSize22 {
+	font-size: 22px
+}
+
+.fSize24 {
+	font-size: 24px
+}
+
+.fSize26 {
+	font-size: 26px
+}
+
+.fSize28 {
+	font-size: 28px
+}
+
+.fSize30 {
+	font-size: 30px
+}
+
+.fSize32 {
+	font-size: 32px
+}
+
+.fSize34 {
+	font-size: 34px
+}
+
+.fSize36 {
+	font-size: 36px
+}
+
+.fSize38 {
+	font-size: 38px
+}
+
+.fSize40 {
+	font-size: 40px
+}
+
+.fSize42 {
+	font-size: 42px
+}
+
+.fSize44 {
+	font-size: 44px
+}
+
+.fSize46 {
+	font-size: 46px
+}
+
+.fSize48 {
+	font-size: 48px
+}
+
+.fSize50 {
+	font-size: 50px
+}
+
+.fSize52 {
+	font-size: 52px
+}
+
+.fSize54 {
+	font-size: 54px
+}
+
+.calendar-bg-sat {
+	background-color: #e0f3ff
+}
+
+.calendar-bg-sun {
+	background-color: #ffeded
+}
+
+.myLink:hover {
+	text-decoration: none
+}
+
+.myTable {
+	width: 100%;
+	table-layout: fixed
+}
+
+/* 
+
+@media(min-width:1440px) {
+	#frontPageImg {
+		background-repeat: no-repeat;
+		background-position: center center;
+		padding-top: 60px;
+		padding-bottom: 30px
+	}
+}
+
+@media(min-width:1200px) {
+	.over-md-disp-block {
+		display: block
+	}
+}
+
+@media(max-width:1199px) {
+	.top-img-box {
+		min-height: 400px
+	}
+
+	.md-disp-block {
+		display: block
+	}
+
+	.md-disp-inline-block {
+		display: inline-block
+	}
+}
+
+@media(min-width:993px) {
+	.md-mt-30 {
+		margin-top: 30px
+	}
+}
+
+@media(max-width:992px) {
+	#wrap {
+		padding-top: 90px
+	}
+
+	#wrapFrontPage {
+		padding-top: 51px
+	}
+
+	.sm-mt-00 {
+		margin-top: 0
+	}
+
+	.sm-mb-00 {
+		margin-bottom: 0
+	}
+
+	.sm-mb-03 {
+		margin-bottom: 3px
+	}
+
+	.sm-mb-05 {
+		margin-bottom: 5px
+	}
+
+	.sm-mb-10 {
+		margin-bottom: 10px
+	}
+
+	.sm-mb-15 {
+		margin-bottom: 15px
+	}
+
+	.sm-mb-20 {
+		margin-bottom: 20px
+	}
+
+	.sm-mb-30 {
+		margin-bottom: 30px
+	}
+
+	.sm-mb-35 {
+		margin-bottom: 35px
+	}
+
+	.sm-mb-45 {
+		margin-bottom: 45px
+	}
+
+	.sm-mb-50 {
+		margin-bottom: 50px
+	}
+
+	.sm-mb-55 {
+		margin-bottom: 55px
+	}
+
+	.sm-mb-60 {
+		margin-bottom: 60px
+	}
+
+	.sm-disp-block {
+		display: block
+	}
+
+	.sm-disp-inline-block {
+		display: inline-block
+	}
+
+	#subMenu2 {
+		position: relative
+	}
+
+	#subMenu2Title a {
+		margin-right: 26px
+	}
+
+	#subMenu2Box {
+		overflow-x: scroll;
+		position: absolute;
+		top: 100%;
+		left: 1px;
+		background-color: #f5f5f5;
+		border: 1px #838d9d solid;
+		border-radius: 0 0 3px 3px;
+		z-index: 1020
+	}
+
+	#subMenu2BtnWrap {
+		display: block;
+		width: 20px;
+		height: 20px;
+		border: 1px #fff solid;
+		border-radius: 2px;
+		position: absolute;
+		top: 50%;
+		right: 6px;
+		margin-top: -10px
+	}
+
+	#subMenu2Btn {
+		margin: 2px 2px 2px 2px;
+		padding: 0
+	}
+
+	#subMenu2Box ul li {
+		float: left;
+		display: inline-block
+	}
+
+	#subMenu2Box ul li.active a:after {
+		content: "\f138"
+	}
+
+	.footText {
+		text-align: right
+	}
+
+	#uc-imgbox {
+		min-height: 408px
+	}
+
+	.top-img-box {
+		min-height: 360px
+	}
+
+	.sm-td-w7em {
+		width: 7em
+	}
+}
+
+@media(max-width:767px) {
+
+	#wrap,
+	#wrapFrontPage {
+		margin-bottom: -300px;
+		padding-bottom: 300px
+	}
+
+	#frontPageImg .frontPageImgBox-lego {
+		background-size: 180px 120px;
+		padding-bottom: 120px
+	}
+
+	#footer {
+		height: 300px
+	}
+
+	.myTitlePost {
+		font-size: 26px
+	}
+
+	.xs-disp-block {
+		display: block
+	}
+
+	.xs-disp-inline-block {
+		display: inline-block
+	}
+
+	.xs-mf-00 {
+		margin-left: 0
+	}
+
+	.xs-mf-03 {
+		margin-left: 3px
+	}
+
+	.xs-mf-05 {
+		margin-left: 5px
+	}
+
+	.xs-mf-10 {
+		margin-left: 10px
+	}
+
+	.xs-mf-15 {
+		margin-left: 15px
+	}
+
+	.xs-mf-20 {
+		margin-left: 20px
+	}
+
+	.xs-mf-25 {
+		margin-left: 25px
+	}
+
+	.xs-mf-30 {
+		margin-left: 30px
+	}
+
+	.xs-mt-00 {
+		margin-top: 0
+	}
+
+	.xs-mb-00 {
+		margin-bottom: 0
+	}
+
+	.xs-mb-03 {
+		margin-bottom: 3px
+	}
+
+	.xs-mb-05 {
+		margin-bottom: 5px
+	}
+
+	.xs-mb-10 {
+		margin-bottom: 10px
+	}
+
+	.xs-mb-15 {
+		margin-bottom: 15px
+	}
+
+	.xs-mb-20 {
+		margin-bottom: 20px
+	}
+
+	.xs-mb-30 {
+		margin-bottom: 30px
+	}
+
+	.xs-mb-35 {
+		margin-bottom: 35px
+	}
+
+	.xs-mb-45 {
+		margin-bottom: 45px
+	}
+
+	.xs-mb-50 {
+		margin-bottom: 50px
+	}
+
+	.xs-mb-55 {
+		margin-bottom: 55px
+	}
+
+	.xs-mb-60 {
+		margin-bottom: 60px
+	}
+
+	.xs-fSize10 {
+		font-size: 10px
+	}
+
+	.xs-fSize12 {
+		font-size: 12px
+	}
+
+	.xs-fSize14 {
+		font-size: 14px
+	}
+
+	.xs-fSize16 {
+		font-size: 16px
+	}
+
+	.xs-fSize18 {
+		font-size: 18px
+	}
+
+	.xs-fSize20 {
+		font-size: 20px
+	}
+
+	.xs-fSize22 {
+		font-size: 22px
+	}
+
+	.xs-fSize24 {
+		font-size: 24px
+	}
+
+	.xs-fSize26 {
+		font-size: 26px
+	}
+
+	#uc-imgbox {
+		min-height: 180px
+	}
+
+	.uc-imgbox-titleBox {
+		margin-top: 15px;
+		margin-left: 15px;
+		margin-right: 15px
+	}
+
+	.myArtTitle {
+		font-size: 18px
+	}
+
+	.top-img-box {
+		min-height: 210px;
+		padding: 10px
+	}
+
+	.xs-td-w7em {
+		width: 7em
+	}
+
+	.xs-txtRigth {
+		text-align: right
+	}
+
+	.xs-txtLeft {
+		text-align: Left
+	}
+
+	.xs-myDecs>dt {
+		float: none
+	}
+
+	.xs-myDecs>dd {
+		margin-left: 0
+	}
+
+	.myTableCalendar {
+		max-width: 720px;
+		width: 720px
+	}
+}
+
+@media(max-width:991px) {
+	.navbar-header {
+		float: none
+	}
+
+	.navbar-toggle {
+		display: block
+	}
+
+	.navbar-collapse {
+		border-top: 1px solid transparent;
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1)
+	}
+
+	.navbar-collapse.collapse {
+		display: none !important
+	}
+
+	.navbar-nav {
+		float: none !important;
+		margin: 7.5px -15px
+	}
+
+	.navbar-nav>li {
+		float: none
+	}
+
+	.navbar-nav>li>a {
+		padding-top: 10px;
+		padding-bottom: 10px
+	}
+
+	.navbar-text {
+		float: none;
+		margin: 15px 0
+	}
+
+	.navbar-collapse.collapse.in {
+		display: block !important
+	}
+
+	.collapsing {
+		overflow: hidden !important
+	}
+
+	.row-eq-height>.col-sm-6 {
+		margin: 0
+	}
+}
+ */

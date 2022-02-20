@@ -37,70 +37,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>アカウント登録確認</title>
-<link rel="shortcut icon" href="img/bulletin_board.ico">
-<link rel="stylesheet" type="text/css" href="css/design.css">
-<link rel="stylesheet" type="text/css" href="css/design2.css">
+	<meta charset="UTF-8">
+	<title>アカウント登録確認</title>
+	<link rel="shortcut icon" href="img/bulletin_board.ico">
+	<link rel="stylesheet" type="text/css" href="css/design.css" media="all">
+	<link rel="stylesheet" type="text/css" href="css/design2.css" media="all">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="all">
+	<link rel="stylesheet" type="text/css" href="css/main.min.css" media="all">
+	<link rel="stylesheet" type="text/css" href="css/style.css" media="all">
 </head>
 <body>
-	<jsp:include page="header.jsp" flush="true" />
-	
-	<p>入力内容を確認して下さい</p>
-	
-	<table>
-		<tr>
-			<th>会員ID</th>
-			<td><%= id %></td>
-		</tr>
-		<tr>
-			<th>メールアドレス</th>
-			<td><%= email %></td>
-		</tr>
-		<tr>
-			<th>パスワード</th>
-			<td><%= pass %></td>
-		</tr>
-		<tr>
-			<th>ユーザー名</th>
-			<td><%= name %></td>
-		</tr>
-		<tr>
-			<th>生年月日</th>
-			<td><%= birth %></td>
-		</tr>
-		<tr>
-			<th>性別</th>
-			<%	for (GenderInfo gender : genderList) { 
-					if (gender.getGenderId() == genderId) {	%>
-						<td><%= gender.getGenderName() %></td>
-			<%		}
-				}	%>
-		</tr>
-		<tr>
-			<th>管理者権限の有無</th>
-			<td>
-				<% if (manager == 1) { %>
-					有
-				<% } else { %>
-					無
-				<% } %>
-			</td>
-		</tr>
-		<tr>
-			<th>登録者</th>
-			<td><%= user.getUserName() %></td>
-		</tr>
-	</table>
-	
-	<br>
-	
-	<form action="ServletAccountRegisterConfirm" method="post">
-		<input type="submit" value="登録">
-	</form>
-	
-	<div>
-		<a href="ServletAccountRegister">アカウント登録画面へ戻る</a>
+	<div id="wrap">
+		<div class="container mb-45">
+			<div class="row">
+				<div class="col-md-12">
+					<jsp:include page="header.jsp" flush="true" />
+					
+					<p>入力内容を確認して下さい</p>
+					
+					<table>
+						<tr>
+							<th>会員ID</th>
+							<td><%= id %></td>
+						</tr>
+						<tr>
+							<th>メールアドレス</th>
+							<td><%= email %></td>
+						</tr>
+						<tr>
+							<th>パスワード</th>
+							<td><%= pass %></td>
+						</tr>
+						<tr>
+							<th>ユーザー名</th>
+							<td><%= name %></td>
+						</tr>
+						<tr>
+							<th>生年月日</th>
+							<td><%= birth %></td>
+						</tr>
+						<tr>
+							<th>性別</th>
+							<%	for (GenderInfo gender : genderList) { 
+									if (gender.getGenderId() == genderId) {	%>
+										<td><%= gender.getGenderName() %></td>
+							<%		}
+								}	%>
+						</tr>
+						<tr>
+							<th>管理者権限の有無</th>
+							<td>
+								<% if (manager == 1) { %>
+									有
+								<% } else { %>
+									無
+								<% } %>
+							</td>
+						</tr>
+						<tr>
+							<th>登録者</th>
+							<td><%= user.getUserName() %></td>
+						</tr>
+					</table>
+					
+					<br>
+					
+					<% if (message != null && !message.equals("")) { %>
+						<div class="caution-text"><%= message %></div>
+					<% } %>
+					
+					<form action="ServletAccountRegisterConfirm" method="post">
+						<input type="submit" value="登録">
+					</form>
+					
+					<div>
+						<a href="ServletAccountRegister">アカウント登録画面へ戻る</a>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>
