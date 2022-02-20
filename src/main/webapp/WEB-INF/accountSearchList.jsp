@@ -33,6 +33,10 @@
 <head>
 <meta charset="UTF-8">
 <title>アカウント一覧</title>
+<link rel="shortcut icon" href="img/bulletin_board.ico">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/design.css">
+<link rel="stylesheet" type="text/css" href="css/design2.css">
 </head>
 <body>
 	<jsp:include page="header.jsp" flush="true" />
@@ -121,7 +125,13 @@
 						無
 					<% } %>
 				</td>
-				<td><%= account.getErrorCount() %></td>
+				<td>
+					<% if (account.getErrorCount() >= 3) { %>
+						<span class="fa fa-lock" style="color: #ff0000;"></span>
+					<% } else { %>
+						<span></span>
+					<% } %>
+				</td>
 				<td>
 					<% for (UserInfo user : userList) { 
 						if (user.getUserId().equals(account.getDispInsUserId())) { %>
@@ -143,8 +153,8 @@
 					<% } %>
 				</td>
 			</tr>
-		</table>
 	<% } %>
+	</table>
 	<div>
 	<% for (int i = 1; i <= totalNum; i++) {
 		if (i == pageNum) { %>

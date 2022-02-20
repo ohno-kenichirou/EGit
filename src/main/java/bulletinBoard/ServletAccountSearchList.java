@@ -48,7 +48,6 @@ public class ServletAccountSearchList extends HttpServlet {
 		request.setAttribute("accountPageNo", pageNo);
 		UserDAO userDao = new UserDAO();
 		int userCnt = userDao.findCntUserInfo(searchName, selectMatch);
-		System.out.println(userCnt);
 		int totalNum = ((Double)Math.ceil(userCnt/10.0)).intValue();
 		request.setAttribute("totalNum", totalNum);
 		ArrayList<UserInfo> accountList = (ArrayList<UserInfo>)session.getAttribute("AccountSearchList");
@@ -98,7 +97,7 @@ public class ServletAccountSearchList extends HttpServlet {
 			session.setMaxInactiveInterval(60 * 60 * 24);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/accountSearchList.jsp");
 			dispatcher.forward(request, response);
-		} if (btn.equals("register")) {
+		} else if (btn.equals("register")) {
 			session.removeAttribute("accountyRegister");
 			response.sendRedirect("ServletAccountRegister");
 		} else {

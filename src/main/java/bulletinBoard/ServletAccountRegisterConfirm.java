@@ -47,7 +47,6 @@ public class ServletAccountRegisterConfirm extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		UserInfo user = (UserInfo)session.getAttribute("User");
 		UserInfo account = (UserInfo)session.getAttribute("AccountRegister");
-		System.out.println(account);
 		if (account == null) {
 			doGet(request,response);
 			return;

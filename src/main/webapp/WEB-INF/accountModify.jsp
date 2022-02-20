@@ -38,6 +38,9 @@
 <head>
 <meta charset="UTF-8">
 <title>アカウント修正</title>
+<link rel="shortcut icon" href="img/bulletin_board.ico">
+<link rel="stylesheet" type="text/css" href="css/design.css">
+<link rel="stylesheet" type="text/css" href="css/design2.css">
 </head>
 <body>
 	<jsp:include page="header.jsp" flush="true" />
@@ -56,7 +59,7 @@
 			</label>				
 		</div>
 		<div>
-			<input type="text" id="userId" name="userId" readonly="readonly" value="<%= id %>">
+			<input type="text" id="userId" name="userId" readonly="readonly" size="11" value="<%= id %>">
 		</div>
 		<div>
 			<label for="email">
@@ -64,7 +67,7 @@
 			</label>				
 		</div>
 		<div>
-			<input type="email" id="email" name="email" placeholder="メールアドレス入力" maxlength="255" required value="<%= email %>">
+			<input type="email" id="email" name="email" placeholder="メールアドレス入力" maxlength="255" size="255" required value="<%= email %>">
 		</div>
 		<div>
 			<label for="pass">
@@ -72,7 +75,7 @@
 			</label>				
 		</div>
 		<div>
-			<input type="password" id="pass" name="pass" placeholder="パスワード入力" maxlength="255" required value="<%= pass %>">
+			<input type="password" id="pass" name="pass" placeholder="パスワード入力" minlength="8" maxlength="18" size="18" required value="<%= pass %>">
 		</div>
 		<div>
 			<label for="userName">
@@ -80,7 +83,7 @@
 			</label>				
 		</div>
 		<div>
-			<input type="text" id="userName" name="userName" placeholder="ユーザー名入力" maxlength="100" required value="<%= name %>">
+			<input type="text" id="userName" name="userName" placeholder="ユーザー名入力" maxlength="100" size="100" required value="<%= name %>">
 		</div>
 		<div>
 			<label for="birth">

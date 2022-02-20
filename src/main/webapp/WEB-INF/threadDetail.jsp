@@ -29,96 +29,79 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>スレッド詳細</title>
+		<link rel="stylesheet" type="text/css" href="css/design.css">
 	</head>
 	<body>
-		<header>
-			<a href="ServletThreadSearchList">スレッド一覧</a>
-			
-			<%
-				if (user != null && user.getManager() == 1) {
-			%>
-					<a href="ServletCategorySearchList">カテゴリー一覧</a>
-					<a href="ServletAccountSearchList">アカウント一覧</a>
-			<%		
-				}
-				if (user != null) {
-			%>
-					<a href="ServletLogout">ログアウト</a>	
-			<%
-				} else {
-			%>
-					<a href="ServletLogin">ログイン</a>	
-			<%
-				}
-			%>		
-				
-		</header>
-		<hr>
+		<jsp:include page="header.jsp" flush="true" />
 
 		<%
 			if (deleteMessage != null && !deleteMessage.equals("")) {
 		%>
-				<div>
+				<br>
+				<div class="caution-text">
 					<%= deleteMessage %>
 				</div>
 		<%	
 			}
 		%>
 		
+		<div class="thread">
+		
 		<%
-			if (threadInfo != null) {
-				
+			if (threadInfo != null) {	
 		%>
-				<h1><%= threadInfo.getTitle() %></h1>
-				<span>カテゴリー:<%= threadInfo.getCategory() %></span>
-				<p>
-					<span>1. </span><%= threadInfo.getCreateUserName() %><span> <%= threadInfo.getCreateDate() %></span>
+				<div class="thread-info">
+					<h1><%= threadInfo.getTitle() %></h1>
+					<span>カテゴリー:<%= threadInfo.getCategory() %></span>
 					<br>
-					<span><%= threadInfo.getComment() %></span>
-				</p>
-				
-				<br>
-		<%	
-				
+					<br>
+					<div class="backcolor-gray">
+						<span>1.</span><span class="thread-infoMargin"><%= threadInfo.getCreateUserName() %></span><span class="thread-infoMargin"><%= threadInfo.getCreateDate() %></span>
+						<br>
+						<span><%= threadInfo.getComment() %></span>
+					</div>
+				</div>
+		<%		
 			}
 		%>
 		
-		
-		
-	
 		<%
 			if (commentList != null) {
 				for (int i = 0; i < commentList.size(); i++) {
-					
 					commentId = commentList.get(i).getCommentId();
 		%>
-					<p><%= i + 2 %>. <%= commentList.get(i).getPostUserName() %> <%= commentList.get(i).getPostDate() %></p>
-					<p><%= commentList.get(i).getComment() %></p>
-					<%
-						if (user != null && user.getManager() == 1) {
-					%>
-					
-							<form action="ServletCommentDelConfirm" method="post">
-								<input type="submit" value="削除">
-								<input type="hidden" name="commentId" value="<%= commentId %>">
-								<input type="hidden" name="threadId" value="<%= threadId %>">
-							</form>
-					<%
-						}
-					%>
-					<br>
+					<div class="thread-info">
+						<div class="backcolor-gray">
+						<span><%= i + 2 %>.</span><span class="thread-infoMargin"><%= commentList.get(i).getPostUserName() %></span><span class="thread-infoMargin"><%= commentList.get(i).getPostDate() %></span>
+						<br>
+						<span><%= commentList.get(i).getComment() %></span>
+						</div>
+						<%
+							if (user != null && user.getManager() == 1) {
+						%>						
+								<form action="ServletCommentDelConfirm" method="post">
+									<input type="submit" value="削除">
+									<input type="hidden" name="commentId" value="<%= commentId %>">
+									<input type="hidden" name="threadId" value="<%= threadId %>">
+								</form>
+						<%
+							}
+						%>						
+					</div>
 		<%	
 				}
 			}
 		%>
-		
+		<br>
 		<%
 			if ((commentList == null || commentList.size() < 50) && user != null) {
 		%>
-				<form action="ServletCommentPost" method="post">
-					<input type="submit" value="コメントする">
-					<input type="hidden" name="threadId" value="<%= threadId %>">
-				</form>
+				<div class="text-center">
+					<form action="ServletCommentPost" method="post">
+						<input type="submit" value="コメントする">
+						<input type="hidden" name="threadId" value="<%= threadId %>">
+					</form>
+				</div>
 		<%
 			}
 		%>		
@@ -126,15 +109,21 @@
 		<%
 			if ((commentMessage != null && !commentMessage.equals("")) && user != null) {
 		%>
-				<div>
+				<br>
+				<div class="text-center">
 					<%= commentMessage %>
 				</div>
 		<%	
 			}
 		%>
 		
+		</div>
 		<br>
-		
-		<a href="ServletThreadSearchList">スレッド一覧へ戻る</a>
+		<br>
+		<div class="text-center">
+			<a href="ServletThreadSearchList">スレッド一覧へ戻る</a>
+		</div>
+		<br>
+		<br>
 	</body>
 </html>

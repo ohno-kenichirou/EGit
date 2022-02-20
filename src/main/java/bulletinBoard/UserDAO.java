@@ -141,21 +141,17 @@ public class UserDAO {
 			}
 			String sql = "SELECT userId, userName, email, birth, genderId, dispInsUserId, dispInsDate, dispUpdUserId, dispUpdDate, manager, errorCount "
 					   + "FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY dispInsDate, userId) AS rowNum FROM [User] WHERE delFlg = 0 ";
-			System.out.println(searchName);
 			if (searchName != null && !searchName.equals("")) {
 				String where = "LIKE";
-				System.out.println(selectMatch);
 				if (selectMatch.equals("partial")) {
 					where = "LIKE";
 				} else if (selectMatch.equals("perfect")) {
 					where = "=";
 				}
 				sql += " AND userName " + where + " ? ";
-				System.out.println(sql);
 			}
 			sql += ") AS t "
 				+  "WHERE rowNum BETWEEN ? AND ? ";
-			System.out.println(sql);
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			int parameterIndex = 1;
 			if (searchName != null && !searchName.equals("")) {
@@ -165,7 +161,6 @@ public class UserDAO {
 				} else if (selectMatch.equals("perfect")) {
 					whereSearchName = searchName;
 				}
-				System.out.println(whereSearchName);
 				pstmt.setString(parameterIndex++, whereSearchName);
 			}
 			pstmt.setInt(parameterIndex++, pageNum * 10 - 9);
@@ -182,7 +177,6 @@ public class UserDAO {
 			rs.close();
 			pstmt.close();
 			Collections.sort(userList);
-			System.out.println(userList);
 			return userList;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -290,17 +284,14 @@ public class UserDAO {
 			pstmt.setString(2, user.getUserId());
 			pstmt.setString(3, account.getUserId());
 			ret = pstmt.executeUpdate() > 0;
-			System.out.println("1:" + ret);		// テストコメント
 			if (ret) {
 				ret= delThread(pstmt, con, user, account);
 			}
 						
 			if (ret) {
 				con.commit();
-				System.out.println("commit");		// テストコメント
 			} else {
 				con.rollback();
-				System.out.println("rollback");		// テストコメント
 			}
 			pstmt.close();
 		} catch (SQLException e) {
@@ -352,7 +343,6 @@ public class UserDAO {
 		if (ret) {
 			ret = delCommentByThreadId(pstmt, con, user, account, threadIdList);
 		}
-		System.out.println("2:" + ret);		// テストコメント
 		return ret;
 	}
 	
@@ -391,7 +381,6 @@ public class UserDAO {
 		if (ret) {
 			ret = delCommentByPostUserId(pstmt, con, user, account, commentDao);
 		}
-		System.out.println("3:" + ret);		// テストコメント
 		return ret;
 	}
 	
@@ -418,7 +407,6 @@ public class UserDAO {
 		if (rs != null) {
 			rs.close();
 		}
-		System.out.println("4:" + ret);		// テストコメント
 		return ret;
 	}
 	

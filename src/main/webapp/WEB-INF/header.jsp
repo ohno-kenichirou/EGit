@@ -5,25 +5,26 @@
 	UserInfo user = (UserInfo)session.getAttribute("User");
 %>
 		<header>
-			<a href="ServletThreadSearchList">スレッド一覧</a>
-			
-			<%
-				if (user != null && user.getManager() == 1) {
-			%>
-					<a href="ServletCategorySearchList">カテゴリー一覧</a>
-					<a href="ServletAccountSearchList">アカウント一覧</a>
-			<%		
-				}
-				if (user != null) {
-			%>
-					<a href="ServletLogout">ログアウト</a>	
-			<%
-				} else {
-			%>
-					<a href="ServletLogin">ログイン</a>	
-			<%
-				}
-			%>		
+			<div>
+				<div class="navigationLink"><a href="ServletThreadSearchList">スレッド一覧</a></div>
 				
+				<%
+					if (user != null && user.getManager() == 1) {
+				%>
+						<div class="navigationLink"><a href="ServletCategorySearchList">カテゴリー一覧</a></div>
+						<div class="navigationLink"><a href="ServletAccountSearchList">アカウント一覧</a></div>
+				<%		
+					}
+					if (user != null) {
+				%>
+						<div class="navigationLink"><a href="ServletLogout">ログアウト</a></div>
+				<%
+					} else {
+				%>
+						<div class="navigationLink"><a href="ServletLogin">ログイン</a></div>
+				<%
+					}
+				%>		
+			</div>	
 		</header>
 		<hr>

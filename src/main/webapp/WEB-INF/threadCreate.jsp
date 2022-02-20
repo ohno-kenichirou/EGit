@@ -29,99 +29,93 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>スレッド作成</title>
+		<link rel="stylesheet" type="text/css" href="css/design.css">
 	</head>
 	<body>
-		<header>
-			<a href="ServletThreadSearchList">スレッド一覧</a>
-			
-			<%
-				if (user != null && user.getManager() == 1) {
-			%>
-					<a href="ServletCategorySearchList">カテゴリー一覧</a>
-					<a href="ServletAccountSearchList">アカウント一覧</a>
-			<%		
-				}
-				if (user != null) {
-			%>
-					<a href="ServletLogout">ログアウト</a>	
-			<%
-				} else {
-			%>
-					<a href="ServletLogin">ログイン</a>	
-			<%
-				}
-			%>		
-				
-		</header>
-		<hr>
+		<jsp:include page="header.jsp" flush="true" />
 		
 		<%
 			if (message != null && message.equals("未入力の項目があります")) {
 		%>
-				<div>
+				<br>
+				<div class="caution-text">
 					<%= message %>
 				</div>
 		<%	
 			}
 		%>
-		
-		<div>
-			<span>＊</span>マークは入力必須項目
+		<br>
+		<div class="text-center font12">
+			<span class="caution-color">＊</span>マークは入力必須項目
 		</div>
-		
-		<form action="ServletThreadCreateConfirm" method="post">
-			<div>
-				<label for="title">
-					<span>＊</span>タイトル:
-				</label>				
-			</div>
-			<div>
-				<input type="text" id="title" name="title" placeholder="<%= title %>" required <%
-																									if (newThread != null) {
-																								%>
-																										value="<%= newThread.getTitle() %>"																								
-																								<%
-																									}
-																								%>>
-			</div>
-			
-			<div>
-				<label for="category">
-					<span>＊</span>カテゴリー:
-				</label>				
-			</div>
-						
-			<div>
-				<select id="category" name="categoryId">
-					<%
-						if (categoryList != null && categoryList.size() > 0) {
-							for (CategoryNameDisp category : categoryList) {
-								
-					%>
-								<option value="<%= category.getCategoryId() %>"><%= category.getCategoryName() %></option>
-					<%			
-							}
-						}
-					%>
-				</select>
-			</div>
-			<div>
-				<label for="comment">
-					<span>＊</span>スレッド内容:
-				</label>				
-			</div>
-			<div>
-				<textarea id="comment" name="comment" placeholder="<%= comment %>" required><% if (newThread != null) %><%= newThread.getComment() %></textarea>
-			</div>
-			
-			<div>
-				<input type="submit" value="確認">
-			</div>
-		</form>
-			
 		<br>
 		
-		<a href="ServletThreadSearchList">スレッド一覧へ戻る</a>
+		<div class="text-center">
+			<form action="ServletThreadCreateConfirm" method="post">
+				<div class="input-margin">
+					<div class="inline-block  a">
+						<label for="title">
+							<span class="caution-color">＊</span>タイトル:
+						</label>				
+					</div>
+					<span>
+						<input class="input-width" type="text" id="title" name="title" placeholder="<%= title %>" required <%
+																											if (newThread != null) {
+																										%>
+																												value="<%= newThread.getTitle() %>"																								
+																										<%
+																											}
+																										%>>
+					</span>
+				</div>
+				
+				<div class="input-margin">
+					<div class="inline-block  a">
+						<label for="category">
+							<span class="caution-color">＊</span>カテゴリー:
+						</label>				
+					</div>
+								
+					<span>
+						<select class="input-width" id="category" name="categoryId">
+							<%
+								if (categoryList != null && categoryList.size() > 0) {
+									for (CategoryNameDisp category : categoryList) {
+										
+							%>
+										<option value="<%= category.getCategoryId() %>"><%= category.getCategoryName() %></option>
+							<%			
+									}
+								}
+							%>
+						</select>
+					</span>
+				</div>
+				
+				<div class="input-margin">
+					<div class="inline-block  a top">
+						<label for="comment">
+							<span class="caution-color">＊</span>スレッド内容:
+						</label>				
+					</div>
+					<span>
+						<textarea class="input-width" rows="10" id="comment" name="comment" placeholder="<%= comment %>" required><% if (newThread != null) %><%= newThread.getComment() %></textarea>
+					</span>
+				</div>
+				
+				<div class="input-margin">
+					<input type="submit" value="確認">
+				</div>
+			</form>
+		</div>
 		
+		
+		<br>	
+		<br>
+		<div class="text-center">
+			<a href="ServletThreadSearchList">スレッド一覧へ戻る</a>
+		</div>
+		<br>	
+		<br>
 	</body>
 </html>

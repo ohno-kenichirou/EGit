@@ -21,6 +21,9 @@
 <head>
 <meta charset="UTF-8">
 <title>カテゴリー削除確認</title>
+<link rel="shortcut icon" href="img/bulletin_board.ico">
+<link rel="stylesheet" type="text/css" href="css/design.css">
+<link rel="stylesheet" type="text/css" href="css/design2.css">
 </head>
 <body>
 	<jsp:include page="header.jsp" flush="true" />
@@ -54,7 +57,7 @@
 		<input type="submit" value="削除">
 	</form>
 	<div>
-		<a href="ServletCategorySerchList">カテゴリー一覧画面へ戻る</a>
+		<a href="ServletCategorySearchList">カテゴリー一覧画面へ戻る</a>
 	</div>
 </body>
 </html>

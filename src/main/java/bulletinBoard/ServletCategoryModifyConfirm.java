@@ -52,15 +52,15 @@ public class ServletCategoryModifyConfirm extends HttpServlet {
 			return;
 		}
 		CategoryCommonDAO dao = new CategoryModifyDAO(user, category);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/categoryModifyConfirm.jsp");
 		if (dao.modifyCategory()) {
 			request.setAttribute("message", "カテゴリーが修正されました。");
 			session.removeAttribute("CategoryModify");
-			response.sendRedirect("ServletCategorySearchList");
+			dispatcher = request.getRequestDispatcher("ServletCategorySearchList");
 		} else {
 			request.setAttribute("message", "[システムエラー]処理に失敗しました。");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/categoryModifyConfirm.jsp");
-			dispatcher.forward(request, response);
 		}
+		dispatcher.forward(request, response);
 	}
 
 }

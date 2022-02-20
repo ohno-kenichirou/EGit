@@ -183,7 +183,7 @@ public class CategoryListDAO extends CategoryCommonDAO {
 				pstmt.setString(2, categorySearch.getSearchWord());
 				pstmt.setInt(3, categoryDispNumber);
 			}
-				   		
+				
 			ResultSet rs = pstmt.executeQuery();
 			ArrayList<CategoryNameDisp> categoryList = new ArrayList<>();
 			

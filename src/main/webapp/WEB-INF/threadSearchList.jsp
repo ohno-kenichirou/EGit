@@ -82,7 +82,7 @@
 			<p class="text-center">
 				<span class="search-margin">
 					<label for="category">カテゴリー:</label>
-					<select id="category" name="categoryId">
+					<select class="input-width" id="category" name="categoryId">
 						<option value="0">検索条件に含まない</option>
 						<%
 							if (categoryList != null && categoryList.size() != 0) {
@@ -124,6 +124,7 @@
 				<input type="submit" value="スレッドを立てる">
 			</form>
 		</div>
+		<br>
 		<%
 			}
 			
@@ -133,7 +134,7 @@
 		%>				
 					<div class="thread">
 						<form action="ServletThreadDelConfirm" method="post">
-							<p class="thread-info">
+							<p class="thread-info backcolor-gray">
 								<a class="thread-linkFont" href="ServletThreadDetail?threadId=<%= thread.getThreadId() %>"><%= thread.getTitle() %></a>
 								<%
 									if (user != null && user.getManager() == 1) {

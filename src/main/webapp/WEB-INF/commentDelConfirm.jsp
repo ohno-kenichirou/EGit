@@ -89,7 +89,7 @@
 		
 		<br>
 		
-		<a href="ServletThreadDetail?threadInfo=<%= threadId %>">スレッド詳細画面へ戻る</a>
+		<a href="ServletThreadDetail?threadId=<%= threadId %>">スレッド詳細画面へ戻る</a>
 		
 	</body>
 </html>

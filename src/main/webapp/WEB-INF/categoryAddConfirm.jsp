@@ -27,6 +27,9 @@
 <head>
 <meta charset="UTF-8">
 <title>カテゴリー追加確認</title>
+<link rel="shortcut icon" href="img/bulletin_board.ico">
+<link rel="stylesheet" type="text/css" href="css/design.css">
+<link rel="stylesheet" type="text/css" href="css/design2.css">
 </head>
 <body>
 	<jsp:include page="header.jsp" flush="true" />

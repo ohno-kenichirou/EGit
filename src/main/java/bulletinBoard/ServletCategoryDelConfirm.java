@@ -52,15 +52,15 @@ public class ServletCategoryDelConfirm extends HttpServlet {
 			return;
 		}
 		CategoryCommonDAO dao = new CategoryDelDAO(user, category);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/categoryDelConfirm.jsp");
 		if (dao.delCategory()) {
 			request.setAttribute("message", "カテゴリーが削除されました。");
 			session.removeAttribute("CategoryDel");
-			response.sendRedirect("ServletCategorySearchList");
+			dispatcher = request.getRequestDispatcher("ServletCategorySearchList");
 		} else {
 			request.setAttribute("message", "[システムエラー]処理に失敗しました。");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/categoryDelConfirm.jsp");
-			dispatcher.forward(request, response);
 		}
+		dispatcher.forward(request, response);
 	}
 
 }
