@@ -33,13 +33,15 @@
 <head>
 <meta charset="UTF-8">
 <title>アカウント一覧</title>
-<link rel="shortcut icon" href="img/bulletin_board.ico">
-<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="css/design.css">
-<link rel="stylesheet" type="text/css" href="css/design2.css">
 </head>
 <body>
-	<jsp:include page="header.jsp" flush="true" />
+	<header class="flex">
+		<a href="ServletThreadSearchList">スレッド一覧</a>
+		<a href="#">カテゴリー一覧</a>
+		<a href="#">アカウント一覧</a>	
+		<a href="ServletLogout">ログアウト</a>		
+	</header>
+	<hr>
 	<form action="ServletAccountSearchList" method="post">
 		<p>
 			<span>ユーザー名:</span>
@@ -56,11 +58,12 @@
 		</p>
 	</form>
 	<hr>
-	<% if (message != null && message != "") { %>
-		<div><%= message %></div>
+	<% if (message != null && message != "") {	%>
+		<div><%= message %>
+		</div>
 	<% } %>
-	<form action="ServletAccountSearchList" method="post">
-		<input type="hidden" name="btn" value="register">
+	<form action="ServletAccountRegister" method="post">
+		<input type="hidden" name="btn" value="Register">
 		<input type="submit" value="アカウント登録">
 	</form>
 	<table>
@@ -82,7 +85,7 @@
 		<% for (UserInfo account : accountList) { %>
 			<tr>
 				<td>
-					<form action="ServletAccountSearchList" method="post">
+					<form action="ServletAccountModify" method="post">
 						<input type="hidden" name="userId"		value="<%= account.getUserId() %>">
 						<input type="hidden" name="email"		value="<%= account.getEmail() %>">
 						<input type="hidden" name="userName"	value="<%= account.getUserName() %>">
@@ -95,7 +98,7 @@
 					</form>
 				</td>
 				<td>
-					<form action="ServletAccountSearchList" method="post">
+					<form action="ServletAccountDelConfirm" method="post">
 						<input type="hidden" name="userId"		value="<%= account.getUserId() %>">
 						<input type="hidden" name="email"		value="<%= account.getEmail() %>">
 						<input type="hidden" name="userName"	value="<%= account.getUserName() %>">
@@ -125,13 +128,7 @@
 						無
 					<% } %>
 				</td>
-				<td>
-					<% if (account.getErrorCount() >= 3) { %>
-						<span class="fa fa-lock" style="color: #ff0000;"></span>
-					<% } else { %>
-						<span></span>
-					<% } %>
-				</td>
+				<td><%= account.getErrorCount() %></td>
 				<td>
 					<% for (UserInfo user : userList) { 
 						if (user.getUserId().equals(account.getDispInsUserId())) { %>
@@ -153,8 +150,8 @@
 					<% } %>
 				</td>
 			</tr>
+		</table>
 	<% } %>
-	</table>
 	<div>
 	<% for (int i = 1; i <= totalNum; i++) {
 		if (i == pageNum) { %>

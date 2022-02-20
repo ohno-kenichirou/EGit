@@ -36,117 +36,94 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>カテゴリー一覧・検索</title>
-		<link rel="stylesheet" type="text/css" href="css/design.css">
+		<link rel="stylesheet" type="text.css" href="../css.css">
 	</head>
 	<body>
 	 	<jsp:include page="header.jsp" flush="true" />
 		
 		<form action="ServletCategorySearchList" method="post">
-			<p class="text-center">
-				<span class="search-margin">
-					<label>
-						<span>カテゴリー名:</span>
-					</label>			
-					<input type="text" name="searchWord" placeholder="カテゴリー名入力" <%
-					  																	if (searchWord != null) {
-					  																%>
-					  																		value="<%= searchWord %>"
-					  																<%		
-					  																	}
-																					%>>
-				</span>	
-				<span class="search-margin">														
-					<input type="radio" name="match" value="part" id="part" <%
-																				if (categorySearch == null || (categorySearch != null && categorySearch.getMatch().equals("part"))) {	
-																			%>
-																					checked="checked"
-																			<%
-																				}
-																			%>		
-																			><label for="part">部分一致</label>
-					<input type="radio" name="match" value="all" id="all" <%
-																				if (categorySearch != null && categorySearch.getMatch().equals("all")) {	
-																		   %>
-																		   			checked="checked"
-																		  <%
-																				}
-																		  %>				
-																		  ><label for="all">完全一致</label>
-				</span>			
-				<input type="hidden" name="update" value="search">
-				<span class="search-margin">
-					<input type="submit" value="検索">
-				</span>
-			</p>
+			<label>
+				<span>カテゴリー名:</span>
+			</label>			
+			<input type="text" name="searchWord" placeholder="カテゴリー名入力" <%
+			  																	if (searchWord != null) {
+			  																%>
+			  																		value="<%= searchWord %>"
+			  																<%		
+			  																	}
+																			%>>
+				<input type="radio" name="match" value="part" id="part" <%
+																			if (categorySearch == null || (categorySearch != null && categorySearch.getMatch().equals("part"))) {	
+																		%>
+																				checked="checked"
+																		<%
+																			}
+																		%>		
+																		><label for="part">部分一致</label>
+				<input type="radio" name="match" value="all" id="all" <%
+																			if (categorySearch != null && categorySearch.getMatch().equals("all")) {	
+																	   %>
+																	   			checked="checked"
+																	  <%
+																			}
+																	  %>
+																	  ><label for="all">完全一致</label>
+			<input type="submit" value="検索">
 		</form>
 		<hr>
 		
 		<%
 			if (message != null && message != "") {
-		%>		
-				<br>
-				<div class="caution-text">
+		%>
+				<div>
 					<%= message %>
 				</div>
 		<%	
 			}
 		%>
-		<br>
-		<div class="text-center">
-			<form action="ServletCategoryAdd" method="get">
-				<input type="submit" value="カテゴリー追加">
-			</form>
-		</div>
-		<br>
-		<div class="thread">
-			<%
-				for (CategoryNameDisp category : categoryList) {
-			%>
-					<div class="flex thread-info">
-						<span class="category-name">
-							<%= category.getCategoryName() %>
-						</span>
-						
-						<form action="ServletCategorySearchList" method="post">
-							<span class="category-update-button">
-								<input type="submit" value="修正">
-								<input type="hidden" name="update" value="modify">
-								<input type="hidden" name="categoryId" value="<%= category.getCategoryId() %>">
-								<input type="hidden" name="categoryName" value="<%= category.getCategoryName() %>">
-								<input type="hidden" name="categoryKana" value="<%= category.getCategoryKana() %>">					
-							</span>
-						</form>
-						
-						<form action="ServletCategorySearchList" method="post">
-							<span class="category-update-button">
-								<input type="submit" value="削除">
-								<input type="hidden" name="update" value="delete">
-								<input type="hidden" name="categoryId" value="<%= category.getCategoryId() %>">
-								<input type="hidden" name="categoryName" value="<%= category.getCategoryName() %>">
-								<input type="hidden" name="categoryKana" value="<%= category.getCategoryKana() %>">
-							</span>
-						</form>				
-					</div>	
-			<%
-				}
-			%>
-		</div>
+		
+		<form action="ServletCategoryAdd" method="get">
+			<input type="submit" value="カテゴリー追加">
+		</form>
+		
+		<%
+			for (CategoryNameDisp category : categoryList) {
+		%>
+				
+				<p>
+					<%= category.getCategoryName() %>
+					<form action="ServletCategorySearchList" method="post">
+						<input type="submit" value="修正">
+						<input type="hidden" name="update" value="modify">
+						<input type="hidden" name="categoryId" value="<%= category.getCategoryId() %>">
+						<input type="hidden" name="categoryName" value="<%= category.getCategoryName() %>">
+						<input type="hidden" name="categoryKana" value="<%= category.getCategoryKana() %>">
+					</form>
+					<form action="ServletCategorySearchList" method="post">
+						<input type="submit" value="削除">
+						<input type="hidden" name="update" value="delete">
+						<input type="hidden" name="categoryId" value="<%= category.getCategoryId() %>">
+						<input type="hidden" name="categoryName" value="<%= category.getCategoryName() %>">
+						<input type="hidden" name="categoryKana" value="<%= category.getCategoryKana() %>">
+					</form>
+				</p>
+				
+		<%
+			}
+		%>
 		
 		<br>
-		<br>
-		<div class="text-center">
-			<%
-				for (int i = 1; i <= pagination; i++) {
-			%>
-					<span class="pagination-margin"><a href="ServletCategorySearchList?page=<%= i  %>"><%= i %></a></span>
-			<%
-					if (i == 10) {
-						break;
-					}
+		
+		<%
+			for (int i = 1; i <= pagination; i++) {
+		%>
+				<a href="ServletCategorySearchList?page=<%= i  %>"><%= i %></a>	
+		<%
+				if (i == 10) {
+					break;
 				}
-			%>
-		</div>
-		<br>
-		<br>
+			}
+		%>
+	
 	</body>
 </html>

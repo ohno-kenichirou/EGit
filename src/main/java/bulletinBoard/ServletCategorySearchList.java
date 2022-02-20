@@ -77,30 +77,16 @@ public class ServletCategorySearchList extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession(false);
 		
-		int page;
-		try {
-			page = Integer.parseInt(request.getParameter("page"));
-		} catch (NumberFormatException e) {
-			page = 1;
-		}
-		
 		String btn = request.getParameter("update");
-		if (btn == null) {
-			doGet(request, response);
-			return;
-		}
 		if (btn.equals("search")) {
-			String searchName = request.getParameter("searchWord");
-			String selectMatch = request.getParameter("match");
-			CategorySearchInfo categorySearch = new CategorySearchInfo(searchName, selectMatch);
-			ArrayList<CategoryNameDisp> categoryList = new CategoryListDAO().searchCategory(categorySearch, page);
-			session.setAttribute("CategoryList", categoryList);
-			session.setAttribute("CategorySearchInfo", categorySearch);
-			session.setAttribute("CategoryPagination", new CategoryListDAO().searchCategoryCount(categorySearch));
+			CategoryListDAO categoryDao = new CategoryListDAO();
+			String searchName = request.getParameter("searchCategoryWord");
+			String selectMatch = request.getParameter("selectMatch");
+			ArrayList<CategoryInfo> categoryList = categoryDao.findCategoryList(searchName,selectMatch);
 			request.setAttribute("sendCategoryList", categoryList);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/categorySearchList.jsp");
 			dispatcher.forward(request, response);
-		} else if (btn.equals("add")) {
+		} if (btn.equals("add")) {
 			response.sendRedirect("ServletCategoryAdd");
 		} else {
 			int categoryId = Integer.parseInt(request.getParameter("categoryId"));

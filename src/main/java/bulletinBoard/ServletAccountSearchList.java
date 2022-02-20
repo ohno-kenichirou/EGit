@@ -41,6 +41,8 @@ public class ServletAccountSearchList extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		String searchName = (String)session.getAttribute("searchUserName");
 		String selectMatch = (String)session.getAttribute("selectMatch");
+		ArrayList<UserInfo> accountList = (ArrayList<UserInfo>)session.getAttribute("AccountSearchList");
+		ArrayList<UserInfo> userList = (ArrayList<UserInfo>)session.getAttribute("UserList");
 		String pageNo = request.getParameter("accountPageNo");
 		if (pageNo == null || pageNo.equals("")) {
 			pageNo = "1";
@@ -50,10 +52,8 @@ public class ServletAccountSearchList extends HttpServlet {
 		int userCnt = userDao.findCntUserInfo(searchName, selectMatch);
 		int totalNum = ((Double)Math.ceil(userCnt/10.0)).intValue();
 		request.setAttribute("totalNum", totalNum);
-		ArrayList<UserInfo> accountList = (ArrayList<UserInfo>)session.getAttribute("AccountSearchList");
 		accountList = userDao.findUserInfoList(searchName, selectMatch, pageNo);
 		session.setAttribute("AccountSearchList", accountList);
-		ArrayList<UserInfo> userList = (ArrayList<UserInfo>)session.getAttribute("UserList");
 		if (userList == null) {
 			userList = userDao.getAllUserList();
 			session.setAttribute("UserList", userList);
@@ -74,18 +74,18 @@ public class ServletAccountSearchList extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
-		String btn = request.getParameter("btn");
-		if (btn == null) {
+		String searchName = request.getParameter("searchUserName");
+		String selectMatch = request.getParameter("selectMatch");
+		if (searchName == null) {
 			doGet(request,response);
 			return;
 		}
 		HttpSession session = request.getSession(false);
+		session.setAttribute("searchUserName", searchName);
+		session.setAttribute("selectMatch", selectMatch);
+		session.setMaxInactiveInterval(60 * 60 * 24);
+		String btn = request.getParameter("btn");
 		if (btn.equals("search")) {
-			String searchName = request.getParameter("searchUserName");
-			String selectMatch = request.getParameter("selectMatch");
-			session.setAttribute("searchUserName", searchName);
-			session.setAttribute("selectMatch", selectMatch);
-			session.setMaxInactiveInterval(60 * 60 * 24);
 			UserDAO userDao = new UserDAO();
 			int userCnt = userDao.findCntUserInfo(searchName, selectMatch);
 			int totalNum = ((Double)Math.ceil(userCnt/10.0)).intValue();
@@ -93,11 +93,10 @@ public class ServletAccountSearchList extends HttpServlet {
 			String pageNo = "1";
 			request.setAttribute("accountPageNo", pageNo);
 			ArrayList<UserInfo> accountList = userDao.findUserInfoList(searchName, selectMatch, pageNo);
-			session.setAttribute("AccountSearchList", accountList);
-			session.setMaxInactiveInterval(60 * 60 * 24);
+			request.setAttribute("AccountSearchList", accountList);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/accountSearchList.jsp");
 			dispatcher.forward(request, response);
-		} else if (btn.equals("register")) {
+		} if (btn.equals("Register")) {
 			session.removeAttribute("accountyRegister");
 			response.sendRedirect("ServletAccountRegister");
 		} else {
@@ -110,9 +109,7 @@ public class ServletAccountSearchList extends HttpServlet {
 			int errorCount = Integer.parseInt(request.getParameter("errorCount"));
 			UserInfo info = new UserInfo(userId, userName, email, birth, genderId, manager, errorCount);
 			if (btn.equals("modify")) {
-				UserInfo infoBefore = new UserInfo(userId, userName, email, birth, genderId, manager, errorCount);
 				session.setAttribute("AccountModify", info);
-				session.setAttribute("AccountBefore", infoBefore);
 				session.setMaxInactiveInterval(60 * 60 * 24);
 				response.sendRedirect("ServletAccountModify");
 			} else if (btn.equals("delete")) {

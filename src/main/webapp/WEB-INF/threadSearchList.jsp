@@ -42,137 +42,132 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>スレッド一覧・検索</title>
-		<link rel="stylesheet" type="text/css" href="css/design.css">
+		<link rel="stylesheet" type="text.css" href="../cssLogout.css">
 	</head>
 	<body>
-		<jsp:include page="header.jsp" flush="true" />
+		<header>
+	<a href="ServletThreadSearchList">スレッド一覧</a>
+	
+	<%
+		if (user != null && user.getManager() == 1) {
+%>
+					<a href="ServletCategorySearchList">カテゴリー一覧</a>
+					<a href="ServletAccountSearchList">アカウント一覧</a>
+			<%		
+				}
+				if (user != null) {
+			%>
+					<a href="ServletLogout">ログアウト</a>	
+			<%
+				} else {
+			%>
+					<a href="ServletLogin">ログイン</a>	
+			<%
+				}
+			%>		
+				
+		</header>
+		<hr>
 		
 		<form action="ServletThreadSearchList" method="post">
-			<p class="text-center">
-				
-				<span class="search-margin">
-					<label for="searchWord">タイトル:</label>
-					<input id="searchWord" type="text" name="searchWord" placeholder="タイトル入力" <%
-																					if (searchWord != null) {
+			<p>
+				<span>タイトル:</span>
+				<input type="text" name="searchWord" placeholder="タイトル入力" <%
+																				if (searchWord != null) {
+																			%>
+																					value="<%= searchWord %>"
+																			<%
+																				}
+																			%>>
+				<input type="radio" name="match" value="part" id="part" checked="checked"><label for="part">部分一致</label>
+				<input type="radio" name="match" value="all" id="all"><label for="all">完全一致</label>
+			</p>
+			<p>
+				<span>カテゴリー:</span>
+				<select name="categoryId">
+					<option value="0">検索条件に含まない</option>
+					<%
+						if (categoryList != null && categoryList.size() != 0) {
+							for (CategoryNameDisp category : categoryList) {
+					%>
+								<option value="<%= category.getCategoryId() %>" <%
+																					if (threadSearch != null && threadSearch.getCategoryId() == category.getCategoryId()) {
 																				%>
-																						value="<%= searchWord %>"
+																						selected
 																				<%
 																					}
 																				%>>
-				</span>
-				<span class="search-margin">
-					<input type="radio" name="match" value="part" id="part" <%
-																				if (threadSearch == null || (threadSearch != null && threadSearch.getMatch().equals("part"))) {	
-																			%>
-																					checked="checked"
-																			<%
-																				}
-																			%>		
-																			><label for="part">部分一致</label>
-					<input type="radio" name="match" value="all" id="all" <%
-																				if (threadSearch != null && threadSearch.getMatch().equals("all")) {	
-																		   %>
-																		   			checked="checked"
-																		  <%
-																				}
-																		  %>
-																		  ><label for="all">完全一致</label>
-				</span>
-			</p>
-			<p class="text-center">
-				<span class="search-margin">
-					<label for="category">カテゴリー:</label>
-					<select class="input-width" id="category" name="categoryId">
-						<option value="0">検索条件に含まない</option>
-						<%
-							if (categoryList != null && categoryList.size() != 0) {
-								for (CategoryNameDisp category : categoryList) {
-						%>
-									<option value="<%= category.getCategoryId() %>" <%
-																						if (threadSearch != null && threadSearch.getCategoryId() == category.getCategoryId()) {
-																					%>
-																							selected
-																					<%
-																						}
-																					%>>
-										<%= category.getCategoryName() %>
-									</option>
-						<%			
-								}
+									<%= category.getCategoryName() %>
+								</option>
+					<%			
 							}
-						%>
-					</select>
-				</span>
-				<input class="search-margin" type="submit" value="検索">
+						}
+					%>
+				</select>
+				<input type="submit" value="検索">
 			</p>
 		</form>
 		<hr>
+		
 		<%
 			if (message != null && !message.equals("")) {
 		%>
-				<br>
-				<div class="caution-text">
+				<div>
 					<%= message %>
 				</div>
 		<%	
 			}
 			if (user != null) {
 		%>
-		<br>
-		<div class="text-center">
-			<form action="ServletThreadCreate" method="post">
-				<input type="submit" value="スレッドを立てる">
-			</form>
-		</div>
-		<br>
+		
+				<form action="ServletThreadCreate" method="post">
+					<input type="submit" value="スレッドを立てる">
+				</form>
+		
 		<%
 			}
 			
 			if (threadList != null) {
 				for (ThreadDispInfo thread : threadList) {
 					
-		%>				
-					<div class="thread">
-						<form action="ServletThreadDelConfirm" method="post">
-							<p class="thread-info backcolor-gray">
-								<a class="thread-linkFont" href="ServletThreadDetail?threadId=<%= thread.getThreadId() %>"><%= thread.getTitle() %></a>
-								<%
-									if (user != null && user.getManager() == 1) {
-								%>
-										<span>								
-											<input class="thread-infoMargin" type="submit" value="削除">
-											<input type="hidden" name="threadId" value="<%= thread.getThreadId() %>">								
-										</span>
-								<%
-									}
-								%>						
-								<br>
-								<span class="thread-infoMargin">カテゴリー:<%= thread.getCategory() %></span>
-								<span class="thread-infoMargin">作成者:<%= thread.getCreateUserName() %></span>
-								<span class="thread-infoMargin">作成日:<%= thread.getCreateDate().substring(0, 11) %></span>								
-							</p>
-						</form>
-					</div>
+		%>
+				
+					<p>
+						<a href="ServletThreadDetail?threadId=<%= thread.getThreadId() %>"><%= thread.getTitle() %></a>
+						<br>
+						<span>カテゴリー:<%= thread.getCategory() %></span>
+						<span>作成者:<%= thread.getCreateUserName() %></span>
+						<span>作成日:<%= thread.getCreateDate().substring(0, 11) %></span>
+						
+						<%
+							if (user != null && user.getManager() == 1) {
+						%>
+								<form action="ServletThreadDelConfirm" method="post">
+									<input type="submit" value="削除">
+									<input type="hidden" name="threadId" value="<%= thread.getThreadId() %>">
+								</form>
+						<%
+							}
+						%>
+						
+					</p>
+					
 		<%
 				}
 			}
 		%>
 		
 		<br>
-		<br>
-		<div class="text-center">
-			<%
-				for (int i = 1; i <= pagination; i++) {
-			%>		
-					<span class="pagination-margin"><a href="ServletThreadSearchList?page=<%= i  %>"><%= i %></a></span>
-			<%
-					if (i == 10) {
-						break;
-					}
+		
+		<%
+			for (int i = 1; i <= pagination; i++) {
+		%>
+				<a href="ServletThreadSearchList?page=<%= i  %>"><%= i %></a>	
+		<%
+				if (i == 10) {
+					break;
 				}
-			%>
-		</div>
-		<br>
-		<br>
+			}
+		%>
 	</body>
 </html>

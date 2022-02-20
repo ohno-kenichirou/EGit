@@ -43,37 +43,45 @@ public class MakeUserIdDAO {
 		try {
 			con = DriverManager.getConnection(this.getConnection());
 			con.setAutoCommit(false);
-			MakeUserIdInfo info = null;
+			ResultSet rs = null;
 			// 現在年月日のIDアルファベットとIDナンバーを取得
-			info = getMakeUserIdData(con);
+			rs = getMakeUserIdData(con);
+			rs.last();
+			int rowNum = rs.getRow();
+			rs.beforeFirst();
+			System.out.println("rowNum:" + rowNum); // テストコメント
 			// 現在年月日のデータが無ければ作成
-			if (info == null) {
+			if (rowNum <= 0) {
 				isRes = insMakeUserId(con);
 				if (isRes) {
-					info = getMakeUserIdData(con);
+					rs = getMakeUserIdData(con);
 				}
 			}
-			if (info != null) {
-				isRes = true;
-			}
-			Date thisDate = null;
-			String idAlphabet = null;
-			int idNo = 0;
+			System.out.println("isRes:" + isRes); // テストコメント
+			Date thisDate = rs.getDate("thisDate");
+			String idAlphabet = rs.getString("idAlphabet");
+			int idNo = rs.getInt("idNo");
+			System.out.println("thisDate:" + thisDate); // テストコメント
+			System.out.println("idAlphabet:" + idAlphabet); // テストコメント
+			System.out.println("idNo:" + idNo); // テストコメント
+			
+			// ユーザーID作成テーブルの更新
 			if (isRes) {
-				thisDate = info.getThisDate();
-				idAlphabet = info.getIdAlphabet();
-				idNo = info.getIdNo();
-				// ユーザーID作成テーブルの更新
 				isRes = updMakeUserId(con, idAlphabet, idNo);
 			}
+			System.out.println("isRes:" + isRes); // テストコメント
+			// 返すユーザーIDを作成
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			ret = idAlphabet + sdf.format(thisDate) + String.format("%02d", idNo);
+			
 			if (isRes) {
-				// 返すユーザーIDを作成
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-				ret = idAlphabet + sdf.format(thisDate) + String.format("%02d", idNo);
 				con.commit();
+				System.out.println("commit:"); // テストコメント
 			} else {
 				con.rollback();
+				System.out.println("rollback:"); // テストコメント
 			}
+			rs.close();
 		} catch (SQLException e) {
 			try {
 				e.printStackTrace();
@@ -98,18 +106,13 @@ public class MakeUserIdDAO {
 	 * 
 	 * 	作成者：大野賢一朗　作成日：2022/02/14(月)
 	 */
-	public MakeUserIdInfo getMakeUserIdData(Connection con) throws SQLException {
+	public ResultSet getMakeUserIdData(Connection con) throws SQLException {
 		ResultSet rs = null;
 		String sql = "SELECT thisDate, idAlphabet, idNo FROM MakeUserId WHERE thisDate = CONVERT(DATE,GETDATE())";
 		PreparedStatement pstmt = con.prepareStatement(sql);
 		rs = pstmt.executeQuery();
-		MakeUserIdInfo info = null;
-		if (rs.next()) {
-			info = new MakeUserIdInfo(rs.getDate("thisDate"), rs.getString("idAlphabet"), rs.getInt("idNo"));
-		}
 		pstmt.close();
-		rs.close();
-		return info;
+		return rs;
 	}
 	
 	/**
