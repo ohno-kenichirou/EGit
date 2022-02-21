@@ -30,6 +30,7 @@
 		<meta charset="UTF-8">
 		<title>スレッド詳細</title>
 		<link rel="stylesheet" type="text/css" href="css/design.css">
+		<link rel="shortcut icon" href="img/bulletin_board.ico">
 	</head>
 	<body>
 		<jsp:include page="header.jsp" flush="true" />
@@ -80,7 +81,7 @@
 							if (user != null && user.getManager() == 1) {
 						%>						
 								<form action="ServletCommentDelConfirm" method="post">
-									<input type="submit" value="削除">
+									<input class="delete width5" type="submit" value="削除">
 									<input type="hidden" name="commentId" value="<%= commentId %>">
 									<input type="hidden" name="threadId" value="<%= threadId %>">
 								</form>
@@ -98,7 +99,7 @@
 		%>
 				<div class="text-center">
 					<form action="ServletCommentPost" method="post">
-						<input type="submit" value="コメントする">
+						<input class="default width9" type="submit" value="コメントする">
 						<input type="hidden" name="threadId" value="<%= threadId %>">
 					</form>
 				</div>

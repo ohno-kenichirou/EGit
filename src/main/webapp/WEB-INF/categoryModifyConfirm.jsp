@@ -28,21 +28,21 @@
 	<meta charset="UTF-8">
 	<title>カテゴリー修正確認</title>
 	<link rel="shortcut icon" href="img/bulletin_board.ico">
-	<link rel="stylesheet" type="text/css" href="css/design.css" media="all">
-	<link rel="stylesheet" type="text/css" href="css/design2.css" media="all">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="all">
 	<link rel="stylesheet" type="text/css" href="css/main.min.css" media="all">
 	<link rel="stylesheet" type="text/css" href="css/style.css" media="all">
+	<link rel="stylesheet" type="text/css" href="css/design.css" media="all">
+	<link rel="stylesheet" type="text/css" href="css/design2.css" media="all">
 </head>
 <body>
-	<div id="wrap">
-		<div class="container mb-45">
-			<div class="row">
-				<div class="col-md-12">
-					<jsp:include page="header.jsp" flush="true" />
+	<div>
+		<jsp:include page="header.jsp" flush="true" />
+		<div class="mb-45">
+			<div class="col-md-12">
+				<div class="text-center">
 					
 					<p>入力内容を確認して下さい</p>
-					
+					<div class="inline-block">
 					<table>
 						<tr>
 							<th>カテゴリー名</th>
@@ -57,13 +57,13 @@
 							<td><%= userName %></td>
 						</tr>
 					</table>
-					
+					</div>
 					<br>
 					
 					<%
 						if (message != null && !message.equals("")) {
 					%>
-							<div>
+							<div class="caution-text">
 								<%= message %>
 							</div>
 					<%	
@@ -71,7 +71,7 @@
 					%>
 					
 					<form action="ServletCategoryModifyConfirm" method="post">
-						<input type="submit" value="修正">
+						<input type="submit" class="modify width5" value="修正">
 					</form>
 					<div>
 						<a href="ServletCategoryModify">カテゴリー修正画面へ戻る</a>

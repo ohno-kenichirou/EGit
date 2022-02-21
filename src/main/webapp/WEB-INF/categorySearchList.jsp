@@ -76,7 +76,7 @@
 				</span>			
 				<input type="hidden" name="update" value="search">
 				<span class="search-margin">
-					<input type="submit" value="検索">
+					<input class="default width5" type="submit" value="検索">
 				</span>
 			</p>
 		</form>
@@ -95,7 +95,7 @@
 		<br>
 		<div class="text-center">
 			<form action="ServletCategoryAdd" method="get">
-				<input type="submit" value="カテゴリー追加">
+				<input class="add width12" type="submit" value="カテゴリー追加">
 			</form>
 		</div>
 		<br>
@@ -110,7 +110,7 @@
 						
 						<div class="inline-block category-update-button">
 							<form action="ServletCategorySearchList" method="post">							
-								<input type="submit" value="修正">
+								<input class="modify width5" type="submit" value="修正">
 								<input type="hidden" name="update" value="modify">
 								<input type="hidden" name="categoryId" value="<%= category.getCategoryId() %>">
 								<input type="hidden" name="categoryName" value="<%= category.getCategoryName() %>">
@@ -120,7 +120,7 @@
 						
 						<div class="inline-block category-update-button" >
 							<form action="ServletCategorySearchList" method="post">								
-								<input type="submit" value="削除">
+								<input class="delete width5" type="submit" value="削除">
 								<input type="hidden" name="update" value="delete">
 								<input type="hidden" name="categoryId" value="<%= category.getCategoryId() %>">
 								<input type="hidden" name="categoryName" value="<%= category.getCategoryName() %>">

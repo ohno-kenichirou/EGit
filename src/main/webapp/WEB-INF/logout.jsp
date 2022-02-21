@@ -9,6 +9,7 @@
 		<meta charset="UTF-8">
 		<title>ログアウト画面</title>
 		<link rel="stylesheet" type="text/css" href="css/design.css">
+		<link rel="shortcut icon" href="img/bulletin_board.ico">
 	</head>
 	<body>
 		<div class="logoutForm">
@@ -18,13 +19,13 @@
 			<div class="text-center">
 				<div class="inline-block button-margin">
 					<form action="ServletLogout" method="post">
-						<input type="submit" value="はい">
+						<input class="default width5" type="submit" value="はい">
 						<input type="hidden" name="logout" value="yes">
 					</form>
 				</div>
 				<div class="inline-block button-margin">
 					<form action="ServletLogout" method="post">
-						<input type="submit" value="いいえ">
+						<input class="default width5" type="submit" value="いいえ">
 						<input type="hidden" name="logout" value="no">
 					</form>
 				</div>

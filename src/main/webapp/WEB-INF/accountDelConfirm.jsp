@@ -34,21 +34,21 @@
 	<meta charset="UTF-8">
 	<title>アカウント削除確認</title>
 	<link rel="shortcut icon" href="img/bulletin_board.ico">
-	<link rel="stylesheet" type="text/css" href="css/design.css" media="all">
-	<link rel="stylesheet" type="text/css" href="css/design2.css" media="all">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="all">
 	<link rel="stylesheet" type="text/css" href="css/main.min.css" media="all">
 	<link rel="stylesheet" type="text/css" href="css/style.css" media="all">
+	<link rel="stylesheet" type="text/css" href="css/design.css" media="all">
+	<link rel="stylesheet" type="text/css" href="css/design2.css" media="all">
 </head>
 <body>
-	<div id="wrap">
+	<div>
+		<jsp:include page="header.jsp" flush="true" />
 		<div class="mb-45">
-			<div class="row">
-				<div class="col-md-12">
-					<jsp:include page="header.jsp" flush="true" />
+			<div class="col-md-12">
+				<div class="text-center">
 					
 					<p>対象のユーザーが作成したスレッドとコメントが全て削除されます。<br>本当に削除してもよろしいですか？</p>
-					
+					<div class="inline-block">
 					<table>
 						<tr>
 							<th>会員ID</th>
@@ -93,7 +93,7 @@
 							</td>
 						</tr>
 					</table>
-					
+					</div>
 					<br>
 					
 					<% if (message != null && !message.equals("")) { %>
@@ -101,7 +101,7 @@
 					<% } %>
 					
 					<form action="ServletAccountDelConfirm" method="post">
-						<input type="submit" value="削除">
+						<input type="submit" class="delete width5" value="削除">
 					</form>
 					
 					<div>

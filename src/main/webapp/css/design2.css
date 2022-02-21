@@ -10,11 +10,12 @@ table {
 
 th {
 	border: #000000 1px solid;
-	width: 300px;
+	text-align: center !important;
 }
 
 td {
 	border: #000000 1px solid;
+	text-align: center;
 }
 
 .blue-color {
@@ -40,3 +41,56 @@ td {
 .mb-45 {
 	margin-bottom: 45px
 }
+
+.wd-btnMod {
+	width: 80px
+}
+
+.wd-btnDel {
+	width: 80px
+}
+
+.wd-userId {
+	width: 120px
+}
+
+.wd-email {
+	width: 200px
+}
+
+.wd-userName {
+	width: 200px
+}
+
+.wd-birth {
+	width: 80px
+}
+
+.wd-gender {
+	width: 60px
+}
+
+.wd-manager {
+	width: 80px
+}
+
+.wd-lock {
+	width: 60px
+}
+
+.wd-insName {
+	width: 200px
+}
+
+.wd-insDate {
+	width: 80px
+}
+
+.wd-updName {
+	width: 200px
+}
+
+.wd-updDate {
+	width: 80px
+}
+

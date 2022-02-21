@@ -21,6 +21,7 @@
 		<meta charset="UTF-8">
 		<title>コメント入力</title>
 		<link rel="stylesheet" type="text/css" href="css/design.css">
+		<link rel="shortcut icon" href="img/bulletin_board.ico">
 	</head>
 	<body>
 		<jsp:include page="header.jsp" flush="true" />								
@@ -65,7 +66,7 @@
 				</div>
 				
 				<div  class="input-margin">
-					<input type="submit" value="確認">
+					<input class="default width5" type="submit" value="確認">
 				</div>
 				<input type="hidden" name="threadId" value="<%= threadId %>">
 			</form>

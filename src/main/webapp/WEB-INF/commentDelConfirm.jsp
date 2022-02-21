@@ -19,77 +19,64 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>コメント削除内容確認</title>
+		<link rel="shortcut icon" href="img/bulletin_board.ico">
+		<link rel="stylesheet" type="text/css" href="css/design.css">	
 	</head>
 	<body>
-		<header>
-			<a href="ServletThreadSearchList">スレッド一覧</a>
+		<jsp:include page="header.jsp" flush="true" />
+		
+		<div class="text-center">
+			<br>
+			<p>
+				削除内容を確認してください
+			</p>
+			<br>
 			
 			<%
-				if (user != null && user.getManager() == 1) {
+				if (delComment != null) {
 			%>
-					<a href="ServletCategorySearchList">カテゴリー一覧</a>
-					<a href="ServletAccountSearchList">アカウント一覧</a>
-			<%		
-				}
-				if (user != null) {
-			%>
-					<a href="ServletLogout">ログアウト</a>	
-			<%
-				} else {
-			%>
-					<a href="ServletLogin">ログイン</a>	
-			<%
-				}
-			%>		
-				
-		</header>
-		<hr>
-		
-		<p>
-			削除内容を確認してください
-		</p>
-		
-		<%
-			if (delComment != null) {
-		%>
-		
-				<table>
-					<tr>
-						<th colspan="2">
-							コメント情報
-						</th>
-					</tr>
-					<tr>
-						<th>ユーザー名</th>
-						<td><%= delComment.getPostUserName() %></td>
-					</tr>
-					<tr>
-						<th>コメント投稿日</th>
-						<td><%= delComment.getPostDate().substring(0, 19) %></td>
-					</tr>
-					<tr>
-						<th>コメント内容</th>
-						<td><%= delComment.getComment() %></td>
-					</tr>
+					<div class="inline-block">
+						<table>
+							<tr>
+								<th colspan="2">
+									コメント情報
+								</th>
+							</tr>
+							<tr>
+								<th>ユーザー名</th>
+								<td><%= delComment.getPostUserName() %></td>
+							</tr>
+							<tr>
+								<th>コメント投稿日</th>
+								<td><%= delComment.getPostDate().substring(0, 19) %></td>
+							</tr>
+							<tr>
+								<th>コメント内容</th>
+								<td><%= delComment.getComment() %></td>
+							</tr>
+							
+						</table>
+					</div>
+					<br>
+					<br>
 					
-				</table>
-				
-				<br>
-				
-				<form action="ServletCommentDelConfirm" method="post">
-					<input type="submit" value="削除">
-					<input type="hidden" name="threadId" value="<%= threadId %>">
-					<input type="hidden" name="commentId" value="<%= commentId %>">
-					<input type="hidden" name="delete" value="yes">
-				</form>
-		
-		<%
-			}
-		%>
-		
-		<br>
-		
-		<a href="ServletThreadDetail?threadId=<%= threadId %>">スレッド詳細画面へ戻る</a>
-		
+					<form action="ServletCommentDelConfirm" method="post">
+						<input class="delete width5" type="submit" value="削除">
+						<input type="hidden" name="threadId" value="<%= threadId %>">
+						<input type="hidden" name="commentId" value="<%= commentId %>">
+						<input type="hidden" name="delete" value="yes">
+					</form>
+			
+			<%
+				}
+			%>
+			
+			<br>
+			<br>
+			<br>			
+			<a href="ServletThreadDetail?threadId=<%= threadId %>">スレッド詳細画面へ戻る</a>
+			<br>
+			<br>
+		</div>
 	</body>
 </html>

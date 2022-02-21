@@ -12,6 +12,7 @@
 		<meta charset="UTF-8">
 		<title>ログイン画面</title>
 		<link rel="stylesheet" type="text/css" href="css/design.css">
+		<link rel="shortcut icon" href="img/bulletin_board.ico">
 	</head>
 	<body>
 		<div class="loginForm">
@@ -49,7 +50,7 @@
 				</div>
 					
 				<div class="text-center loginHeight">
-					<input type="submit" value="ログイン">
+					<input class="default width7" type="submit" value="ログイン">
 				</div>
 				
 				<br>

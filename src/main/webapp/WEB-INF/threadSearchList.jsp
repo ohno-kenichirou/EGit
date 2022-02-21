@@ -43,6 +43,7 @@
 		<meta charset="UTF-8">
 		<title>スレッド一覧・検索</title>
 		<link rel="stylesheet" type="text/css" href="css/design.css">
+		<link rel="shortcut icon" href="img/bulletin_board.ico">
 	</head>
 	<body>
 		<jsp:include page="header.jsp" flush="true" />
@@ -103,7 +104,7 @@
 						%>
 					</select>
 				</span>
-				<input class="search-margin" type="submit" value="検索">
+				<input class="search-margin default width5" type="submit" value="検索">
 			</p>
 		</form>
 		<hr>
@@ -121,7 +122,7 @@
 		<br>
 		<div class="text-center">
 			<form action="ServletThreadCreate" method="post">
-				<input type="submit" value="スレッドを立てる">
+				<input class="add width12" type="submit" value="スレッドを立てる">
 			</form>
 		</div>
 		<br>
@@ -140,7 +141,7 @@
 									if (user != null && user.getManager() == 1) {
 								%>
 										<span>								
-											<input class="thread-infoMargin" type="submit" value="削除">
+											<input class="thread-infoMargin delete width5" type="submit" value="削除">
 											<input type="hidden" name="threadId" value="<%= thread.getThreadId() %>">								
 										</span>
 								<%

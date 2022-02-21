@@ -22,19 +22,19 @@
 	<meta charset="UTF-8">
 	<title>カテゴリー修正</title>
 	<link rel="shortcut icon" href="img/bulletin_board.ico">
-	<link rel="stylesheet" type="text/css" href="css/design.css" media="all">
-	<link rel="stylesheet" type="text/css" href="css/design2.css" media="all">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="all">
 	<link rel="stylesheet" type="text/css" href="css/main.min.css" media="all">
 	<link rel="stylesheet" type="text/css" href="css/style.css" media="all">
+	<link rel="stylesheet" type="text/css" href="css/design.css" media="all">
+	<link rel="stylesheet" type="text/css" href="css/design2.css" media="all">
 </head>
 <body>
-	<div id="wrap">
-		<div class="container mb-45">
-			<div class="row">
+	<div>
+		<jsp:include page="header.jsp" flush="true" />
+		<div class="mb-45">
+			<div class="text-center">
 				<div class="col-md-12">
-					<jsp:include page="header.jsp" flush="true" />
-					
+					<div class="text-center">
 					<%
 						if (message != null && !message.equals("")) {
 					%>
@@ -44,33 +44,37 @@
 					<%	
 						}
 					%>
-					
+					</div>
 					<div class="text-center">
 						<span class="caution-color">＊</span>マークは入力必須項目
 					</div>
 					<form action="ServletCategoryModify" method="post">
-						<div>
-							<label for="categoryName">
-								<span class="caution-color">＊</span>カテゴリー名:
-							</label>				
+						<div class="input-margin">
+							<div class="inline-block input-item">
+								<label for="categoryName">
+									<span class="caution-color">＊</span>カテゴリー名:
+								</label>				
+							</div>
+							<div class="input-width inline-block">
+								<input type="text" id="categoryName" name="categoryName" placeholder="カテゴリー名入力" maxlength="50" size="50" required value="<%= name %>">
+							</div>
 						</div>
-						<div>
-							<input type="text" id="categoryName" name="categoryName" placeholder="カテゴリー名入力" maxlength="50" size="50" required value="<%= name %>">
-						</div>
-						<div>
-							<label for="categoryKana">
-								<span class="caution-color">＊</span>カテゴリー名(カナ):
-							</label>				
-						</div>
-						<div>
-							<input type="text" id="categoryKana" name="categoryKana" placeholder="カテゴリー名(カナ)入力" maxlength="100" size="100" required value="<%= kana %>">
+						<div class="input-margin">
+							<div class="inline-block input-item">
+								<label for="categoryKana">
+									<span class="caution-color">＊</span>カテゴリー名(カナ):
+								</label>				
+							</div>
+							<div class="input-width inline-block">
+								<input type="text" id="categoryKana" name="categoryKana" placeholder="カテゴリー名(カナ)入力" maxlength="100" size="100" required value="<%= kana %>">
+							</div>
 						</div>
 						<input type="hidden" name="fromPage" value="categoryModify">
-						<div>
+						<div class="input-margin">
 							<input type="submit" value="確認">
 						</div>
 					</form>
-					<div>
+					<div class="text-center">
 						<a href="ServletCategorySearchList">カテゴリー一覧へ戻る</a>
 					</div>
 				</div>

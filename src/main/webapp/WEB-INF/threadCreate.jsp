@@ -30,6 +30,7 @@
 		<meta charset="UTF-8">
 		<title>スレッド作成</title>
 		<link rel="stylesheet" type="text/css" href="css/design.css">
+		<link rel="shortcut icon" href="img/bulletin_board.ico">
 	</head>
 	<body>
 		<jsp:include page="header.jsp" flush="true" />
@@ -53,7 +54,7 @@
 		<div class="text-center">
 			<form action="ServletThreadCreateConfirm" method="post">
 				<div class="input-margin">
-					<div class="inline-block  a">
+					<div class="inline-block input-item">
 						<label for="title">
 							<span class="caution-color">＊</span>タイトル:
 						</label>				
@@ -70,7 +71,7 @@
 				</div>
 				
 				<div class="input-margin">
-					<div class="inline-block  a">
+					<div class="inline-block input-item">
 						<label for="category">
 							<span class="caution-color">＊</span>カテゴリー:
 						</label>				
@@ -93,7 +94,7 @@
 				</div>
 				
 				<div class="input-margin">
-					<div class="inline-block  a top">
+					<div class="inline-block input-item top">
 						<label for="comment">
 							<span class="caution-color">＊</span>スレッド内容:
 						</label>				
@@ -104,7 +105,7 @@
 				</div>
 				
 				<div class="input-margin">
-					<input type="submit" value="確認">
+					<input class="default width5" type="submit" value="確認">
 				</div>
 			</form>
 		</div>
