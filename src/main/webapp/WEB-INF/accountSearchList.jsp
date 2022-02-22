@@ -66,7 +66,7 @@
 					</div>
 					<hr>
 					<% if (message != null && message != "") { %>
-						<div class="text-center"><%= message %></div>
+						<div class="caution-text"><%= message %></div>
 					<% } %>
 					<div class="text-center">
 						<form action="ServletAccountSearchList" method="post">
@@ -74,6 +74,7 @@
 							<input type="submit" class="add width12" value="アカウント登録">
 						</form>
 					</div>
+					<br>
 					<div class="text-center">
 						<table>
 								<tr>
@@ -139,9 +140,9 @@
 										</td>
 										<td class="wd-lock">
 											<% if (account.getErrorCount() >= 3) { %>
-												<span class="fa fa-lock red-color"></span>
+												<span class="fa fa-lock fa-2x red-color"></span>
 											<% } else { %>
-												<span class="fa fa-unlock blue-color"></span>
+												<span class="fa fa-unlock fa-2x blue-color"></span>
 											<% } %>
 										</td>
 										<td class="wd-insName">
@@ -182,5 +183,7 @@
 			</div>
 		</div>
 	</div>
+	<br>
+	<br>
 </body>
 </html>

@@ -61,7 +61,6 @@
 					</div>
 					<div class="text-center">
 						<span class="caution-color">＊</span>マークは必須項目
-					</div>
 					<form action="ServletAccountRegister" method="post">
 						<div class="input-margin">
 							<div class="inline-block input-item">
@@ -80,7 +79,7 @@
 								</label>				
 							</div>
 							<div class="input-width inline-block">
-								<input type="text" id="email" name="email" placeholder="メールアドレス入力" maxlength="255" size="11" required value="<%= email %>">
+								<input type="email" id="email" name="email" placeholder="メールアドレス入力" maxlength="255" size="62" required value="<%= email %>">
 							</div>
 						</div>
 						<div class="input-margin">
@@ -100,7 +99,7 @@
 								</label>				
 							</div>
 							<div class="input-width inline-block">
-								<input type="text" id=userName name="userName" placeholder="ユーザー名入力" maxlength="100" size="100" required value="<%= name %>">
+								<input type="text" id="userName" name="userName" placeholder="ユーザー名入力" maxlength="100" size="26" required value="<%= name %>">
 							</div>
 						</div>
 						<div class="input-margin">
@@ -150,6 +149,7 @@
 							<input type="submit" class="default width5" value="確認">
 						</div>
 					</form>
+					</div>
 					<br>	
 					<br>
 					<div class="text-center">
