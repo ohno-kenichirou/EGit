@@ -34,12 +34,12 @@
 	<meta charset="UTF-8">
 	<title>アカウント一覧</title>
 	<link rel="shortcut icon" href="img/bulletin_board.ico">
-	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="all">
 	<link rel="stylesheet" type="text/css" href="css/main.min.css" media="all">
 	<link rel="stylesheet" type="text/css" href="css/style.css" media="all">
 	<link rel="stylesheet" type="text/css" href="css/design.css" media="all">
 	<link rel="stylesheet" type="text/css" href="css/design2.css" media="all">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
 </head>
 <body>
 	<div>
@@ -183,7 +183,7 @@
 			</div>
 		</div>
 	</div>
-	<br>
-	<br>
+		<br>
+		<br>
 </body>
 </html>
